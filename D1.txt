@@ -1,0 +1,42 @@
+
+Tre Strategier från Legoövningen som vi tar med oss till Scrum-utvecklingen
+____________________________________________________________________________
+Grupp:
+Simon Ceder,
+Pontus Stjernström ,
+Miki Swahn,
+Adam Liljenberg och
+Johan Berndtsson.
+
+
+Vad:
+Sluta lägga för mycket tid på att bedöma uppgifternas tidsåtgång.
+Varför:
+Tidsbedömning är svårt och vår uppskattning kommer vara felaktig i många
+fall ändå, särskilt som vi alla är ganska oerfarna programmerare.
+Hur:  
+Är mer ett mindsett och kräver att vi är uppmärksamma på om uppskattningen
+tar för lång tid. Då gäller det att helt enkelt få det gjort och avsluta.
+Bli bättre på uppskattning genom att lägga tid i Sprint retrospective där
+vi evaluerar hur våra uppskattningar för den sprinten.
+
+Vad:
+Fortsätta fråga varför-frågor. Diskutera sedan vilka alternativ som finns.
+Varför:
+För att ta reda på vad som efterfrågas och vad som skapar värde för
+projektägaren och se om vi kan föreslå ändringar som hade sparat oss tid/
+blivit bättre för oss. 
+Hur:
+Vid all kommunikation med Hamnen och andra intressenter. Förhandla sedan om
+alternativa lösningar. 
+
+
+Vad:
+Fortsätta dela upp arbetet på teams om 2-3 personer. Bestäm sedan sinsemellan
+om det isoleras till enskilda uppgifter eller om det parprogrameras. 
+Varför:
+Parallellisera arbetet så mycket det går. Vara produktiva och inte vänta på
+varandra. Så att inte hela gruppen behöver vara med och planera varenda liten
+detalj. 
+Hur:
+Tilldela varje user story till 2-3 personer, inte fler och inte färre.     
