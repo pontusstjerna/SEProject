@@ -1,0 +1,21 @@
+
+Socialt kontrakt
+____________________________________________________________________________________________________
+
+Grupp:
+Johan Berndtsson
+Miki Swahn
+Simon Ceder
+Pontus Stjernström
+Adam Liljenberg
+
+Respektera varandras kunskapsnivåer och kodningsvanor.
+Alla kan inte närvara vid alla möten. Kan man inte närvara bör man höra av sig i god tid. 
+Är man missnöjd men någons insats pratar man med hen. Vädra dina åsikter, positivasom negativa.
+Arbetsveckan är 20 timmar, inte mer. 
+När möten börjar är man närvarande, inte nödvändigtvis startklar.
+Vi ber om hjälp så tidigt som möjligt för att undvika långa stopp.
+Vår arbetsprocess kan förändras över tiden. Alla har rätt att önska förändring närsom.
+Man är alltid i tid. Vet man med sig att man är sen hör man av sig till gruppen med ETA.
+Efter uppdelning av arbetsuppgifter är det upp till var och en att planera sin tid.
+Don’t push to master.
