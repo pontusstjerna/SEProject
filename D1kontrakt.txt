@@ -8,6 +8,7 @@ Miki Swahn
 Simon Ceder
 Pontus Stjernström
 Adam Liljenberg
+Jonatan Almén
 
 Respektera varandras kunskapsnivåer och kodningsvanor.
 Alla kan inte närvara vid alla möten. Kan man inte närvara bör man höra av sig i god tid. 
