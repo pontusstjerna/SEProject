@@ -1,5 +1,4 @@
 window.onload = function () {
-  alert('I am alive!');
-
-
+  
+  document.querySelector(".copyright").textContent = "Pontus är ful";
 }
