@@ -28,7 +28,4 @@ public class TestRestController {
     public String greeting() {
         return "I come from java.";
     }
-
-    @RequestMapping("/test3")
-    public String greeting() {return "I did it"}
 }
