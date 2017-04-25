@@ -19,10 +19,17 @@ sourceCompatibility = 1.8
 
 repositories {
 	mavenCentral()
+	maven {
+		url "http://brink.viktoria.chalmers.se/nexus/content/repositories/monalisa-viktoria-snapshots"
+	}
+	maven {
+		url "http://brink.viktoria.chalmers.se/nexus/content/repositories/monalisa-viktoria"
+	}
 }
 
 
 dependencies {
+	compile('se.viktoria.stm.portcdm.demonstrator-connector:common:1.6-SNAPSHOT')
 	//compile('org.springframework.boot:spring-boot-starter-data-jpa')
 	//compile('org.springframework.boot:spring-boot-starter-jooq')
 	compile('org.springframework.boot:spring-boot-starter-mustache')
