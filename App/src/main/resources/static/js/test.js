@@ -3,7 +3,7 @@ window.onload = function () {
   }
 
   function GetTestShip(){
-      document.getElementById("result").innerHTML = httpGet("/port_calls");
+      document.getElementById("result").innerHTML = JSON.Parse(httpGet("/port_calls")).arrivalDate;
   }
 
   function httpGet(url) {

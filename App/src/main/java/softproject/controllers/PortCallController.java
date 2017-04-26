@@ -14,6 +14,6 @@ public class PortCallController {
     @RequestMapping("/port_calls")
     public String getPortCalls(){
         //Detta är Pontuss VBoxs superfina IP
-        return HTTPRequests.executeGet("http://192.168.56.101:8080/dmp/port_calls");
+        return HTTPRequests.executeGet("http://192.168.56.101:8080/dmp/port_calls?count=1");
     }
 }
