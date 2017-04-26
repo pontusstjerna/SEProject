@@ -17,12 +17,24 @@ apply plugin: 'org.springframework.boot'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = 1.8
 
+configurations.all {
+	resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+}
+
 repositories {
 	mavenCentral()
+	maven {
+		url "http://brink.viktoria.chalmers.se/nexus/content/repositories/monalisa-viktoria-snapshots"
+	}
+	maven {
+		url "http://brink.viktoria.chalmers.se/nexus/content/repositories/monalisa-viktoria"
+	}
 }
 
 
 dependencies {
+	compile("org.springframework.boot:spring-boot-devtools")
+	compile('se.viktoria.stm.portcdm.demonstrator-connector:common:latest.integration')
 	//compile('org.springframework.boot:spring-boot-starter-data-jpa')
 	//compile('org.springframework.boot:spring-boot-starter-jooq')
 	compile('org.springframework.boot:spring-boot-starter-mustache')
