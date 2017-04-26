@@ -3,7 +3,7 @@ window.onload = function () {
   }
 
   function GetTestShip(){
-      document.getElementById("result").innerHTML = httpGet("/ship");
+      document.getElementById("result").innerHTML = httpGet("/port_calls");
   }
 
   function httpGet(url) {
