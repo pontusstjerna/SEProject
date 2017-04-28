@@ -29,8 +29,6 @@ public class PortCDMRequest {
             e.printStackTrace();
         }
 
-
-
         RequestBody requestBody = null;
         try {
             requestBody = RequestBody.create(MediaType.parse("application/json"), mapper.writeValueAsString(Arrays.asList(filter)));
@@ -46,18 +44,50 @@ public class PortCDMRequest {
                 .post(requestBody)
                 .build();
 
+        Response response = null;
+        String queue = "";
+
         try {
-            Response response = client.newCall(request).execute();
+            response = client.newCall(request).execute();
             System.out.println(response.code());
 
-            System.out.println(response.body().string());
+//            System.out.println(response.body().string());
+            queue = response.body().string();
+            System.out.println(queue);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        // NOW WE HAVE A QUEUE ID!!!
+        return queue;
+    }
+
+    public String getNewMessages(String queue){
+        OkHttpClient client = new OkHttpClient();
+
+
+        Request getRequest = new Request.Builder()
+                .header("X-PortCDM-UserId", "porter")
+                .header("X-PortCDM-Password", "porter")
+                .header("X-PortCDM-APIKey", "eeee")
+                .url("http://192.168.56.101:8080/mb/mqs/" + queue)
+                .build();
+
+        Response response = null;
+        try {
+            response = client.newCall(getRequest).execute();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-//        return request;
-        return null;
+        String result = "";
+
+        try {
+            result = response.body().string();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println(result);
+
+        return result;
     }
-
-
 }
