@@ -1,14 +1,19 @@
 package softproject.services;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.squareup.okhttp.*;
 import eu.portcdm.mb.dto.Filter;
 import eu.portcdm.mb.dto.FilterType;
+import eu.portcdm.messaging.PortCallMessage;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * Created by Johan on 28/04/2017.
@@ -86,7 +91,14 @@ public class PortCDMRequest {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println(result);
+
+        XmlMapper mapper = new XmlMapper();
+        try {
+            List<PortCallMessage> messages = mapper.readValue(result, new TypeReference<List<PortCallMessage>>() { });
+            System.out.println(messages);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         return result;
     }

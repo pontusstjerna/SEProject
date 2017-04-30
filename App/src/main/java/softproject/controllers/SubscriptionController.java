@@ -25,7 +25,7 @@ public class SubscriptionController {
 
         System.out.println(result);
 
-        return queueId;
+        return result;
     }
 
 }
