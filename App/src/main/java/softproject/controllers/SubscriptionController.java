@@ -2,7 +2,6 @@ package softproject.controllers;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import softproject.services.PortCDMRequest;
 
@@ -10,7 +9,7 @@ import softproject.services.PortCDMRequest;
 @RestController
 public class SubscriptionController {
 
-    @GetMapping("/queue/subscribe")
+    @GetMapping("/ship/subscribe")
     public String subscribe() {
         PortCDMRequest req = new PortCDMRequest();
 

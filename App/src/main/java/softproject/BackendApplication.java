@@ -2,7 +2,6 @@ package softproject;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import softproject.services.PortCDMRequest;
 
 @SpringBootApplication
 public class BackendApplication {
