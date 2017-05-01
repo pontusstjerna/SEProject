@@ -1,0 +1,111 @@
+package softproject.util;
+
+import eu.portcdm.dto.DepartureLocation;
+import eu.portcdm.messaging.*;
+import softproject.services.exceptions.IncompletePortCallMessage;
+
+import javax.xml.datatype.XMLGregorianCalendar;
+import java.util.UUID;
+
+public class PortCallMessageBuilder {
+
+    private PortCallMessage message = new PortCallMessage();
+
+    private PortCallMessageBuilder(String messageId) {
+        message = new PortCallMessage();
+        message.setMessageId(messageId);
+    }
+
+    public static PortCallMessageBuilder newBuilder() {
+        return new PortCallMessageBuilder("urn:x-mrn:stm:portcdm:message:" + UUID.randomUUID().toString());
+    }
+
+
+    public PortCallMessageBuilder portCallId(String id) {
+        this.message.setPortCallId(id);
+        return this;
+    }
+
+    public PortCallMessageBuilder localPortCallId(String id) {
+        this.message.setLocalPortCallId(id);
+        return this;
+    }
+
+    public PortCallMessageBuilder localJobId(String id) {
+        this.message.setLocalJobId(id);
+        return this;
+    }
+
+    public PortCallMessageBuilder vesselId(String id) {
+        this.message.setVesselId(id);
+        return this;
+    }
+
+    public PortCallMessageBuilder messageId(String id) {
+        this.message.setMessageId(id);
+        return this;
+    }
+
+    public PortCallMessageBuilder groupWith(String value) {
+        this.message.setGroupWith(value);
+        return this;
+    }
+
+    public PortCallMessageBuilder reportedAt(XMLGregorianCalendar calendar) {
+        this.message.setReportedAt(calendar);
+        return this;
+    }
+
+    public PortCallMessageBuilder comment(String comment) {
+        this.message.setComment(comment);
+        return this;
+    }
+
+    public PortCallMessageBuilder locationState(LocationState state) {
+        this.message.setLocationState(state);
+        return this;
+    }
+
+    public PortCallMessageBuilder locationState(LocationReferenceObject refObject,
+                                                TimeType timeType,
+                                                XMLGregorianCalendar time,
+                                                LocationState.ArrivalLocation arrivalLocation,
+                                                LocationState.DepartureLocation departureLocation) {
+        LocationState locationState = new LocationState();
+        locationState.setReferenceObject(refObject);
+        locationState.setTimeType(timeType);
+        locationState.setTime(time);
+        locationState.setArrivalLocation(arrivalLocation);
+        locationState.setDepartureLocation(departureLocation);
+        this.message.setLocationState(locationState);
+        return this;
+    }
+
+
+    public PortCallMessageBuilder serviceState(ServiceState state) {
+        this.message.setServiceState(state);
+        return this;
+    }
+
+    // TODO behöver en serviceState metod som skapar en ny serviceState från basic värden
+
+    public PortCallMessageBuilder messageOperation(String operation) {
+        MessageOperation op = new MessageOperation();
+        op.setMessageId(this.message.getMessageId());
+        op.setOperation(operation);
+        this.message.setMessageOperation(op);
+        return this;
+    }
+
+    public PortCallMessage build() {
+        if(this.message.getMessageId() != null
+                && this.message.getVesselId() != null
+                && !(this.message.getLocationState() == null && this.message.getServiceState() == null)) {
+            return this.message;
+        } else {
+//            throw new IncompletePortCallMessage();
+            return null;
+        }
+    }
+
+}
