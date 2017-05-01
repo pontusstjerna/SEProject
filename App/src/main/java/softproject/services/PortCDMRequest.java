@@ -180,11 +180,10 @@ public class PortCDMRequest {
 
         arrivalLocation.setTo(location);
 
-
         message.setLocationState(locationState);
 
-        amss.postStateUpdate(message);
 
+        amss.postStateUpdate(message);
         return "";
     }
 }
