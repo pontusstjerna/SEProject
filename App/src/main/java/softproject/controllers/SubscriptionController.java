@@ -1,8 +1,6 @@
 package softproject.controllers;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import softproject.services.PortCDMRequest;
 
 
@@ -23,6 +21,14 @@ public class SubscriptionController {
         String result = req.getNewMessages(queueId);
 
         System.out.println(result);
+
+        return result;
+    }
+
+    @GetMapping("/message/post")
+    public String postMessage() {
+        PortCDMRequest req = new PortCDMRequest();
+        String result = req.sendMessage();
 
         return result;
     }

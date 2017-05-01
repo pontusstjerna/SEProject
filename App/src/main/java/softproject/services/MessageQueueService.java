@@ -17,9 +17,9 @@ import java.util.List;
 
 
 public class MessageQueueService {
-    OkHttpClient httpClient;
-    MediaType mediaType;
-    Request baseRequest;
+    private OkHttpClient httpClient;
+    private MediaType mediaType;
+    private Request baseRequest;
 
 
     public MessageQueueService(OkHttpClient httpClient, Request baseRequest) {
@@ -88,7 +88,7 @@ public class MessageQueueService {
                 messagesAsXML = response.body().string();
                 return convertFromXmlToPortCall(messagesAsXML);
             } else {
-                return null;
+                return null; // TODO this is probably not good
             }
         } catch (IOException e) {
             throw new CouldNotReachPortCDM(e, "from MessageQueueService::getMqs(String, int)");

@@ -3,12 +3,16 @@ package softproject.services;
 import com.squareup.okhttp.*;
 import eu.portcdm.mb.dto.Filter;
 import eu.portcdm.mb.dto.FilterType;
-import eu.portcdm.messaging.PortCallMessage;
+import eu.portcdm.messaging.*;
 import softproject.services.exceptions.CouldNotReachPortCDM;
 import softproject.services.exceptions.IllegalFilters;
 
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 
 public class PortCDMRequest {
@@ -150,5 +154,37 @@ public class PortCDMRequest {
 //
 //
 //        return result;
+    }
+
+    public String sendMessage() {
+        Amss amss = new Amss(getClientInstance(), getBaseRequest());
+
+        PortCallMessage message = new PortCallMessage();
+        LocationState locationState = new LocationState();
+        LocationState.ArrivalLocation arrivalLocation = new LocationState.ArrivalLocation();
+        Location location = new Location();
+        location.setLocationType(LogicalLocation.BERTH);
+
+        message.setMessageId("urn:x-mrn:stm:portcdm:message:" + UUID.randomUUID().toString());
+        message.setVesselId("urn:x-mrn:stm:vessel:IMO:9398917");
+        message.setPortCallId("urn:x-mrn:stm:portcdm:port_call:SEGOT:ca1a795e-ee95-4c96-96d1-53896617c9ac");
+
+        locationState.setArrivalLocation(arrivalLocation);
+        locationState.setReferenceObject(LocationReferenceObject.VESSEL);
+        locationState.setTimeType(TimeType.ESTIMATED);
+        try {
+            locationState.setTime(DatatypeFactory.newInstance().newXMLGregorianCalendar(2017,05,01,12,00,00,00,0));
+        } catch (DatatypeConfigurationException e) {
+            e.printStackTrace();
+        }
+
+        arrivalLocation.setTo(location);
+
+
+        message.setLocationState(locationState);
+
+        amss.postStateUpdate(message);
+
+        return "";
     }
 }
