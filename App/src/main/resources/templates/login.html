@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>TerminalApp</title>
-    <link rel="stylesheet" type="text/css"  href="../static/css/login.css">
-    <link rel="stylesheet" type="text/css" href="../static/css/main.css">
+    <link rel="stylesheet" type="text/css"  href="/css/login.css">
+    <link rel="stylesheet" type="text/css" href="/css/main.css">
 </head>
 <body>
     <div class="div">
@@ -31,12 +31,13 @@
             </tr>
             <tr>
                 <td></td>
-                <td id="error">Invalid username or password</td>
+                <td id="error"></td>
             </tr>
         </table>
         <br>
-        <button id="login" class="button">Log in</button>
+        <button id="login" class="button" onclick="login()">Log in</button>
     </div>
+    <script src="/js/login.js"></script>
 </body>
 <footer>
     <p class="copyright" align="center">&copy; Copyright 2017 Billy Corgan Project.</p>
