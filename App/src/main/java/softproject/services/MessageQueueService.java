@@ -88,7 +88,7 @@ public class MessageQueueService {
                 messagesAsXML = response.body().string();
                 return convertFromXmlToPortCall(messagesAsXML);
             } else {
-                return null; // TODO this is probably not good
+                return null; // TODO this is probably not good, maybe return error instead?
             }
         } catch (IOException e) {
             throw new CouldNotReachPortCDM(e, "from MessageQueueService::getMqs(String, int)");

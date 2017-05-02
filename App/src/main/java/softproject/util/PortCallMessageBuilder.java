@@ -87,7 +87,25 @@ public class PortCallMessageBuilder {
         return this;
     }
 
-    // TODO behöver en serviceState metod som skapar en ny serviceState från basic värden
+    public PortCallMessageBuilder serviceState(Location location,
+                                               eu.portcdm.messaging.ServiceState.Between between,
+                                               String performingActor,
+                                               ServiceObject serviceObject,
+                                               XMLGregorianCalendar time,
+                                               ServiceTimeSequence serviceTimeSequence,
+                                               TimeType timeType
+                                               ) {
+        ServiceState serviceState = new ServiceState();
+        serviceState.setAt(location);
+        serviceState.setBetween(between);
+        serviceState.setPerformingActor(performingActor);
+        serviceState.setServiceObject(serviceObject);
+        serviceState.setTime(time);
+        serviceState.setTimeSequence(serviceTimeSequence);
+        serviceState.setTimeType(timeType);
+        this.message.setServiceState(serviceState);
+        return this;
+    }
 
     public PortCallMessageBuilder messageOperation(String operation) {
         MessageOperation op = new MessageOperation();
