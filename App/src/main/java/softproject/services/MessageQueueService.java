@@ -8,6 +8,7 @@ import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.squareup.okhttp.*;
 import eu.portcdm.mb.dto.Filter;
 import eu.portcdm.messaging.PortCallMessage;
+import softproject.services.exceptions.BadRequest;
 import softproject.services.exceptions.CouldNotReachPortCDM;
 import softproject.services.exceptions.IllegalFilters;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
@@ -33,7 +34,7 @@ public class MessageQueueService {
     }
 
     // Tries to create a queue using filters sent in as parameters
-    public String postMqs(List<Filter> filters) throws IllegalFilters, CouldNotReachPortCDM {
+    public String postMqs(List<Filter> filters) throws IllegalFilters, CouldNotReachPortCDM, BadRequest {
         RequestBody reqBody = createRequestBody(filters);
 
         Request request = this.baseRequest.newBuilder()
@@ -46,7 +47,7 @@ public class MessageQueueService {
             if(response.isSuccessful()) {
                 return response.body().string();
             } else {
-                return ""; // TODO this is probably not good!
+                throw new BadRequest(response.code());
             }
         } catch (IOException e) {
             throw new CouldNotReachPortCDM(e, "from MessageQueueService::postMqs(List<Filter>");
@@ -71,11 +72,11 @@ public class MessageQueueService {
         throw new NotImplementedException();
     }
 
-    public List<PortCallMessage> getMqs(String queue) throws CouldNotReachPortCDM {
+    public List<PortCallMessage> getMqs(String queue) throws CouldNotReachPortCDM, BadRequest {
         return getMqs(queue, 100);
     }
 
-    public List<PortCallMessage> getMqs(String queue, int limit) throws CouldNotReachPortCDM {
+    public List<PortCallMessage> getMqs(String queue, int limit) throws CouldNotReachPortCDM, BadRequest {
         Request request = this.baseRequest.newBuilder()
                 .url(this.baseRequest.urlString() + "/mqs/" + queue + "?count=" + limit)
                 .build();
@@ -88,7 +89,7 @@ public class MessageQueueService {
                 messagesAsXML = response.body().string();
                 return convertFromXmlToPortCall(messagesAsXML);
             } else {
-                return null; // TODO this is probably not good, maybe return error instead?
+                throw new BadRequest(response.code());
             }
         } catch (IOException e) {
             throw new CouldNotReachPortCDM(e, "from MessageQueueService::getMqs(String, int)");
