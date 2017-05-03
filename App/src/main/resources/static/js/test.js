@@ -1,3 +1,26 @@
+var queueId;
+$("#subscribe").on("click", function (e) {
+    $.ajax({
+        url: "http://localhost:8080/queue/subscribe",
+        context: document.body
+    }).done(function(data) {
+        $('#queueId').text(data)
+        queueId = $('#queueId').text();
+    });
+});
+
+$('#getNewMessages').on('click', function (e) {
+
+   $.ajax({
+       url: "http://localhost:8080/queue/" + queueId,
+       context: document.body
+   }).done(function(data) {
+       data.forEach(function (m){
+           $('#resultList').append("<li><span>" + m.messageId + "," + m.vesselId + "</span></li>");
+       });
+    });
+});
+
 window.onload = function () {
 
   }
