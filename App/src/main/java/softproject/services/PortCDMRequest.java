@@ -23,14 +23,14 @@ public class PortCDMRequest {
     private static Request baseRequest = null;
 
     public static OkHttpClient getClientInstance() {
-        if(clientInstance == null)
+        if (clientInstance == null)
             clientInstance = new OkHttpClient();
 
         return clientInstance;
     }
 
     public static Request getBaseRequest() {
-        if(baseRequest == null) {
+        if (baseRequest == null) {
             baseRequest = new Request.Builder()
                     .header("X-PortCDM-UserId", "porter")
                     .header("X-PortCDM-Password", "porter")
@@ -85,7 +85,7 @@ public class PortCDMRequest {
 
         XMLGregorianCalendar time = null;
         try {
-            time =DatatypeFactory.newInstance().newXMLGregorianCalendar(2017, 05, 01, 12, 00, 00, 00, 0);
+            time = DatatypeFactory.newInstance().newXMLGregorianCalendar(2017, 05, 01, 12, 00, 00, 00, 0);
         } catch (DatatypeConfigurationException e) {
             e.printStackTrace();
         }
@@ -101,7 +101,7 @@ public class PortCDMRequest {
                 .locationState(LocationReferenceObject.VESSEL, TimeType.RECOMMENDED, time, arrivalLocation, null)
                 .build();
 
-        if(message != null)
+        if (message != null)
             amss.postStateUpdate(message);
         return "";
     }
@@ -141,7 +141,7 @@ public class PortCDMRequest {
 
         XMLGregorianCalendar time = null;
         try {
-            time =DatatypeFactory.newInstance().newXMLGregorianCalendar(2017, 05, 01, 12, 00, 00, 00, 0);
+            time = DatatypeFactory.newInstance().newXMLGregorianCalendar(2017, 05, 01, 12, 00, 00, 00, 0);
         } catch (DatatypeConfigurationException e) {
             e.printStackTrace();
         }
@@ -188,7 +188,7 @@ public class PortCDMRequest {
         return queueId;
     }
 
-    public List<PortCallMessage> getNewMessages(String queueId){
+    public List<PortCallMessage> getNewMessages(String queueId) {
         List<PortCallMessage> messages = null;
         MessageQueueService queueService = new MessageQueueService(getClientInstance(), getBaseRequest());
         try {
@@ -198,6 +198,16 @@ public class PortCDMRequest {
         } catch (BadRequest badRequest) {
             badRequest.printStackTrace();
         }
+
+        //Filtrera ut alla meddeleanden för kaj 520
+       /* List<PortCallMessage> ourMessages = new ArrayList<>();
+        for (PortCallMessage message : messages) {
+            ServiceState state = message.getServiceState();
+            String name = state.getBetween().getTo().getName();
+            if (name.contains("520")) {
+                ourMessages.add(message);
+            }
+        }*/
 
         return messages;
     }
