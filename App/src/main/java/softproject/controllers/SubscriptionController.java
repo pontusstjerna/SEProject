@@ -1,11 +1,21 @@
 package softproject.controllers;
 
+import eu.portcdm.messaging.PortCallMessage;
 import org.springframework.web.bind.annotation.*;
 import softproject.services.PortCDMRequest;
+
+import java.util.List;
 
 
 @RestController
 public class SubscriptionController {
+
+    @GetMapping("/queue/subscribe")
+    public String getQueueId(){
+        PortCDMRequest portCDMRequest = new PortCDMRequest();
+
+        return portCDMRequest.subscribe();
+    }
 
     @GetMapping("/ship/subscribe")
     public String subscribe() {
@@ -16,12 +26,9 @@ public class SubscriptionController {
     }
 
     @GetMapping("/queue/{queueId}")
-    public String viewQueue(@PathVariable String queueId) {
+    public List<PortCallMessage> viewQueue(@PathVariable String queueId) {
         PortCDMRequest req = new PortCDMRequest();
-        String result = req.getNewMessages(queueId);
-
-        System.out.println(result);
-
+        List<PortCallMessage> result = req.getNewMessages(queueId);
         return result;
     }
 

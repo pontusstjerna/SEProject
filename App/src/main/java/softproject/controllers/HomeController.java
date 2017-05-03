@@ -17,8 +17,7 @@ public class HomeController {
     @GetMapping("/")
     public String index() {
         PortCDMRequest req = new PortCDMRequest();
-
-        req.fixSubscription();
+        req.subscribe();
         return "index";
     }
 }
