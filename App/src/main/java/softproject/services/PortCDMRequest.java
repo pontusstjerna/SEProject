@@ -104,4 +104,142 @@ public class PortCDMRequest {
             amss.postStateUpdate(message);
         return "";
     }
+
+    public String fixSubscription() {
+        Filter filter1 = new Filter();
+        filter1.setType(FilterType.SERVICE_STATE_LOCATION_TYPE);
+        filter1.setElement("BERTH");
+
+
+        Filter filter2 = new Filter();
+        filter2.setType(FilterType.VESSEL);
+        filter2.setElement("urn:x-mrn:stm:vessel:IMO:9398917");
+
+        MessageQueueService queueService = new MessageQueueService(getClientInstance(), getBaseRequest());
+        Amss amss = new Amss(getClientInstance(), getBaseRequest());
+
+        String queueId = "";
+        try {
+            queueId = queueService.postMqs(Arrays.asList(filter1, filter2));
+        } catch (IllegalFilters illegalFilters) {
+            illegalFilters.printStackTrace();
+        } catch (CouldNotReachPortCDM couldNotReachPortCDM) {
+            couldNotReachPortCDM.printStackTrace();
+        } catch (BadRequest badRequest) {
+            badRequest.printStackTrace();
+        }
+
+        List<PortCallMessage> messages = null;
+        try {
+            messages = queueService.getMqs(queueId);
+        } catch (CouldNotReachPortCDM couldNotReachPortCDM) {
+            couldNotReachPortCDM.printStackTrace();
+        } catch (BadRequest badRequest) {
+            badRequest.printStackTrace();
+        }
+
+        messages.stream().forEach(m -> System.out.println(m));
+
+        XMLGregorianCalendar time = null;
+        try {
+            time =DatatypeFactory.newInstance().newXMLGregorianCalendar(2017, 05, 01, 12, 00, 00, 00, 0);
+        } catch (DatatypeConfigurationException e) {
+            e.printStackTrace();
+        }
+
+        ServiceState serviceState = new ServiceState();
+        serviceState.setServiceObject(ServiceObject.ARRIVAL_BERTH);
+        serviceState.setTimeSequence(ServiceTimeSequence.CONFIRMED);
+        serviceState.setTimeType(TimeType.ESTIMATED);
+        serviceState.setTime(time);
+
+        Location location = new Location();
+        location.setLocationType(LogicalLocation.BERTH);
+
+        serviceState.setAt(location);
+
+//        LocationState.ArrivalLocation arrivalLocation = new LocationState.ArrivalLocation();
+//        arrivalLocation.setTo(location);
+
+        PortCallMessage newMessage = PortCallMessageBuilder.newBuilder()
+                .vesselId("urn:x-mrn:stm:vessel:IMO:9398917")
+                .portCallId("urn:x-mrn:stm:portcdm:port_call:SEGOT:ca1a795e-ee95-4c96-96d1-53896617c9ac")
+                .serviceState(serviceState)
+//                .locationState(LocationReferenceObject.VESSEL,
+//                        TimeType.ESTIMATED,
+//                        time,
+//                        arrivalLocation,
+//                        null)
+                .build();
+
+        PortCallMessage newMessage2 = PortCallMessageBuilder.newBuilder()
+                .vesselId("urn:x-mrn:stm:vessel:IMO:9398910")
+                .portCallId("urn:x-mrn:stm:portcdm:port_call:SEGOT:ca1a795e-ee95-4c96-96d1-53896617c9ac")
+                .serviceState(serviceState)
+//                .locationState(LocationReferenceObject.VESSEL,
+//                        TimeType.ESTIMATED,
+//                        time,
+//                        arrivalLocation,
+//                        null)
+                .build();
+
+        amss.postStateUpdate(newMessage);
+        amss.postStateUpdate(newMessage2);
+
+        try {
+            messages = queueService.getMqs(queueId);
+        } catch (CouldNotReachPortCDM couldNotReachPortCDM) {
+            couldNotReachPortCDM.printStackTrace();
+        } catch (BadRequest badRequest) {
+            badRequest.printStackTrace();
+        }
+
+        messages.stream().forEach(m -> System.out.println(m));
+
+        return "";
+    }
+
+//    private String apa() {
+//        for ( QueueFilter filter : collect ) {
+//            Predicate innerPredicate;
+//            switch ( filter.getType() ) {
+//                case VESSEL:
+//                    innerPredicate = builder.equal( join.get( "vesselId" ), filter.getElement() );
+//                    break;
+//                case PORT_CALL:
+//                    innerPredicate = builder.equal( join.get( "portCallId" ), filter.getElement() );
+//                    break;
+//                case TIME_TYPE:
+//                    TimeType timeType = TimeType.valueOf( filter.getElement() );
+//                    innerPredicate = builder.or( builder.equal( join.get( "locationState" ).get( "timeType" ), timeType ), builder.equal( join.get( "serviceState" ).get( "timeType" ), timeType ) );
+//                    break;
+//                case REFERENCE_OBJECT:
+//                    innerPredicate = builder.equal( join.get( "locationState" ).get( "referenceObject" ), LocationReferenceObject.valueOf( filter.getElement() ) );
+//                    break;
+//                case TIME_SEQUENCE:
+//                    innerPredicate = builder.equal( join.get( "serviceState" ).get( "timeSequence" ), ServiceTimeSequence.valueOf( filter.getElement() ) );
+//                    break;
+//                case LOCATION_TYPE:
+//                    LogicalLocation locationType = LogicalLocation.valueOf( filter.getElement() );
+//                    innerPredicate = builder.or(
+//                            builder.equal( join.get( "serviceState" ).get( "at" ).get( "locationType" ), locationType ),
+//                            builder.equal( join.get( "serviceState" ).get( "between" ).get( "to" ).get( "locationType" ), locationType ),
+//                            builder.equal( join.get( "serviceState" ).get( "between" ).get( "from" ).get( "locationType" ), locationType ),
+//                            builder.equal( join.get( "locationState" ).get( "arrivalLocation" ).get( "to" ).get( "locationType" ), locationType ),
+//                            builder.equal( join.get( "locationState" ).get( "arrivalLocation" ).get( "from" ).get( "locationType" ), locationType ),
+//                            builder.equal( join.get( "locationState" ).get( "departureLocation" ).get( "to" ).get( "locationType" ), locationType ),
+//                            builder.equal( join.get( "locationState" ).get( "departureLocation" ).get( "from" ).get( "locationType" ), locationType )
+//                    );
+//                    break;
+//                default:
+//                    continue;
+//            }
+//
+//            if ( predicateTMP == null )
+//                predicateTMP = innerPredicate;
+//            else
+//                predicateTMP = builder.or( predicateTMP, innerPredicate );
+//        }
+//    }
+
 }
