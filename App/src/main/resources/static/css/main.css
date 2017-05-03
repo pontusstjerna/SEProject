@@ -13,6 +13,17 @@ body {
   color:black;
 }
 
+.button{
+  background-color: #99ccff;
+  border: 0;
+  font-size: 1.2em; 
+  transition: 0.2s all;
+}
+
+.button:hover{
+  background-color: #1a8cff;
+}
+
 .copyright{
   font-size: 70%;
 }
