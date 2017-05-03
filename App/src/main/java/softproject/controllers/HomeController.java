@@ -26,10 +26,11 @@ public class HomeController {
         String username = requestParams.get("user");
         String password = requestParams.get("password");
 
-        if (username != null && password != null && username.equals("potatis") && password.equals("kakor"))
+        if (username != null && password != null && username.equals("potatis") && password.equals("kakor")) {
             PortCDMRequest req = new PortCDMRequest();
             req.subscribe();
             return "index";
+        }
         else return "login";
     }
 }
