@@ -200,17 +200,22 @@ public class PortCDMRequest {
         }
 
         //Filtrera ut alla meddeleanden för kaj 520
-       /* List<PortCallMessage> ourMessages = new ArrayList<>();
-        for (PortCallMessage message : messages) {
-            ServiceState state = message.getServiceState();
-            String name = state.getBetween().getTo().getName();
-            if (name.contains("520")) {
-                ourMessages.add(message);
-            }
-        }*/
+        messages.stream().forEach(m->filterBerth(m));
 
         return messages;
     }
+
+    public List<PortCallMessage> filterBerth(PortCallMessage message){
+        List<PortCallMessage> ourMessages = new ArrayList<>();
+
+        ServiceState state = message.getServiceState();
+        String name = state.getBetween().getTo().getName();
+        if (name.contains("520")) {
+            ourMessages.add(message);
+        }
+        return ourMessages;
+    }
+
 
 //    private String apa() {
 //        for ( QueueFilter filter : collect ) {
