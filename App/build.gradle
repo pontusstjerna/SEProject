@@ -17,12 +17,28 @@ apply plugin: 'org.springframework.boot'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = 1.8
 
+configurations.all {
+	resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+}
+
 repositories {
 	mavenCentral()
+	maven {
+		url "http://brink.viktoria.chalmers.se/nexus/content/repositories/monalisa-viktoria-snapshots"
+	}
+	maven {
+		url "http://brink.viktoria.chalmers.se/nexus/content/repositories/monalisa-viktoria"
+	}
 }
 
 
 dependencies {
+//	compile group: 'com.fasterxml.jackson.module', name: 'jackson-module-jaxb-annotations', version: '2.1.4'
+	compile('com.fasterxml.jackson.module:jackson-module-jaxb-annotations')
+    compile('com.fasterxml.jackson.dataformat:jackson-dataformat-xml')
+//	compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.0.pr2'
+	compile('eu.portcdm:message-broker-dto:1.5-SNAPSHOT')
+	compile("org.springframework.boot:spring-boot-devtools")
 	//compile('org.springframework.boot:spring-boot-starter-data-jpa')
 	//compile('org.springframework.boot:spring-boot-starter-jooq')
 	compile('org.springframework.boot:spring-boot-starter-mustache')
@@ -30,4 +46,5 @@ dependencies {
 	// runtime('org.postgresql:postgresql')
 	compileOnly('org.projectlombok:lombok')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
+
 }
