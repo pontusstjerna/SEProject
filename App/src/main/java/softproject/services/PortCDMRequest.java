@@ -200,20 +200,10 @@ public class PortCDMRequest {
         }
 
         //Filtrera ut alla meddeleanden för kaj 520
-        messages.stream().forEach(m->filterBerth(m));
-
+        messages.stream()
+                .filter(m->m.getServiceState().getBetween().getTo().getName().contains("520"));
+        
         return messages;
-    }
-
-    public List<PortCallMessage> filterBerth(PortCallMessage message){
-        List<PortCallMessage> ourMessages = new ArrayList<>();
-
-        ServiceState state = message.getServiceState();
-        String name = state.getBetween().getTo().getName();
-        if (name.contains("520")) {
-            ourMessages.add(message);
-        }
-        return ourMessages;
     }
 
 
