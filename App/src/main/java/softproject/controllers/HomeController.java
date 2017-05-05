@@ -33,4 +33,9 @@ public class HomeController {
         }
         else return "login";
     }
+
+    @GetMapping("/portcallx")
+    public String portcall(){
+        return "portcallView";
+    }
 }
