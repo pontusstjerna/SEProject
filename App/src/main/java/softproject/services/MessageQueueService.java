@@ -11,7 +11,6 @@ import eu.portcdm.messaging.PortCallMessage;
 import softproject.services.exceptions.BadRequest;
 import softproject.services.exceptions.CouldNotReachPortCDM;
 import softproject.services.exceptions.IllegalFilters;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.io.IOException;
 import java.util.List;
@@ -69,7 +68,7 @@ public class MessageQueueService {
     }
 
     public void putMqs(String queue, List<Filter> filters) {
-        throw new NotImplementedException();
+        throw new UnsupportedOperationException();
     }
 
     public List<PortCallMessage> getMqs(String queue) throws CouldNotReachPortCDM, BadRequest {
