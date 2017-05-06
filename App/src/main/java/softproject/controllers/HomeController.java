@@ -33,4 +33,9 @@ public class HomeController {
         }
         else return "login";
     }
+
+    @GetMapping("/unscheduled")
+    public String getUnscheduled() {
+        return "unscheduled";
+    }
 }

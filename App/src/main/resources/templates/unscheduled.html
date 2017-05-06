@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Unscheduled portcalls</title>
+    <link href="/css/unscheduled.css" rel="stylesheet" />
+    <script
+            src="https://code.jquery.com/jquery-2.2.4.js"
+            integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="
+            crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="unscheduled-container centered">
+    <h1>Unscheduled portcalls</h1>
+    <button id="add-portcall-button">Add Portcall</button>
+
+
+    <div class="add-portcall-input hidden">
+        <form id="add-portcall-form">
+            <label for="cargo-in-input">Cargo in:</label>
+            <input id="cargo-in-input" type="text" />
+            <label for="cargo-out-input">Cargo out:</label>
+            <input id="cargo-out-input" type="text" />
+            <button id="submit-button">Submit</button>
+        </form>
+    </div>
+
+</div>
+<script src="/js/unscheduled.js"></script>
+</body>
+</html>

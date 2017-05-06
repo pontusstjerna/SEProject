@@ -1,0 +1,26 @@
+.centered {
+    margin: auto;
+    width: 70%;
+    text-align: center;
+}
+
+.hidden {
+    display: none;
+}
+
+#add-portcall-form {
+    text-align: center;
+}
+
+#add-portcall-form label{
+    display: inline-block;
+    text-align: right;
+    float: left;
+    clear: left;
+
+}
+
+#add-portcall-form input {
+    display: inline-block;
+    float: left;
+}
