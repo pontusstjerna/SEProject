@@ -1,9 +1,11 @@
 .centered {
     margin: auto;
-    width: 70%;
     text-align: center;
 }
 
+.unscheduled-container {
+    width: 70%;
+}
 .hidden {
     display: none;
 }
@@ -17,10 +19,10 @@
     text-align: right;
     float: left;
     clear: left;
-
 }
 
 #add-portcall-form input {
+    width: auto;
     display: inline-block;
     float: left;
 }
