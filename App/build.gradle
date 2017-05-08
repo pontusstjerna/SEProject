@@ -35,6 +35,7 @@ repositories {
 dependencies {
 //	compile group: 'com.fasterxml.jackson.module', name: 'jackson-module-jaxb-annotations', version: '2.1.4'
 	compile('com.fasterxml.jackson.module:jackson-module-jaxb-annotations')
+	compile('org.springframework.boot:spring-boot-devtools')
     compile('com.fasterxml.jackson.dataformat:jackson-dataformat-xml')
 //	compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.0.pr2'
 	compile('eu.portcdm:message-broker-dto:1.5-SNAPSHOT')
@@ -48,3 +49,5 @@ dependencies {
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 
 }
+
+

@@ -1,23 +1,18 @@
-var addPortcallButton = $('#add-portcall-button');
-// var submitPortcall = $('#submit-portcall-button');
+var addPortCallButton = $('#add-portcall-button');
 var addPortCallForm = $('.add-portcall-input');
 
-addPortcallButton.on('click', function () {
+addPortCallButton.on('click', function () {
     addPortCallForm.removeClass('hidden');
 });
 
 addPortCallForm.on('submit', function(){
-    var cargoInVal = $('#cargo-in-input').val();
-    var cargoOutVal = $('#cargo-out-input').val();
+    // var cargoInVal = $('#cargo-in-input').val();
+    // var cargoOutVal = $('#cargo-out-input').val();
 
     var newPortCall = {
-        cargoIn : cargoInVal,
-        cargoOut : cargoOutVal
+        cargoIn : $('#cargo-in-input').val(),
+        cargoOut : $('#cargo-out-input').val()
     };
-
-    // $.post('http://locahost:8080/portcalls/add', newPortCall, function () {
-    //     alert("Portcall sent");
-    // });
 
     $.ajax({
         url: 'http://localhost:8080/portcalls/add',
@@ -26,5 +21,6 @@ addPortCallForm.on('submit', function(){
         data: JSON.stringify(newPortCall),
         dataType: 'json'
     });
+    
     return false;
 });
