@@ -1,8 +1,31 @@
-var dummyMessage = "<div class=\"portcallmessage\>\n" + 
-          "<h4>07:32 Tug boat</h4>\n" +
-          "<b>Message: </b>\n" +
-          "<span>New ETA 08:23... more stuff here</span>\n" +
-    "</div>\n";
+var queueId;
+
+//Start subscription by getting a queueID
+window.onload = function () {
+    function startSubscription() {
+        $.ajax({
+            url: "http://localhost:8080/queue/subscribe",
+            context: document.body
+        }).done(function(data) { //When response is recieved
+            $('#queueId').text(data)
+            queueId = $('#queueId').text();
+        });
+    }
+
+    //Look for new messages every 10 seconds
+    setInterval(getNewMessages, 10000);
+}
+
+function getNewMessages(){
+   $.ajax({
+       url: "http://localhost:8080/queue/" + queueId,
+       context: document.body
+   }).done(function(data) {
+       data.forEach(function (m){
+        $("#portcallmessages").prepend(getMessageContainer(m.portCallId + " 05:23:" + new Date().getSeconds(),m.comment));
+       });
+    });
+}
 
 function addTestMessage(){
     $("#portcallmessages").prepend(getMessageContainer("Tug 05:23:" + new Date().getSeconds(),"New ETB 22:12."));
