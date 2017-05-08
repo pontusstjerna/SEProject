@@ -1,13 +1,14 @@
 package softproject.model;
 
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class PortCall {
+public class PortCall implements Serializable{
 
     private static int portCallCount = 0;
 
-    private int id;
+    private long internalId;
     private String comment;
     private String cargoIn;
     private String cargoOut;
@@ -16,11 +17,11 @@ public class PortCall {
 
     public PortCall() {
         portCallCount++;
-        id = portCallCount;
+        internalId = portCallCount;
     }
 
-    public int getId(){
-        return id;
+    public long getInternalId(){
+        return internalId;
     }
 
     public static int getPortCallCount() {

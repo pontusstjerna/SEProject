@@ -21,6 +21,6 @@ addPortCallForm.on('submit', function(){
         data: JSON.stringify(newPortCall),
         dataType: 'json'
     });
-    
+
     return false;
 });
