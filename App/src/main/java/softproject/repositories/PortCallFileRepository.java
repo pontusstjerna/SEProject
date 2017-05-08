@@ -3,6 +3,7 @@ package softproject.repositories;
 import softproject.model.PortCall;
 import softproject.model.PortCallRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -13,7 +14,7 @@ public class PortCallFileRepository implements PortCallRepository {
     List<PortCall> portcalls;
 
     public PortCallFileRepository() {
-        portcalls = readPortCallsFromFile();
+        portcalls = new ArrayList<>();
     }
 
 

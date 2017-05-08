@@ -19,7 +19,9 @@ public class PortCallController {
 
     @PostMapping("/portcalls/add")
     public void addPortCall(@RequestBody PortCall newPortCall) {
-        System.out.println(newPortCall);
+        PortCallRepository
+                .getRepo()
+                .add(newPortCall);
     }
 
     @GetMapping("/portcalls")
