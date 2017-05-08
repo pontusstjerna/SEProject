@@ -10,6 +10,14 @@
     display: none;
 }
 
+ul {
+    list-style-type: none;
+}
+
+li {
+    border: 1px solid black;
+}
+
 #add-portcall-form {
     text-align: center;
 }
