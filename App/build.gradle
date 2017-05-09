@@ -34,6 +34,7 @@ repositories {
 
 dependencies {
 //	compile group: 'com.fasterxml.jackson.module', name: 'jackson-module-jaxb-annotations', version: '2.1.4'
+	compile('com.fasterxml.jackson.datatype:jackson-datatype-jsr310')
 	compile('com.fasterxml.jackson.module:jackson-module-jaxb-annotations')
 	compile('org.springframework.boot:spring-boot-devtools')
     compile('com.fasterxml.jackson.dataformat:jackson-dataformat-xml')

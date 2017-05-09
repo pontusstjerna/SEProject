@@ -1,5 +1,6 @@
 package softproject.controllers;
 
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,9 +20,7 @@ public class PortCallController {
 
     @PostMapping("/portcalls/add")
     public void addPortCall(@RequestBody PortCall newPortCall) {
-        PortCallRepository
-                .getRepo()
-                .add(newPortCall);
+        PortCallRepository.getRepo().add(newPortCall);
     }
 
     @GetMapping("/portcalls")

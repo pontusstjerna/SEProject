@@ -2,7 +2,7 @@ package softproject.model;
 
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 public class PortCall implements Serializable{
 
@@ -12,8 +12,11 @@ public class PortCall implements Serializable{
     private String comment;
     private String cargoIn;
     private String cargoOut;
-    private LocalDateTime laycanStart;
-    private LocalDateTime laycanEnd;
+    private String name;
+    private String vesselId;
+    private String portcallId;
+    private ZonedDateTime laycanStart;
+    private ZonedDateTime laycanEnd;
 
     public PortCall() {
         portCallCount++;
@@ -24,13 +27,6 @@ public class PortCall implements Serializable{
         return internalId;
     }
 
-    public static int getPortCallCount() {
-        return portCallCount;
-    }
-
-    public static void setPortCallCount(int portCallCount) {
-        PortCall.portCallCount = portCallCount;
-    }
 
     public String getCargoIn() {
         return cargoIn;
@@ -48,19 +44,19 @@ public class PortCall implements Serializable{
         this.cargoOut = cargoOut;
     }
 
-    public LocalDateTime getLaycanStart() {
+    public ZonedDateTime getLaycanStart() {
         return laycanStart;
     }
 
-    public void setLaycanStart(LocalDateTime laycanStart) {
+    public void setLaycanStart(ZonedDateTime laycanStart) {
         this.laycanStart = laycanStart;
     }
 
-    public LocalDateTime getLaycanEnd() {
+    public ZonedDateTime getLaycanEnd() {
         return laycanEnd;
     }
 
-    public void setLaycanEnd(LocalDateTime laycanEnd) {
+    public void setLaycanEnd(ZonedDateTime laycanEnd) {
         this.laycanEnd = laycanEnd;
     }
 
@@ -70,5 +66,29 @@ public class PortCall implements Serializable{
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getVesselId() {
+        return vesselId;
+    }
+
+    public void setVesselId(String vesselId) {
+        this.vesselId = vesselId;
+    }
+
+    public String getPortcallId() {
+        return portcallId;
+    }
+
+    public void setPortcallId(String portcallId) {
+        this.portcallId = portcallId;
     }
 }

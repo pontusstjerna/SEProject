@@ -10,27 +10,33 @@
     display: none;
 }
 
-ul {
-    list-style-type: none;
+.add-portcall-input fieldset {
+    margin: 1.5em 0 0 0;
+    padding: 0;
 }
 
-li {
-    border: 1px solid black;
+.add-portcall-input fieldset ol {
+    padding: 1em 1em 0 1em;
+    list-style: none;
+}
+
+.add-portcall-input li {
+    padding-bottom: 1em;
 }
 
 #add-portcall-form {
     text-align: center;
 }
 
-#add-portcall-form label{
-    display: inline-block;
-    text-align: right;
-    float: left;
-    clear: left;
-}
+/*#add-portcall-form label{*/
+    /*display: inline-block;*/
+    /*text-align: right;*/
+    /*float: left;*/
+    /*clear: left;*/
+/*}*/
 
-#add-portcall-form input {
-    width: auto;
-    display: inline-block;
-    float: left;
-}
+/*#add-portcall-form input {*/
+    /*width: auto;*/
+    /*display: inline-block;*/
+    /*float: left;*/
+/*}*/
