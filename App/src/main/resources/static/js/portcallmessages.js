@@ -1,5 +1,5 @@
 var queueId;
-var portCallId = "urn:x-mrn:stm:portcdm:port_call:SEGOT:ca1a795e-ee95-4c96-96d1-53896617c9ac"
+var portCallId = "urn:x-mrn:stm:portcdm:port_call:SEGOT:ca1a795e-ee95-4c96-96d1-53896617c9ac";
 
 //Start subscription by getting a queueID
 window.onload = function () {
@@ -12,7 +12,7 @@ window.onload = function () {
 
     //Look for new messages every 10 seconds
     setInterval(getNewMessages, 10000);
-}
+};
 
 function getNewMessages(){
    $.ajax({
@@ -49,6 +49,7 @@ function getMessageContainer(timeReceived, sender, timeType, serviceObject, time
 }
 
 function getCurrentDate(){
-    var currentDate = new Date();
-    return currentDate.getFullYear() + "-" + currentDate.getMonth() + "-" + currentDate.getDate() + " " + currentDate.getHours() + ":" + currentDate.getMinutes() + ":" + currentDate.getSeconds();
+    var currentDate = new Date(new Date().getTime() - new Date().getTimezoneOffset()*60*1000).toISOString().substr(0,19).replace('T', ' ');
+                                //getFullYear() + "-" + currentDate.getMonth() + "-" + currentDate.getDate() + " " + currentDate.getHours() + ":" + currentDate.getMinutes() + ":" + currentDate.getSeconds();
+    return currentDate;
 }
