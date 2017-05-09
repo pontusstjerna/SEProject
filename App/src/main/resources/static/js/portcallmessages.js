@@ -34,12 +34,12 @@ function getMessageContainer(timeReceived, sender, timeType, serviceObject, time
     var container = document.createElement("div");
     container.classList.add("portcallmessage");
     var header = document.createElement("b");
-    var headerText = document.createTextNode(timeReceived + " from " + sender);
+    var headerText = document.createTextNode("Posted at " + timeReceived + " by " + sender);
     header.appendChild(headerText);
     container.appendChild(header);
 
     var typeAndObject = document.createTextNode("New " + timeType.toLowerCase() + " " + serviceObject.toLowerCase());
-    var newTime = document.createTextNode(time);
+    var newTime = document.createTextNode(new Date(time).toISOString().substr(0,19).replace('T', ' '));
     container.appendChild(document.createElement("br"));
     container.appendChild(typeAndObject);
     container.appendChild(document.createElement("br"));
