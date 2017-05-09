@@ -1,3 +1,7 @@
+* {
+    font-family: 'Hind', sans-serif;
+}
+
 .centered {
     margin: auto;
     text-align: center;
@@ -8,6 +12,9 @@
 }
 .hidden {
     display: none;
+}
+.add-portcall-input {
+    max-width: 640px;
 }
 
 .add-portcall-input fieldset {
@@ -27,6 +34,18 @@
 #add-portcall-form {
     text-align: center;
 }
+
+#list-of-portcalls {
+    list-style: none;
+    margin-top: 2px;
+}
+
+#list-of-portcalls .show-info-li {
+    border: 1px solid black;
+    margin-bottom: 10px;
+
+}
+
 
 /*#add-portcall-form label{*/
     /*display: inline-block;*/

@@ -20,6 +20,8 @@ public class PortCallController {
 
     @PostMapping("/portcalls/add")
     public void addPortCall(@RequestBody PortCall newPortCall) {
+        System.out.println(newPortCall.getLaycanStart());
+        System.out.println(newPortCall.getLaycanEnd());
         PortCallRepository.getRepo().add(newPortCall);
     }
 
@@ -27,5 +29,6 @@ public class PortCallController {
     public List<PortCall> getAllPortCalls() {
         return PortCallRepository.getRepo().getAll();
     }
+
 
 }

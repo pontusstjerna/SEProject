@@ -8,6 +8,7 @@
             src="https://code.jquery.com/jquery-2.2.4.js"
             integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="
             crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css?family=Hind" rel="stylesheet">
 </head>
 <body>
 <div class="unscheduled-container centered">
@@ -15,17 +16,17 @@
     <button id="add-portcall-button">Add Portcall</button>
 
 
-    <div class="add-portcall-input hidden">
+    <div class="add-portcall-input hidden centered">
         <form id="add-portcall-form">
             <fieldset>
                 <legend>Mandatory</legend>
                 <ol>
                     <li>
-                        <label for="cargo-in-input">Cargo in:</label>
+                        <label for="cargo-in-input">Load Cargo:</label>
                         <input id="cargo-in-input" type="text" class="text"/>
                     </li>
                     <li>
-                        <label for="cargo-out-input">Cargo out:</label>
+                        <label for="cargo-out-input">Unload Cargo:</label>
                         <input id="cargo-out-input" type="text" class="text"/>
                     </li>
                     <li>
@@ -70,9 +71,34 @@
     </div>
 
     <div class="centered">
-        <h2>Portcalls: </h2>
-        <button id="load-port-calls">Load Port Calls</button>
-        <ul id="list-of-portcalls"></ul>
+        <h2>Incomming Portcalls: </h2>
+        <!--<button id="load-port-calls">Load Port Calls</button>-->
+        <ul id="list-of-portcalls">
+            <!--<li class="show-info-li">-->
+                <!--<div>Cargo to load: Oil, 5000 barrels</div>-->
+                <!--<div>Cargo to unload: nothing</div>-->
+                <!--<div>Laycan: 2017-03-12 13:00 to 2017-04-10 15:00</div>-->
+                <!--<div>Name: johans portcall</div>-->
+                <!--<div>Vessel ID: xrnf:fgfdfg:fdgfggvfd:122334</div>-->
+                <!--<div>Portcall id: x-rnf:dfgsdf:gfdsgds:224555-5gggfgftr-54545353-bhghtt</div>-->
+            <!--</li>-->
+            <!--<li class="show-info-li">-->
+                <!--<div>Cargo to load: Oil, 5000 barrels</div>-->
+                <!--<div>Cargo to unload: nothing</div>-->
+                <!--<div>Laycan: 2017-03-12 13:00 to 2017-04-10 15:00</div>-->
+                <!--<div>Name: johans portcall</div>-->
+                <!--<div>Vessel ID: xrnf:fgfdfg:fdgfggvfd:122334</div>-->
+                <!--<div>Portcall id: x-rnf:dfgsdf:gfdsgds:224555-5gggfgftr-54545353-bhghtt</div>-->
+            <!--</li>-->
+        </ul>
+        <!--cargoIn : cargoInInput.val(),-->
+        <!--cargoOut : cargoOutInput.val(),-->
+        <!--laycanStart : laycanStart,-->
+        <!--laycanEnd : laycanEnd,-->
+        <!--name : nameInput.val(),-->
+        <!--vesselId : vesselIdInput.val(),-->
+        <!--portcallId : portcallIdInput.val()-->
+
     </div>
 
 </div>

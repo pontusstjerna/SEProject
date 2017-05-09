@@ -1,6 +1,8 @@
 package softproject.model;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 
@@ -44,6 +46,7 @@ public class PortCall implements Serializable{
         this.cargoOut = cargoOut;
     }
 
+    @JsonFormat (shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd'T'HH:mmz")
     public ZonedDateTime getLaycanStart() {
         return laycanStart;
     }
@@ -52,6 +55,7 @@ public class PortCall implements Serializable{
         this.laycanStart = laycanStart;
     }
 
+    @JsonFormat (shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd'T'HH:mmz")
     public ZonedDateTime getLaycanEnd() {
         return laycanEnd;
     }

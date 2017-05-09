@@ -64,14 +64,14 @@ public class PortCallFileRepository implements PortCallRepository {
 
     // reads the portcalls contained in resources\files\portcallstorage.data
     private List<PortCall> readPortCallsFromFile() {
-        List<PortCall> newPortCalls = null;
+        List<PortCall> newPortCalls;
 
-        FileInputStream fileIn = null;
-        ObjectInputStream objectIn = null;
+        FileInputStream fileIn;
+        ObjectInputStream objectIn;
         try {
             File file = new File(FILE_PATH);
             if(!file.exists()) {
-                file.createNewFile();
+                return new ArrayList<PortCall>();
             }
 
             fileIn = new FileInputStream(file);
@@ -87,8 +87,6 @@ public class PortCallFileRepository implements PortCallRepository {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
-        } finally {
-
         }
 
         return new ArrayList<PortCall>();

@@ -1,5 +1,9 @@
-var baseURL = 'http://localhost:8080/'
+var baseURL = 'http://localhost:8080/';
 
+// How often we should poll the backend for new portcalls, in milliseconds
+var pollingFrequency = 10000;
+
+// Things we are interested in from HTML
 var addPortCallButton = $('#add-portcall-button');
 var addPortCallForm = $('.add-portcall-input');
 var portCallList = $('#list-of-portcalls');
@@ -10,20 +14,36 @@ var laycanStartTimeInput = $('#laycan-start-picker-time');
 var laycanEndDateInput = $('#laycan-end-picker-date');
 var laycanEndTimeInput = $('#laycan-end-picker-time');
 var nameInput = $('#name-input');
-var vesselIdInput = $('#name-input');
+var vesselIdInput = $('#vesselId-input');
 var portcallIdInput = $('#portcall-id-input');
+var cancelButton = $('#clear-new-portcall-button');
 
 
-$('#load-port-calls').on('click',getAllPortCalls);
+// $('#load-port-calls').on('click',getAllPortCalls);
 
 addPortCallButton.on('click', function () {
-    addPortCallForm.removeClass('hidden');
+    // addPortCallForm.removeClass('hidden');
+    addPortCallForm.toggleClass('hidden');
+    if(addPortCallButton.text() === 'Add Portcall') {
+        addPortCallButton.text('Cancel');
+        cargoInInput.focus();
+    } else {
+        addPortCallButton.text('Add Portcall')
+    }
+});
+
+cancelButton.on('click',function(){
+   clearAllInputs();
+   addPortCallForm.addClass('hidden');
 });
 
 addPortCallForm.on('submit', function(){
 
-    var laycanStart = laycanStartDateInput.val() + 'T' + laycanStartTimeInput.val()+'Z';
-    var laycanEnd   = laycanEndDateInput.val() + 'T' + laycanEndTimeInput.val()+'Z';
+    var laycanStart = laycanStartDateInput.val() + 'T' + laycanStartTimeInput.val() + 'Z';
+    var laycanEnd   = laycanEndDateInput.val() + 'T' + laycanEndTimeInput.val() + 'Z';
+
+    laycanStart.replace('T', ' ');
+    laycanEnd.replace('T', ' ');
 
     console.log(laycanStart + '\n');
     console.log(laycanEnd + '\n');
@@ -59,24 +79,39 @@ function getAllPortCalls(){
 }
 
 function updatePortCallList(listOfPortCalls, textStatus){
-    console.log(typeof listOfPortCalls)
     portCallList.empty();
     for (i = 0; i < listOfPortCalls.length; i++){
-        portCallList.append('<li>' +
-            '<ul>' +
-            '<li> id: ' + listOfPortCalls[i].internalId + '</li>' +
-            '<li>'+ 'cargo in: ' + listOfPortCalls[i].cargoIn +'</li>' +
-            '<li>'+  'cargo out: ' + listOfPortCalls[i].cargoOut +'</li>' +
-            '</ul>' +
-            '</li>')
+        var portcall = listOfPortCalls[i];
+
+        var htmlForLi = '<li class=show-info-li>' +
+                '<div> <strong>Cargo to unload: </strong>' + portcall.cargoIn + '</div>' +
+                '<div> <strong>Cargo to load: </strong>' + portcall.cargoOut + '</div>' +
+                '<div> <strong>Laycan: </strong>' + portcall.laycanStart + ' to ' + portcall.laycanEnd +'</div>' +
+                '<div> <strong>Name: </strong>' + portcall.name + '</div>' +
+                '<div> <strong>Vessel ID: </strong>' + portcall.vesselId + '</div>' +
+                '<div> <strong>PortCDM Portcall ID: </strong>' + portcall.portcallId + '</div>' +
+                '</li>';
+
+        portCallList.append(htmlForLi);
     }
 }
 
 function clearAllInputs() {
-    return;
+    cargoInInput.clear();
+    cargoOutInput.clear();
+    laycanStartTimeInput.clear();
+
+    // var cargoOutInput = $('#cargo-out-input');
+    // var laycanStartDateInput = $('#laycan-start-picker-date');
+    // var laycanStartTimeInput = $('#laycan-start-picker-time');
+    // var laycanEndDateInput = $('#laycan-end-picker-date');
+    // var laycanEndTimeInput = $('#laycan-end-picker-time');
+    // var nameInput = $('#name-input');
+    // var vesselIdInput = $('#name-input');
+    // var portcallIdInput = $('#portcall-id-input');
 }
 
 
 // get all port calls immediately, and then every 10 seconds
 getAllPortCalls();
-setInterval(getAllPortCalls, 10000);
+setInterval(getAllPortCalls, pollingFrequency);
