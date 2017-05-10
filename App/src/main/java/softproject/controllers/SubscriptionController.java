@@ -10,11 +10,10 @@ import java.util.List;
 @RestController
 public class SubscriptionController {
 
-    @GetMapping("/queue/subscribe")
-    public String getQueueId(){
+    @GetMapping("/queue/subscribe/portcalls/{portCallId}")
+    public String getQueueId(@PathVariable String portCallId){
         PortCDMRequest portCDMRequest = new PortCDMRequest();
-
-        return portCDMRequest.subscribe();
+        return portCDMRequest.subscribe(portCallId);
     }
 
     @GetMapping("/ship/subscribe")

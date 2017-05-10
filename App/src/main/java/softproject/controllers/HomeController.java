@@ -28,9 +28,14 @@ public class HomeController {
 
         if (username != null && password != null && username.equals("potatis") && password.equals("kakor")) {
             PortCDMRequest req = new PortCDMRequest();
-            req.subscribe();
+            req.subscribe("urn:x-mrn:stm:portcdm:port_call:SEGOT:ca1a795e-ee95-4c96-96d1-53896617c9ac");
             return "index";
         }
         else return "login";
+    }
+
+    @GetMapping("/portcallx")
+    public String portcall(){
+        return "portcallView";
     }
 }

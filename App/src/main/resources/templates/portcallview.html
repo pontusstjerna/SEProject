@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Portcallview</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/portcallview.css">
+</head>
+<body>
+  <div class="maincontainer">
+    <div class="outercontainer">
+      <h1 align="center"> Portcall </h1>
+        <div class="innercontainer">
+          <h3> Information </h3>
+          <span> Type: <br> Name: <br> Number: <br> Cargo: <br> Id: <br>
+          Cargo Loading: <br> Cargo Unloading: <br> </span>
+        </div>
+      <div class="innercontainer">
+        <h3> Reminders </h3>
+        <span> boat <br> name <br> number <br> type <br> </span>
+      </div>
+      <div class="innercontainer">
+        <h3> Comments </h3>
+        <textarea rows="4" cols="50"></textarea>
+        <button> Add comment </button>
+     </div>
+  </div>
+  <div class="outercontainer" id="right">
+    <h1 align="center">Schema</h1>
+    </h1>
+  </div>
+  <div class="outercontainer" id="right">
+    <h1 align="center">Feed</h1>
+      <div class="innercontainer" id="portcallmessages">
+      </div>
+      <button onclick="addTestMessage()">Add dummy message</button>
+    </div>
+  </div>
+</body>
+  <script src="https://code.jquery.com/jquery-2.2.4.js"
+          integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="
+          crossorigin="anonymous"></script>
+<script src="js/portcallmessages.js"></script>
+<footer>
+    <p class="copyright" align="center">&copy; Copyright 2017 Billy Corgan Project.</p>
+</footer>
+</html>
