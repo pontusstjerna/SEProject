@@ -64,22 +64,6 @@ public class PortCDMRequest {
         return result;
     }
 
-    /// public String getNewMessages(String queue){
-    ///     MessageQueueService mqs = new MessageQueueService(PortCDMRequest.getClientInstance(), PortCDMRequest.getBaseRequest());
-
-    ///     List<PortCallMessage> messages = null;
-    ///     try {
-    ///         messages = mqs.getMqs(queue);
-    ///     } catch (CouldNotReachPortCDM couldNotReachPortCDM) {
-    ///         couldNotReachPortCDM.printStackTrace();
-    ///     } catch (BadRequest badRequest) {
-    ///         badRequest.printStackTrace();
-    ///     }
-
-    ///     System.out.println(messages);
-    // return messages.toString();
-    //}
-
     public String sendMessage() {
         Amss amss = new Amss(getClientInstance(), getBaseRequest());
 
@@ -106,7 +90,38 @@ public class PortCDMRequest {
         return "";
     }
 
-    public String subscribe() {
+
+    public String subscribe(String portCallIdToFind) {
+        Filter portCallIdFilter = new Filter();
+        portCallIdFilter.setType(FilterType.PORT_CALL);
+        portCallIdFilter.setElement(portCallIdToFind);
+
+        MessageQueueService queueService = new MessageQueueService(getClientInstance(), getBaseRequest());
+
+        String queueId = "";
+
+        try {
+            queueId = queueService.postMqs(Arrays.asList(portCallIdFilter));
+        } catch (IllegalFilters illegalFilters) {
+            illegalFilters.printStackTrace();
+        } catch (CouldNotReachPortCDM couldNotReachPortCDM) {
+            couldNotReachPortCDM.printStackTrace();
+        } catch (BadRequest badRequest) {
+            badRequest.printStackTrace();
+        }
+
+        XMLGregorianCalendar time = null;
+        try {
+            time = DatatypeFactory.newInstance().newXMLGregorianCalendar(2017, 05, 01, 12, 00, 00, 00, 0);
+        } catch (DatatypeConfigurationException e) {
+            e.printStackTrace();
+        }
+
+        return queueId;
+    }
+
+    
+    /*public String subscribe() {
         Filter filter1 = new Filter();
         filter1.setType(FilterType.SERVICE_STATE_LOCATION_TYPE);
         filter1.setElement("BERTH");
@@ -129,16 +144,6 @@ public class PortCDMRequest {
             badRequest.printStackTrace();
         }
 
-
-        // §List<PortCallMessage> messages = null;
-        // §try {
-        // §    messages = queueService.getMqs(queueId);
-        // §} catch (CouldNotReachPortCDM couldNotReachPortCDM) {
-        // §    couldNotReachPortCDM.printStackTrace();
-        // §} catch (BadRequest badRequest) {
-        // §    badRequest.printStackTrace();
-        // §}
-
         XMLGregorianCalendar time = null;
         try {
             time = DatatypeFactory.newInstance().newXMLGregorianCalendar(2017, 05, 01, 12, 00, 00, 00, 0);
@@ -146,47 +151,8 @@ public class PortCDMRequest {
             e.printStackTrace();
         }
 
-        // ServiceState serviceState = new ServiceState();
-        // serviceState.setServiceObject(ServiceObject.ARRIVAL_BERTH);
-        // serviceState.setTimeSequence(ServiceTimeSequence.CONFIRMED);
-        // serviceState.setTimeType(TimeType.ESTIMATED);
-        // serviceState.setTime(time);
-
-        // Location location = new Location();
-        // location.setLocationType(LogicalLocation.BERTH);
-
-        // serviceState.setAt(location);
-
-//       LocationState.ArrivalLocation arrivalLocation = new LocationState.ArrivalLocation();
-//       arrivalLocation.setTo(location);
-
-        // PortCallMessage newMessage = PortCallMessageBuilder.newBuilder()
-        //         .vesselId("urn:x-mrn:stm:vessel:IMO:9398917")
-        //         .portCallId("urn:x-mrn:stm:portcdm:port_call:SEGOT:ca1a795e-ee95-4c96-96d1-53896617c9ac")
-        //         .serviceState(serviceState)
-//      //           .locationState(LocationReferenceObject.VESSEL,
-//      //                   TimeType.ESTIMATED,
-//      //                   time,
-//      //                   arrivalLocation,
-//      //                   null)
-        //         .build();
-
-        // PortCallMessage newMessage2 = PortCallMessageBuilder.newBuilder()
-        //         .vesselId("urn:x-mrn:stm:vessel:IMO:9398910")
-        //         .portCallId("urn:x-mrn:stm:portcdm:port_call:SEGOT:ca1a795e-ee95-4c96-96d1-53896617c9ac")
-        //         .serviceState(serviceState)
-//      //           .locationState(LocationReferenceObject.VESSEL,
-//      //                   TimeType.ESTIMATED,
-//      //                   time,
-//      //                   arrivalLocation,
-//      //                   null)
-        //         .build();
-
-        // amss.postStateUpdate(newMessage);
-        // amss.postStateUpdate(newMessage2);
-
         return queueId;
-    }
+    }*/
 
     public List<PortCallMessage> getNewMessages(String queueId) {
         List<PortCallMessage> messages = null;
@@ -200,59 +166,10 @@ public class PortCDMRequest {
         }
 
         //Filtrera ut alla meddeleanden för kaj 520
-       /* List<PortCallMessage> ourMessages = new ArrayList<>();
-        for (PortCallMessage message : messages) {
-            ServiceState state = message.getServiceState();
-            String name = state.getBetween().getTo().getName();
-            if (name.contains("520")) {
-                ourMessages.add(message);
-            }
-        }*/
+        messages.stream()
+                .filter(m -> m.getServiceState().getBetween().getTo().getName().contains("520"));
 
         return messages;
     }
-
-//    private String apa() {
-//        for ( QueueFilter filter : collect ) {
-//            Predicate innerPredicate;
-//            switch ( filter.getType() ) {
-//                case VESSEL:
-//                    innerPredicate = builder.equal( join.get( "vesselId" ), filter.getElement() );
-//                    break;
-//                case PORT_CALL:
-//                    innerPredicate = builder.equal( join.get( "portCallId" ), filter.getElement() );
-//                    break;
-//                case TIME_TYPE:
-//                    TimeType timeType = TimeType.valueOf( filter.getElement() );
-//                    innerPredicate = builder.or( builder.equal( join.get( "locationState" ).get( "timeType" ), timeType ), builder.equal( join.get( "serviceState" ).get( "timeType" ), timeType ) );
-//                    break;
-//                case REFERENCE_OBJECT:
-//                    innerPredicate = builder.equal( join.get( "locationState" ).get( "referenceObject" ), LocationReferenceObject.valueOf( filter.getElement() ) );
-//                    break;
-//                case TIME_SEQUENCE:
-//                    innerPredicate = builder.equal( join.get( "serviceState" ).get( "timeSequence" ), ServiceTimeSequence.valueOf( filter.getElement() ) );
-//                    break;
-//                case LOCATION_TYPE:
-//                    LogicalLocation locationType = LogicalLocation.valueOf( filter.getElement() );
-//                    innerPredicate = builder.or(
-//                            builder.equal( join.get( "serviceState" ).get( "at" ).get( "locationType" ), locationType ),
-//                            builder.equal( join.get( "serviceState" ).get( "between" ).get( "to" ).get( "locationType" ), locationType ),
-//                            builder.equal( join.get( "serviceState" ).get( "between" ).get( "from" ).get( "locationType" ), locationType ),
-//                            builder.equal( join.get( "locationState" ).get( "arrivalLocation" ).get( "to" ).get( "locationType" ), locationType ),
-//                            builder.equal( join.get( "locationState" ).get( "arrivalLocation" ).get( "from" ).get( "locationType" ), locationType ),
-//                            builder.equal( join.get( "locationState" ).get( "departureLocation" ).get( "to" ).get( "locationType" ), locationType ),
-//                            builder.equal( join.get( "locationState" ).get( "departureLocation" ).get( "from" ).get( "locationType" ), locationType )
-//                    );
-//                    break;
-//                default:
-//                    continue;
-//            }
-//
-//            if ( predicateTMP == null )
-//                predicateTMP = innerPredicate;
-//            else
-//                predicateTMP = builder.or( predicateTMP, innerPredicate );
-//        }
-//    }
 
 }

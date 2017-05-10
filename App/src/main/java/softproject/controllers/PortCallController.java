@@ -1,6 +1,8 @@
 package softproject.controllers;
 
 
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,10 +27,34 @@ public class PortCallController {
         PortCallRepository.getRepo().add(newPortCall);
     }
 
+
+    @RequestMapping("/portcall")
+    public DummyPortCall portcall(@RequestParam(value="id") String id) {
+        int portId = Integer.parseInt(id);
+        //Plocka ur lista egentligen
+        return new DummyPortCall();
+    }
+
+    private class DummyPortCall{
+        private int id;
+        private String vesselName;
+
+        public DummyPortCall(){
+            id = 1337;
+            vesselName = "Superfint anrop";
+        }
+
+        public int getId(){
+            return id;
+        }
+
+        public String getVesselName(){
+            return vesselName;
+        }
+    }
+
     @GetMapping("/portcalls")
     public List<PortCall> getAllPortCalls() {
         return PortCallRepository.getRepo().getAll();
     }
-
-
 }

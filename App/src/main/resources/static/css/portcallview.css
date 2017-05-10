@@ -1,0 +1,43 @@
+.maincontainer{
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+.outercontainer{
+  height: 700px;
+  width: 30%;
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  border: 0.1em black solid;
+  vertical-align: top;
+  border-top: 0;
+  border-bottom: 0;
+}
+
+.innercontainer{
+  width: 95%;
+  display: inline-block;
+  text-align: left;
+  border: 0.12em black dotted;
+  margin-bottom: 0.05em;
+  padding-top: 0;
+}
+
+.portcallmessage{
+  background-color: #cccccc;
+  margin: 0.2em;
+  padding: 0.1em;
+  border: transparent;
+  border-width: 0.1em;
+}
+
+#right{
+  border-left: 0;
+}
+
+#portcallmessages{
+  overflow-y:scroll;
+  height:400px;
+}
