@@ -1,10 +1,8 @@
 package softproject.controllers;
 
-import lombok.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import softproject.services.PortCDMRequest;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Date;
@@ -37,5 +35,10 @@ public class HomeController {
     @GetMapping("/portcallx")
     public String portcall(){
         return "portcallView";
+
+    @GetMapping("/unscheduled")
+    public String getUnscheduled() {
+        return "unscheduled";
+
     }
 }
