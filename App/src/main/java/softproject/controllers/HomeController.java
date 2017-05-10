@@ -33,8 +33,9 @@ public class HomeController {
     }
 
     @GetMapping("/portcallx")
-    public String portcall(){
+    public String portcall() {
         return "portcallView";
+    }
 
     @GetMapping("/unscheduled")
     public String getUnscheduled() {
