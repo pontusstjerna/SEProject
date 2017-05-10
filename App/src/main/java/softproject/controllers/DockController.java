@@ -12,6 +12,6 @@ public class DockController {
     @GetMapping("/docks")
     public String getDocks(){
         System.out.println("Hello");
-        return "docks";
+        return "dock";
     }
 }
