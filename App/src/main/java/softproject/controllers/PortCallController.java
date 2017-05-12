@@ -28,11 +28,11 @@ public class PortCallController {
     }
 
 
-    @RequestMapping("/portcall")
-    public DummyPortCall portcall(@RequestParam(value="id") String id) {
+    @RequestMapping("/internalPortcall")
+    public PortCall portcall(@RequestParam(value="id") String id) {
         int portId = Integer.parseInt(id);
-        //Plocka ur lista egentligen
-        return new DummyPortCall();
+
+        return PortCallRepository.getRepo().get(portId);
     }
 
     private class DummyPortCall{

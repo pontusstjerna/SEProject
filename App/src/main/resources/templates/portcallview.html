@@ -10,11 +10,24 @@
 <body>
   <div class="maincontainer">
     <div class="outercontainer">
-      <h1 align="center"> Portcall </h1>
+      <h1 id="portCallName"> Portcall </h1>
         <div class="innercontainer">
           <h3> Information </h3>
-          <span> Type: <br> Name: <br> Number: <br> Cargo: <br> Id: <br>
-          Cargo Loading: <br> Cargo Unloading: <br> </span>
+          <span>
+            <b>Cargo to unload: </b><p class="data" id="cargoIn"></p>
+            <br>
+            <b>Cargo to load: </b><p class="data" id="cargoOut"></p>  
+            <br>
+            <b>Laycan start: </b><p class="data" id="laycanStart"></p>
+            <br>
+            <b>Laycan end: </b><p class="data" id="laycanEnd"></p>
+            <br>
+            <b>Vessel name: </b><p class="data" id="name"></p>
+            <br>
+            <b>Vessel ID: </b><p class="data" id="vesselId"></p>
+            <br>
+            <b>PortCall ID: </b><p class="data" id="portcallId"></p>
+          </span>
         </div>
       <div class="innercontainer">
         <h3> Reminders </h3>
@@ -22,7 +35,8 @@
       </div>
       <div class="innercontainer">
         <h3> Comments </h3>
-        <textarea rows="4" cols="50"></textarea>
+        <textarea id="comment"></textarea>
+        <br>
         <button> Add comment </button>
      </div>
   </div>
@@ -42,6 +56,7 @@
           integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="
           crossorigin="anonymous"></script>
 <script src="js/portcallmessages.js"></script>
+<script src="js/portcallview.js"></script>
 <footer>
     <p class="copyright" align="center">&copy; Copyright 2017 Billy Corgan Project.</p>
 </footer>

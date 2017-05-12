@@ -50,6 +50,5 @@ function getMessageContainer(timeReceived, sender, timeType, serviceObject, time
 
 function getCurrentDate(){
     var currentDate = new Date(new Date().getTime() - new Date().getTimezoneOffset()*60*1000).toISOString().substr(0,19).replace('T', ' ');
-                                //getFullYear() + "-" + currentDate.getMonth() + "-" + currentDate.getDate() + " " + currentDate.getHours() + ":" + currentDate.getMinutes() + ":" + currentDate.getSeconds();
     return currentDate;
 }

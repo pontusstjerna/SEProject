@@ -14,15 +14,16 @@
   vertical-align: top;
   border-top: 0;
   border-bottom: 0;
+  text-align: center;
 }
 
 .innercontainer{
   width: 95%;
   display: inline-block;
   text-align: left;
-  border: 0.12em black dotted;
   margin-bottom: 0.05em;
-  padding-top: 0;
+  padding: 0.03em;
+  border: 0.01em gray;
 }
 
 .portcallmessage{
@@ -31,6 +32,10 @@
   padding: 0.1em;
   border: transparent;
   border-width: 0.1em;
+}
+
+.data{
+  display: inline-block;
 }
 
 #right{

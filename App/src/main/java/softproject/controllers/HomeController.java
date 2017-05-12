@@ -32,7 +32,7 @@ public class HomeController {
         else return "login";
     }
 
-    @GetMapping("/portcallx")
+    @GetMapping("/portcall")
     public String portcall() {
         return "portcallView";
     }
@@ -40,6 +40,5 @@ public class HomeController {
     @GetMapping("/unscheduled")
     public String getUnscheduled() {
         return "unscheduled";
-
     }
 }
