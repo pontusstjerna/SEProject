@@ -42,4 +42,9 @@ public class HomeController {
         return "unscheduled";
 
     }
+
+    @GetMapping("/report")
+    public String reportTestPage() {
+        return "reportTestPage";
+    }
 }
