@@ -10,6 +10,7 @@ import softproject.services.Amss;
 import softproject.services.MessageQueueService;
 import softproject.services.PortCDMRequest;
 import softproject.util.PortCallMessageBuilder;
+import softproject.util.ServiceStateBuilder;
 
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
@@ -17,41 +18,31 @@ import javax.xml.datatype.XMLGregorianCalendar;
 import java.time.ZonedDateTime;
 import java.util.GregorianCalendar;
 
+import static eu.portcdm.messaging.LogicalLocation.BERTH;
+
 
 @RestController
 public class ReportController {
 
     private final String LOCATION_NAME = "520";
+    private final LogicalLocation LOGICAL_LOCATION = LogicalLocation.BERTH;
 
     @PostMapping("/report/cargo/commenced/{time}")
     public void reportCargoOpCommenced(@RequestBody PortCall portcall, @PathVariable String time) {
         ZonedDateTime dateTime = ZonedDateTime.parse(time);
-        System.out.println("in reportCargoOpCommenced");
 
-        GregorianCalendar gregCal = GregorianCalendar.from(dateTime);
-        XMLGregorianCalendar xmlGregCal = null;
-        try {
-            xmlGregCal = DatatypeFactory.newInstance().newXMLGregorianCalendar(gregCal);
-        } catch (DatatypeConfigurationException e) {
-            e.printStackTrace();
-        }
-
-        Location location = new Location();
-        location.setName(LOCATION_NAME);
-        location.setLocationType(LogicalLocation.BERTH);
-
-        ServiceState serviceState = new ServiceState();
-        serviceState.setTimeSequence(ServiceTimeSequence.COMMENCED);
-        serviceState.setServiceObject(ServiceObject.CARGO_OPERATION);
-        serviceState.setTime(xmlGregCal);
-        serviceState.setTimeType(TimeType.ACTUAL);
-        serviceState.setAt(location);
+        ServiceState state = ServiceStateBuilder.newBuilder()
+                .serviceObject(ServiceObject.CARGO_OPERATION)
+                .time(dateTime)
+                .timeType(TimeType.ACTUAL)
+                .at(LOCATION_NAME, LOGICAL_LOCATION, null)
+                .build();
 
         PortCallMessage message = PortCallMessageBuilder.newBuilder()
                 .portCallId(portcall.getPortcallId())
                 .vesselId(portcall.getVesselId())
                 .comment("Johans kommentar")
-//                .serviceState(serviceState)
+                .serviceState(state)
                 .build();
 
         Amss amss = new Amss(PortCDMRequest.getClientInstance(), PortCDMRequest.getBaseRequest());
