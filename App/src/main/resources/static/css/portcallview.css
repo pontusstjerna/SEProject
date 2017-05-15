@@ -21,6 +21,7 @@
   width: 95%;
   display: inline-block;
   text-align: left;
+  vertical-align: center;
   margin-bottom: 0.05em;
   padding: 0.03em;
   border: 0.01em gray;
@@ -35,7 +36,21 @@
 }
 
 .data{
-  display: inline-block;
+  width: 60%;
+  border: none;
+}
+
+.btnEdit{
+  /*background-image: url(/img/edit.png);
+  background-repeat: no-repeat;
+  background-position: left;
+  padding-left: 32px;*/
+  margin: 0.2em;
+  align-self: right;
+}
+
+.tblInfo, td{
+  /*border: 1px black solid;*/
 }
 
 #right{

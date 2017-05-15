@@ -27,7 +27,7 @@ function getNewMessages(){
 }
 
 function addTestMessage(){
-    $("#portcallmessages").prepend(getMessageContainer("Tug 05:23:" + new Date().getSeconds(),"New ETB 22:12."));
+    $("#portcallmessages").prepend(getMessageContainer(new Date().getMilliseconds(),"Tug", "ACTUAL", "BERT_DEPARTURE", new Date().getMilliseconds()));
 }
 
 function getMessageContainer(timeReceived, sender, timeType, serviceObject, time){

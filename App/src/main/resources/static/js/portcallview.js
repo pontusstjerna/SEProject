@@ -1,11 +1,11 @@
 var id;
 
 function loadProperties(portcall, textStatus){
-    $("#cargoIn").html(portcall.cargoIn);
+    $("#cargoIn").val(portcall.cargoIn);
     $("#cargoOut").html(portcall.cargoOut);
     $("#laycanStart").html(portcall.laycanStart);
     $("#laycanEnd").html(portcall.laycanEnd);
-    $("#name").html(portcall.name);
+    $("#name").val(portcall.name);
     $("#vesselId").html(portcall.vesselId);
     $("#portcallId").html(portcall.portcallId);
     $("#comment").html(portcall.comment);
@@ -29,4 +29,8 @@ function getPortCall(){
      type: 'GET',
      success: loadProperties
  });
+}
+
+function Return(){
+    window.open("/unscheduled", "_self");
 }
