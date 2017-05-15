@@ -39,7 +39,8 @@ function saveChanges(){
         laycanEnd : $("#laycanEnd").val(),
         name : $("#name").val(),
         vesselId : $("#vesselId").val(),
-        portcallId : $("#portCallId").val()
+        portcallId : $("#portCallId").val(),
+        internalId : id
     };
 
     $.ajax({

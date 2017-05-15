@@ -40,9 +40,15 @@ public class PortCallFileRepository implements PortCallRepository {
     @Override
     public void add(PortCall newPortCall) {
 
+        System.out.println("Adding or editing portcall " + newPortCall.getInternalId());
+
+        System.out.println("PRESENT::");
+        for(PortCall p : portcalls) System.out.println("Portcall: " + p.getInternalId());
+
         //If id already exists, edit instead of adding
         Optional<PortCall> maybeOld = portcalls.stream().filter(x -> x.getInternalId() == newPortCall.getInternalId()).findFirst();
         if(maybeOld.isPresent()){ //Update old
+            System.out.println("This is an edit!");
             PortCall old = maybeOld.get();
             old.setCargoIn(newPortCall.getCargoIn());
             old.setCargoOut(newPortCall.getCargoOut());
