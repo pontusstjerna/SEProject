@@ -37,6 +37,10 @@
 
 .data{
   width: 60%;
+  border: 1px black solid;
+}
+
+.data:read-only{
   border: none;
 }
 

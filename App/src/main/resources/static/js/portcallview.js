@@ -2,13 +2,13 @@ var id;
 
 function loadProperties(portcall, textStatus){
     $("#cargoIn").val(portcall.cargoIn);
-    $("#cargoOut").html(portcall.cargoOut);
-    $("#laycanStart").html(portcall.laycanStart);
-    $("#laycanEnd").html(portcall.laycanEnd);
+    $("#cargoOut").val(portcall.cargoOut);
+    $("#laycanStart").val(portcall.laycanStart);
+    $("#laycanEnd").val(portcall.laycanEnd);
     $("#name").val(portcall.name);
-    $("#vesselId").html(portcall.vesselId);
-    $("#portcallId").html(portcall.portcallId);
-    $("#comment").html(portcall.comment);
+    $("#vesselId").val(portcall.vesselId);
+    $("#portcallId").val(portcall.portcallId);
+    $("#comment").val(portcall.comment);
 }
 
 window.onload = function(){
