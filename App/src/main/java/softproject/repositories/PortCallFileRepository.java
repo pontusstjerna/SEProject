@@ -39,11 +39,22 @@ public class PortCallFileRepository implements PortCallRepository {
 
     @Override
     public void add(PortCall newPortCall) {
-        // TODO check so that the id isn't already in the list
-        portcalls.add(newPortCall);
+
+        //If id already exists, edit instead of adding
+        Optional<PortCall> maybeOld = portcalls.stream().filter(x -> x.getInternalId() == newPortCall.getInternalId()).findFirst();
+        if(maybeOld.isPresent()){ //Update old
+            PortCall old = maybeOld.get();
+            old.setCargoIn(newPortCall.getCargoIn());
+            old.setCargoOut(newPortCall.getCargoOut());
+            old.setLaycanStart(newPortCall.getLaycanStart());
+            old.setLaycanEnd(newPortCall.getLaycanEnd());
+            old.setName(newPortCall.getName());
+            old.setVesselId(newPortCall.getVesselId());
+            old.setPortcallId(newPortCall.getVesselId());
+        }else portcalls.add(newPortCall);
+
         savePortCallsToFile();
     }
-
 
     @Override
     // deletes the portcall sent in as a parameter

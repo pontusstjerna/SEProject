@@ -23,6 +23,7 @@ function switchEdit(field){
     }else{
         setBtnEdit("btnEdit" + field.capitalize());
         $("#" + field).attr("readonly", "readonly");
+        saveChanges();
     }
 }
     
@@ -30,4 +31,23 @@ String.prototype.capitalize = function() {
     return this.charAt(0).toUpperCase() + this.slice(1);
 }
 
+function saveChanges(){
+    var newPortCall = {
+        cargoIn : $("#cargoIn").val(),
+        cargoOut : $("#cargoOut").val(),
+        laycanStart : $("#laycanStart").val(),
+        laycanEnd : $("#laycanEnd").val(),
+        name : $("#name").val(),
+        vesselId : $("#vesselId").val(),
+        portcallId : $("#portCallId").val()
+    };
+
+    $.ajax({
+        url: 'portcalls/add',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(newPortCall),
+        dataType: 'json'
+    });
+}
 
