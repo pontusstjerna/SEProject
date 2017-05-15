@@ -8,9 +8,7 @@ import softproject.model.PortCall;
 
 import java.time.ZonedDateTime;
 
-/**
- * Created by Johan on 15/05/2017.
- */
+
 @RestController
 public class ReportController {
 
