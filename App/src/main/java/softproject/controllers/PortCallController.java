@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import softproject.model.PortCall;
 import softproject.model.PortCallRepository;
+import softproject.util.PortCallMessageBuilder;
 
 import java.util.List;
 
@@ -55,6 +56,8 @@ public class PortCallController {
 
     @GetMapping("/portcalls")
     public List<PortCall> getAllPortCalls() {
+
+
         return PortCallRepository.getRepo().getAll();
     }
 }
