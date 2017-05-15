@@ -9,9 +9,11 @@ import javax.xml.datatype.XMLGregorianCalendar;
 import java.time.ZonedDateTime;
 import java.util.GregorianCalendar;
 
-public class ServiceStateBuilder {
+public class ServiceStateBuilder extends StateBuilder{
 
     private ServiceState state = new ServiceState();
+
+    private ServiceStateBuilder() {}
 
     public static ServiceStateBuilder newBuilder(){
         return new ServiceStateBuilder();
@@ -33,28 +35,14 @@ public class ServiceStateBuilder {
     }
 
     public ServiceStateBuilder time (ZonedDateTime zonedDateTime){
-        GregorianCalendar gregCal = GregorianCalendar.from(zonedDateTime);
-        XMLGregorianCalendar xmlGregCal = null;
-        try {
-            xmlGregCal = DatatypeFactory.newInstance().newXMLGregorianCalendar(gregCal);
-        } catch (DatatypeConfigurationException e) {
-            e.printStackTrace();
-        }
-        state.setTime(xmlGregCal);
+
+        state.setTime(createXmlGregorianCalendar(zonedDateTime));
         return this;
     }
 
     public ServiceStateBuilder timeType (TimeType timeType){
         state.setTimeType(timeType);
         return this;
-    }
-
-    private Location createLocation(String name, LogicalLocation logicalLocation, Position position){
-        Location location = new Location();
-        location.setName(name);
-        location.setLocationType(logicalLocation);
-        location.setPosition(position);
-        return location;
     }
 
     public ServiceStateBuilder at (String name, LogicalLocation logicalLocation, Position position){
