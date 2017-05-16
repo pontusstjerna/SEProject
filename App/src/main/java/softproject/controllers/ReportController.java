@@ -7,18 +7,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import softproject.model.PortCall;
 import softproject.services.Amss;
-import softproject.services.MessageQueueService;
 import softproject.services.PortCDMRequest;
 import softproject.util.PortCallMessageBuilder;
 import softproject.util.ServiceStateBuilder;
-
-import javax.xml.datatype.DatatypeConfigurationException;
-import javax.xml.datatype.DatatypeFactory;
-import javax.xml.datatype.XMLGregorianCalendar;
 import java.time.ZonedDateTime;
-import java.util.GregorianCalendar;
-
-import static eu.portcdm.messaging.LogicalLocation.BERTH;
 
 
 @RestController
@@ -33,6 +25,7 @@ public class ReportController {
 
         ServiceState state = ServiceStateBuilder.newBuilder()
                 .serviceObject(ServiceObject.CARGO_OPERATION)
+                .timeSequence(ServiceTimeSequence.COMMENCED)
                 .time(dateTime)
                 .timeType(TimeType.ACTUAL)
                 .at(LOCATION_NAME, LOGICAL_LOCATION, null)
@@ -41,10 +34,40 @@ public class ReportController {
         PortCallMessage message = PortCallMessageBuilder.newBuilder()
                 .portCallId(portcall.getPortcallId())
                 .vesselId(portcall.getVesselId())
-                .comment("Johans kommentar")
+                .comment("Johans kommentar 2")
+                .serviceState(state)
+                .messageOperation("CargoOp_Commenced")
+                .build();
+
+        sendMessage(message);
+    }
+
+    @PostMapping("/report/cargo/completed/{time}")
+    public void reportCargoOpCompleted(@RequestBody PortCall portcall, @PathVariable String time) {
+        ZonedDateTime dateTime = ZonedDateTime.parse(time);
+
+        ServiceState state = ServiceStateBuilder.newBuilder()
+                .serviceObject(ServiceObject.CARGO_OPERATION)
+                .timeSequence(ServiceTimeSequence.COMPLETED)
+                .time(dateTime)
+                .timeType(TimeType.ACTUAL)
+                .at(LOCATION_NAME, LOGICAL_LOCATION, null)
+                .build();
+
+        PortCallMessage message = PortCallMessageBuilder.newBuilder()
+                .portCallId(portcall.getPortcallId())
+                .vesselId(portcall.getVesselId())
+                .comment("From reportCargoOpCompleted")
                 .serviceState(state)
                 .build();
 
+        sendMessage(message);
+    }
+
+
+
+
+    private void sendMessage(PortCallMessage message) {
         Amss amss = new Amss(PortCDMRequest.getClientInstance(), PortCDMRequest.getBaseRequest());
         amss.postStateUpdate(message);
     }
