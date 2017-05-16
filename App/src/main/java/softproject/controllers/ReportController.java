@@ -43,7 +43,7 @@ public class ReportController {
     }
 
     @PostMapping("/report/cargo/completed")
-    public void reportCargoOpCompleted(@RequestBody PortCall portcall,
+    public void reportCargoOpCompleted(@RequestBody PortCall portCall,
                                        @RequestParam String time,
                                        @RequestParam TimeType timeType) {
         ZonedDateTime dateTime = ZonedDateTime.parse(time);
@@ -57,8 +57,8 @@ public class ReportController {
                 .build();
 
         PortCallMessage message = PortCallMessageBuilder.newBuilder()
-                .portCallId(portcall.getPortcallId())
-                .vesselId(portcall.getVesselId())
+                .portCallId(portCall.getPortcallId())
+                .vesselId(portCall.getVesselId())
                 .comment("From reportCargoOpCompleted")
                 .serviceState(state)
                 .build();
@@ -66,11 +66,53 @@ public class ReportController {
         sendMessage(message);
     }
 
-    @PostMapping("/report/readyToSailOp/completed/{time}")
-    public void reportReadyToSailOpCompleted(@RequestBody PortCall portCall){}
+    @PostMapping("/report/readyToSailOp/completed")
+    public void reportReadyToSailOpCompleted(@RequestBody PortCall portCall,
+                                             @RequestParam String time,
+                                             @RequestParam TimeType timeType){
+        ZonedDateTime dateTime = ZonedDateTime.parse(time);
 
+        ServiceState state = ServiceStateBuilder.newBuilder()
+                .serviceObject(ServiceObject.DEPARTURE_BERTH)
+                .timeSequence(ServiceTimeSequence.COMPLETED)
+                .time(dateTime)
+                .timeType(timeType)
+                .at(LOCATION_NAME, LOGICAL_LOCATION, null)
+                .build();
 
+        PortCallMessage message = PortCallMessageBuilder.newBuilder()
+                .portCallId(portCall.getPortcallId())
+                .vesselId(portCall.getPortcallId())
+                .comment("Ready-to-Sail Operations Completed")
+                .serviceState(state)
+                .build();
 
+        sendMessage(message);
+    }
+
+    @PostMapping("/report/slopOp/confirmed/")
+    public void reportSlopOpConfirmed(@RequestBody PortCall portCall,
+                                      @RequestParam String time,
+                                      @RequestParam TimeType timeType){
+        ZonedDateTime dateTime = ZonedDateTime.parse(time);
+
+        ServiceState state = ServiceStateBuilder.newBuilder()
+                .serviceObject(ServiceObject.SLOP_OPERATION)
+                .timeSequence(ServiceTimeSequence.CONFIRMED)
+                .time(dateTime)
+                .timeType(timeType)
+                .at(LOCATION_NAME, LOGICAL_LOCATION, null)
+                .build();
+
+        PortCallMessage message = PortCallMessageBuilder.newBuilder()
+                .portCallId(portCall.getPortcallId())
+                .vesselId(portCall.getPortcallId())
+                .comment("Slop Operation confirmed")
+                .serviceState(state)
+                .build();
+
+        sendMessage(message);
+    }
 
     private void sendMessage(PortCallMessage message) {
         Amss amss = new Amss(PortCDMRequest.getClientInstance(), PortCDMRequest.getBaseRequest());
