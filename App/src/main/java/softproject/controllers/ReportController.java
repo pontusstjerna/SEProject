@@ -35,15 +35,17 @@ public class ReportController {
         sendMessage(message);
     }
 
-    @PostMapping("/report/cargo/completed/{time}")
-    public void reportCargoOpCompleted(@RequestBody PortCall portcall, @PathVariable String time) {
+    @PostMapping("/report/cargo/completed")
+    public void reportCargoOpCompleted(@RequestBody PortCall portcall,
+                                       @RequestParam String time,
+                                       @RequestParam TimeType timeType) {
         ZonedDateTime dateTime = ZonedDateTime.parse(time);
 
         ServiceState state = ServiceStateBuilder.newBuilder()
                 .serviceObject(ServiceObject.CARGO_OPERATION)
                 .timeSequence(ServiceTimeSequence.COMPLETED)
                 .time(dateTime)
-                .timeType(TimeType.ACTUAL)
+                .timeType(timeType)
                 .at(LOCATION_NAME, LOGICAL_LOCATION, null)
                 .build();
 
@@ -89,6 +91,9 @@ public class ReportController {
 
         sendMessage(message);
     }
+
+    @PostMapping("/report/readyToSailOp/completed/{time}")
+    public void reportReadyToSailOpCompleted(@RequestBody PortCall portCall){}
 
     @PostMapping("/report/slop/reqreceived")
     public void reportSlopOpReqReceived(@RequestBody PortCall portcall,
