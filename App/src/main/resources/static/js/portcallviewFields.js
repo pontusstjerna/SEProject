@@ -4,7 +4,7 @@ $("#btnEditLaycanStart").click(function() {switchEdit("laycanStart")});
 $("#btnEditLaycanEnd").click(function() {switchEdit("laycanEnd")});
 $("#btnEditName").click(function() {switchEdit("name")});
 $("#btnEditVesselId").click(function() {switchEdit("vesselId")});
-$("#btnEditPortCallId").click(function() {switchEdit("portCallId")});
+$("#btnEditPortcallId").click(function() {switchEdit("portcallId")});
 
 function setBtnSave(button){
     $("#" + button).html("Save");
@@ -39,7 +39,7 @@ function saveChanges(){
         laycanEnd : $("#laycanEnd").val(),
         name : $("#name").val(),
         vesselId : $("#vesselId").val(),
-        portcallId : $("#portCallId").val(),
+        portcallId : $("#portcallId").val(),
         internalId : id
     };
 

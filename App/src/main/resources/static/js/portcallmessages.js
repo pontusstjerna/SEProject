@@ -1,10 +1,10 @@
 var queueId;
-var portCallId = "urn:x-mrn:stm:portcdm:port_call:SEGOT:ca1a795e-ee95-4c96-96d1-53896617c9ac";
+//"urn:x-mrn:stm:portcdm:port_call:SEGOT:ca1a795e-ee95-4c96-96d1-53896617c9ac";
 
-//Start subscription by getting a queueID
-window.onload = function () {
+function startSubscribtion(){
+    var portId = $("#portcallId").val();
     $.ajax({
-        url: "http://localhost:8080/queue/subscribe/portcalls/" + portCallId,
+        url: "http://localhost:8080/queue/subscribe/portcalls/" + portId,
         context: document.body
     }).done(function(data) { //When response is recieved     
         queueId = data;
@@ -12,7 +12,7 @@ window.onload = function () {
 
     //Look for new messages every 10 seconds
     setInterval(getNewMessages, 10000);
-};
+}
 
 function getNewMessages(){
    $.ajax({

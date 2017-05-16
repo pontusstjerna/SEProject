@@ -9,12 +9,19 @@ function loadProperties(portcall, textStatus){
     $("#vesselId").val(portcall.vesselId);
     $("#portcallId").val(portcall.portcallId);
     $("#comment").val(portcall.comment);
+    
 }
 
 window.onload = function(){
     id = getId();
     $("#portCallName").append(" " + id);
     getPortCall();
+
+    var portId = $("#portcallId").val(); 
+
+    console.log(portId);
+    if(portId != "")
+        startSubscribtion();
 }
     
 

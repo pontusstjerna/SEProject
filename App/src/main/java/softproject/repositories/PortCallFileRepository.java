@@ -56,7 +56,7 @@ public class PortCallFileRepository implements PortCallRepository {
             old.setLaycanEnd(newPortCall.getLaycanEnd());
             old.setName(newPortCall.getName());
             old.setVesselId(newPortCall.getVesselId());
-            old.setPortcallId(newPortCall.getVesselId());
+            old.setPortcallId(newPortCall.getPortcallId());
         }else portcalls.add(newPortCall);
 
         savePortCallsToFile();
