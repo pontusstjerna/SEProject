@@ -41,7 +41,11 @@ public class LocationStateBuilder extends StateBuilder{
     }
 
     public LocationStateBuilder arrivalLocation(String toName, LogicalLocation toLogicalLocation, Position toPosition) {
-        return arrivalLocation(toName, toLogicalLocation, toPosition, null, null, null);
+        LocationState.ArrivalLocation arrivalLocation = new LocationState.ArrivalLocation();
+        arrivalLocation.setTo(createLocation(toName, toLogicalLocation, toPosition));
+
+        state.setArrivalLocation(arrivalLocation);
+        return this;
     }
 
     public LocationStateBuilder departureLocation(String fromName, LogicalLocation fromLogicalLocation, Position fromPosition,
@@ -57,7 +61,11 @@ public class LocationStateBuilder extends StateBuilder{
     }
 
     public LocationStateBuilder departureLocation(String fromName, LogicalLocation fromLogicalLocation, Position fromPosition) {
-        return departureLocation(fromName, fromLogicalLocation, fromPosition, null, null, null);
+        LocationState.DepartureLocation departureLocation = new LocationState.DepartureLocation();
+        departureLocation.setFrom(createLocation(fromName, fromLogicalLocation, fromPosition));
+
+        state.setDepartureLocation(departureLocation);
+        return this;
     }
 
 
