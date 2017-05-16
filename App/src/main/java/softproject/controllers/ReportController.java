@@ -64,7 +64,8 @@ public class ReportController {
         sendMessage(message);
     }
 
-
+    @PostMapping("/report/readyToSailOp/completed/{time}")
+    public void reportReadyToSailOpCompleted(@RequestBody PortCall portCall){}
 
 
     private void sendMessage(PortCallMessage message) {
