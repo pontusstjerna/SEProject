@@ -11,7 +11,7 @@ var newPortCall = {
 cargoCommenced.on('click', function() {
     console.log("cargoCommenced clicked");
     $.ajax({
-        url: baseURL + 'report/cargo/commenced/2017-05-15T14:00:00Z', // this URL only works when the server is on the same machine!
+        url: baseURL + 'report/cargo/commenced?time=2017-05-15T12:00:00Z&timeType=ACTUAL', // this URL only works when the server is on the same machine!
         type: 'POST',
         contentType: 'application/json',
         data: JSON.stringify(newPortCall),
