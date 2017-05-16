@@ -92,7 +92,7 @@ public class ReportController {
         sendMessage(message);
     }
 
-    @PostMapping("/report/readyToSailOp/completed")
+    @PostMapping("/report/readytosailop/completed")
     public void reportReadyToSailOpCompleted(@RequestBody PortCall portcall,
                                              @RequestParam String time,
                                              @RequestParam TimeType timeType){
@@ -111,7 +111,8 @@ public class ReportController {
         sendMessage(message);
     }
 
-    @PostMapping("/report/slop/reqreceived")
+
+    @PostMapping("/report/slopop/received")
     public void reportSlopOpReqReceived(@RequestBody PortCall portcall,
                                         @RequestParam String time,
                                         @RequestParam TimeType timeType) {
@@ -132,7 +133,7 @@ public class ReportController {
     }
 
 
-    @PostMapping("/report/slopOp/confirmed/")
+    @PostMapping("/report/slopop/confirmed")
     public void reportSlopOpConfirmed(@RequestBody PortCall portcall,
                                       @RequestParam String time,
                                       @RequestParam TimeType timeType) {
@@ -149,10 +150,11 @@ public class ReportController {
         PortCallMessage message = createMessage(portcall, state, null);
         //.comment("Slop Operation confirmed")
 
+
         sendMessage(message);
     }
 
-        @PostMapping("/report/slop/denied")
+        @PostMapping("/report/slopop/denied")
         public void reportSlopOpDenied(@RequestBody PortCall portcall,
                                         @RequestParam String time,
                                         @RequestParam TimeType timeType) {
