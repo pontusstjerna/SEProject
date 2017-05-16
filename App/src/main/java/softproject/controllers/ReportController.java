@@ -5,11 +5,10 @@ import org.springframework.web.bind.annotation.*;
 import softproject.model.PortCall;
 import softproject.services.Amss;
 import softproject.services.PortCDMRequest;
+import softproject.util.LocationStateBuilder;
 import softproject.util.PortCallMessageBuilder;
 import softproject.util.ServiceStateBuilder;
 import java.time.ZonedDateTime;
-import java.util.Map;
-
 
 @RestController
 public class ReportController {
@@ -31,13 +30,7 @@ public class ReportController {
                 .at(LOCATION_NAME, LOGICAL_LOCATION, null)
                 .build();
 
-        PortCallMessage message = PortCallMessageBuilder.newBuilder()
-                .portCallId(portcall.getPortcallId())
-                .vesselId(portcall.getVesselId())
-                .comment("Johans kommentar 2")
-                .serviceState(state)
-                .messageOperation("CargoOp_Commenced")
-                .build();
+        PortCallMessage message = createMessage(portcall, state, null);
 
         sendMessage(message);
     }
@@ -54,20 +47,97 @@ public class ReportController {
                 .at(LOCATION_NAME, LOGICAL_LOCATION, null)
                 .build();
 
-        PortCallMessage message = PortCallMessageBuilder.newBuilder()
-                .portCallId(portcall.getPortcallId())
-                .vesselId(portcall.getVesselId())
-                .comment("From reportCargoOpCompleted")
-                .serviceState(state)
-                .build();
+        PortCallMessage message = createMessage(portcall, state, null);
 
         sendMessage(message);
     }
 
+    @PostMapping("/report/vessel/departure")
+    public void reportDepartureVesselBerth(@RequestBody PortCall portcall,
+                                           @RequestParam String time,
+                                           @RequestParam TimeType timeType) {
 
+        ZonedDateTime dateTime = ZonedDateTime.parse(time);
 
+        LocationState state = LocationStateBuilder.newBuilder()
+                .referenceObject(LocationReferenceObject.VESSEL)
+                .time(dateTime)
+                .timeType(timeType)
+                .departureLocation(LOCATION_NAME, LOGICAL_LOCATION, null)
+                .build();
 
+        PortCallMessage message = createMessage(portcall, null, state);
 
+        sendMessage(message);
+    }
+
+    @PostMapping("/report/vessel/arrival")
+    public void reportArrivalVesselBerth(@RequestBody PortCall portcall,
+                                         @RequestParam String time,
+                                         @RequestParam TimeType timeType) {
+
+        ZonedDateTime dateTime = ZonedDateTime.parse(time);
+
+        LocationState state = LocationStateBuilder.newBuilder()
+                .referenceObject(LocationReferenceObject.VESSEL)
+                .time(dateTime)
+                .timeType(timeType)
+                .arrivalLocation(LOCATION_NAME, LOGICAL_LOCATION, null)
+                .build();
+
+        PortCallMessage message = createMessage(portcall, null, state);
+
+        sendMessage(message);
+    }
+
+    @PostMapping("/report/slop/reqreceived")
+    public void reportSlopOpReqReceived(@RequestBody PortCall portcall,
+                                        @RequestParam String time,
+                                        @RequestParam TimeType timeType) {
+
+        ZonedDateTime dateTime = ZonedDateTime.parse(time);
+
+        ServiceState state = ServiceStateBuilder.newBuilder()
+                .serviceObject(ServiceObject.SLOP_OPERATION)
+                .timeSequence(ServiceTimeSequence.REQUEST_RECEIVED)
+                .time(dateTime)
+                .timeType(timeType)
+                .at(LOCATION_NAME, LOGICAL_LOCATION, null)
+                .build();
+
+        PortCallMessage message = createMessage(portcall, state, null);
+
+        sendMessage(message);
+    }
+
+    @PostMapping("/report/slop/denied")
+    public void reportSlopOpDenied(@RequestBody PortCall portcall,
+                                        @RequestParam String time,
+                                        @RequestParam TimeType timeType) {
+
+        ZonedDateTime dateTime = ZonedDateTime.parse(time);
+
+        ServiceState state = ServiceStateBuilder.newBuilder()
+                .serviceObject(ServiceObject.SLOP_OPERATION)
+                .timeSequence(ServiceTimeSequence.DENIED)
+                .time(dateTime)
+                .timeType(timeType)
+                .at(LOCATION_NAME, LOGICAL_LOCATION, null)
+                .build();
+
+        PortCallMessage message = createMessage(portcall, state, null);
+
+        sendMessage(message);
+    }
+
+    private PortCallMessage createMessage(PortCall portcall, ServiceState serviceState, LocationState locationState) {
+        PortCallMessageBuilder.newBuilder()
+                .serviceState(serviceState)
+                .locationState(locationState)
+                .vesselId(portcall.getVesselId())
+                .portCallId(portcall.getPortcallId())
+                .build();
+    }
 
     private void sendMessage(PortCallMessage message) {
         Amss amss = new Amss(PortCDMRequest.getClientInstance(), PortCDMRequest.getBaseRequest());

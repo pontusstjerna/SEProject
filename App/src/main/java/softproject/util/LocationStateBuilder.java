@@ -62,7 +62,9 @@ public class LocationStateBuilder extends StateBuilder{
 
 
 
-
+    public LocationState build() {
+        return state;
+    }
 
 
 
