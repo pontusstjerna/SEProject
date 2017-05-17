@@ -2,11 +2,14 @@ package softproject.model;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import eu.portcdm.messaging.PortCallMessage;
 
 import java.io.Serializable;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
-public class PortCall implements Serializable{
+public class PortCall implements Serializable {
 
     private static int portCallCount = 0;
 
@@ -19,13 +22,15 @@ public class PortCall implements Serializable{
     private String portcallId;
     private ZonedDateTime laycanStart;
     private ZonedDateTime laycanEnd;
+    private String queueID;
+    private List<PortCallMessage> messages = new ArrayList<>();
 
     public PortCall() {
         portCallCount++;
         internalId = portCallCount;
     }
 
-    public long getInternalId(){
+    public long getInternalId() {
         return internalId;
     }
 
@@ -46,7 +51,7 @@ public class PortCall implements Serializable{
         this.cargoOut = cargoOut;
     }
 
-    @JsonFormat (shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd'T'HH:mmz")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mmz")
     public ZonedDateTime getLaycanStart() {
         return laycanStart;
     }
@@ -55,7 +60,7 @@ public class PortCall implements Serializable{
         this.laycanStart = laycanStart;
     }
 
-    @JsonFormat (shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd'T'HH:mmz")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mmz")
     public ZonedDateTime getLaycanEnd() {
         return laycanEnd;
     }
@@ -95,4 +100,19 @@ public class PortCall implements Serializable{
     public void setPortcallId(String portcallId) {
         this.portcallId = portcallId;
     }
+
+    public List<PortCallMessage> getMessages() {
+        return messages;
+    }
+
+    public void setMessages(List<PortCallMessage> messages) { this.messages = messages; }
+
+    public String getQueueID() {
+        return queueID;
+    }
+
+    public void setQueueID(String queueID) {
+        this.queueID = queueID;
+    }
 }
+

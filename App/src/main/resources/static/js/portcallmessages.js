@@ -6,17 +6,24 @@ function startSubscribtion(){
     var portId = $("#portcallId").val();
     var subUrl = "";
 
-    if(portId != "")
+    if(portId != "") {
         subUrl = "/queue/subscribe/portcalls/" + portId;
-    else if(vessId != "")
-        subUrl = "/queue/subscribe/WHATTAFACK/" + vessId;
-        else return;
+        getQidAndMessages(subUrl);
+    }
+    else if(vessId != "") {
+        subUrl = "/queue/subscribe/portcalls/vessel/" + vessId;
+        getQidAndMessages(subUrl);
+    }else{
+        getNoFeedContainer()
+    }
 
-    console.log(portId)
-        $.ajax({
+}
+
+function getQidAndMessages(subUrl){
+    $.ajax({
         url: subUrl,
         context: document.body
-    }).done(function(data) { //When response is recieved     
+    }).done(function(data) { //When response is recieved
         queueId = data;
     });
 
@@ -30,14 +37,13 @@ function getNewMessages(){
        context: document.body
    }).done(function(data) {
        data.forEach(function (m){
-        console.log(m.serviceState);
-        $("#portcallmessages").prepend(getMessageContainer(getCurrentDate(), "unknown", m.serviceState.timeType, m.serviceState.serviceObject, m.serviceState.time));
+        $("#portcallmessages").val(getMessageContainer(getCurrentDate(), m.reportedBy, m.serviceState.timeType, m.serviceState.serviceObject, m.serviceState.time));
        });
     });
 }
 
 function addTestMessage(){
-    $("#portcallmessages").prepend(getMessageContainer(new Date().getMilliseconds(),"Tug", "ACTUAL", "BERT_DEPARTURE", new Date().getMilliseconds()));
+    $("#portcallmessages").val(getMessageContainer(new Date().getMilliseconds(),"Tug", "ACTUAL", "BERT_DEPARTURE", new Date().getMilliseconds()));
 }
 
 function getMessageContainer(timeReceived, sender, timeType, serviceObject, time){
@@ -54,6 +60,21 @@ function getMessageContainer(timeReceived, sender, timeType, serviceObject, time
     container.appendChild(typeAndObject);
     container.appendChild(document.createElement("br"));
     container.appendChild(newTime);
+
+    return container;
+}
+
+function getNoFeedContainer(){
+    var container = document.createElement("div");
+    container.classList.add("infodisplay");
+    var header = document.createElement("b");
+    var headerText = document.createTextNode("No feed available!");
+    header.appendChild(headerText);
+    container.appendChild(header);
+
+    var info = document.createTextNode("Need PortCallID or VesselID to display feed.");
+    container.appendChild(document.createElement("br"));
+    container.appendChild(info);
 
     return container;
 }

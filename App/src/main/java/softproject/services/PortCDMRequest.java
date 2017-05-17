@@ -91,17 +91,18 @@ public class PortCDMRequest {
     }
 
 
-    public String subscribe(String portCallIdToFind) {
-        Filter portCallIdFilter = new Filter();
-        portCallIdFilter.setType(FilterType.PORT_CALL);
-        portCallIdFilter.setElement(portCallIdToFind);
+    // Subscribe with one filter
+    public String subscribe(FilterType type, String elementToFind) {
+        Filter filter = new Filter();
+        filter.setType(type);
+        filter.setElement(elementToFind);
 
         MessageQueueService queueService = new MessageQueueService(getClientInstance(), getBaseRequest());
 
         String queueId = "";
 
         try {
-            queueId = queueService.postMqs(Arrays.asList(portCallIdFilter));
+            queueId = queueService.postMqs(Arrays.asList(filter));
         } catch (IllegalFilters illegalFilters) {
             illegalFilters.printStackTrace();
         } catch (CouldNotReachPortCDM couldNotReachPortCDM) {
@@ -110,12 +111,12 @@ public class PortCDMRequest {
             badRequest.printStackTrace();
         }
 
-        XMLGregorianCalendar time = null;
+        /*XMLGregorianCalendar time = null;
         try {
             time = DatatypeFactory.newInstance().newXMLGregorianCalendar(2017, 05, 01, 12, 00, 00, 00, 0);
         } catch (DatatypeConfigurationException e) {
             e.printStackTrace();
-        }
+        }*/
 
         return queueId;
     }
