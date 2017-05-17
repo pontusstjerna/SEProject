@@ -2,9 +2,19 @@ var queueId;
 //"urn:x-mrn:stm:portcdm:port_call:SEGOT:ca1a795e-ee95-4c96-96d1-53896617c9ac";
 
 function startSubscribtion(){
+    var vessId = $("#vesselId").val()
     var portId = $("#portcallId").val();
-    $.ajax({
-        url: "http://localhost:8080/queue/subscribe/portcalls/" + portId,
+    var subUrl = "";
+
+    if(portId != "")
+        subUrl = "/queue/subscribe/portcalls/" + portId;
+    else if(vessId != "")
+        subUrl = "/queue/subscribe/WHATTAFACK/" + vessId;
+        else return;
+
+    console.log(portId)
+        $.ajax({
+        url: subUrl,
         context: document.body
     }).done(function(data) { //When response is recieved     
         queueId = data;
@@ -16,7 +26,7 @@ function startSubscribtion(){
 
 function getNewMessages(){
    $.ajax({
-       url: "http://localhost:8080/queue/" + queueId,
+       url: "/queue/" + queueId,
        context: document.body
    }).done(function(data) {
        data.forEach(function (m){
