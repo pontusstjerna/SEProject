@@ -3,13 +3,12 @@ package softproject.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import javax.annotation.PostConstruct;
 import java.io.Serializable;
 import java.sql.Time;
 import java.time.ZonedDateTime;
 
 public class PortCall implements Serializable{
-
-    private static int portCallCount = 0;
 
     private long internalId;
     private String comment;
@@ -18,11 +17,11 @@ public class PortCall implements Serializable{
     private String name;
     private String vesselId;
     private String portcallId;
-    private ZonedDateTime laycanStart;
-    private ZonedDateTime laycanEnd;
     private String berth;
 
-    //To PortCDM
+    //Timestamps
+    private Timestamp laycanStart;
+    private Timestamp laycanEnd;
     private Timestamp cargoOpCommenced;
     private Timestamp cargoOpCompleted;
     private Timestamp readyToSail;
@@ -32,15 +31,11 @@ public class PortCall implements Serializable{
     private Timestamp ArrivalVesselBerth;
     private Timestamp DepartureVesselBerth;
 
-    public PortCall() {
-        portCallCount++;
-        internalId = portCallCount;
-    }
-
     public long getInternalId(){
         return internalId;
     }
 
+    public void setInternalId(long id){internalId = id;}
 
     public String getCargoIn() {
         return cargoIn;
@@ -59,20 +54,20 @@ public class PortCall implements Serializable{
     }
 
     @JsonFormat (shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd'T'HH:mmz")
-    public ZonedDateTime getLaycanStart() {
+    public Timestamp getLaycanStart() {
         return laycanStart;
     }
 
-    public void setLaycanStart(ZonedDateTime laycanStart) {
+    public void setLaycanStart(Timestamp laycanStart) {
         this.laycanStart = laycanStart;
     }
 
     @JsonFormat (shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd'T'HH:mmz")
-    public ZonedDateTime getLaycanEnd() {
+    public Timestamp getLaycanEnd() {
         return laycanEnd;
     }
 
-    public void setLaycanEnd(ZonedDateTime laycanEnd) {
+    public void setLaycanEnd(Timestamp laycanEnd) {
         this.laycanEnd = laycanEnd;
     }
 

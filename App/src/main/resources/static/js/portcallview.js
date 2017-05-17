@@ -1,10 +1,12 @@
 var id;
+var currentPortcall;
 
 function loadProperties(portcall, textStatus){
+    currentPortcall = portcall;
+
     $("#cargoIn").val(portcall.cargoIn);
     $("#cargoOut").val(portcall.cargoOut);
-    $("#laycanStart").val(portcall.laycanStart);
-    $("#laycanEnd").val(portcall.laycanEnd);
+    $("#berth").val(portcall.berth === "" || portcall.berth === null ? "Unassigned" : portcall.berth);
     $("#name").val(portcall.name);
     $("#vesselId").val(portcall.vesselId);
     $("#portcallId").val(portcall.portcallId);
@@ -12,8 +14,10 @@ function loadProperties(portcall, textStatus){
     
     //Timestamps
     setTimestamp("cargoOpCommenced", portcall.cargoOpCommenced);
+    setTimestamp("laycanStart", portcall.laycanStart);
+    setTimestamp("laycanEnd", portcall.laycanEnd);
 
-    startSubscribtion();
+    startSubscription();
 }
 
 window.onload = function(){
@@ -41,26 +45,30 @@ function Return(){
 }
 
 function setTimestamp(field, value){
-    var timeSelect = $("#time-type-select").val().toString();
     var timeStmp;
-
-    switch(timeSelect){
-        case "ESTIMATED":
-            timeStmp = value.estimated;
-            break;
-        case "TARGET":
-            timeStmp = value.target;
-            break;
-        case "ACTUAL":
-            timeStmp = value.actual;
-            break;
-        case "RECOMMENDED":
-            timeStmp = value.recommended;
-            break;
-    }
-
     var date = $("#" + field + "Date");
     var time = $("#" + field + "Time");
+
+    var timeSelect = $("#time-type-select").val().toString();
+
+    if(value != null){
+        switch(timeSelect){
+            case "ESTIMATED":
+                timeStmp = value.estimated;
+                break;
+            case "TARGET":
+                timeStmp = value.target;
+                break;
+            case "ACTUAL":
+                timeStmp = value.actual;
+                break;
+            case "RECOMMENDED":
+                timeStmp = value.recommended;
+                break;
+        }
+    }
+    
+
     if(timeStmp === undefined || timeStmp === null){
         date.val("");
         time.val("");

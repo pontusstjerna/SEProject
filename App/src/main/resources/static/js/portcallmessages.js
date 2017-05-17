@@ -1,7 +1,7 @@
 var queueId;
 //"urn:x-mrn:stm:portcdm:port_call:SEGOT:ca1a795e-ee95-4c96-96d1-53896617c9ac";
 
-function startSubscribtion(){
+function startSubscription(){
     var vessId = $("#vesselId").val()
     var portId = $("#portcallId").val();
     var subUrl = "";

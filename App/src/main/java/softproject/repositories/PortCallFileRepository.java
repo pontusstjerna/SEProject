@@ -47,7 +47,7 @@ public class PortCallFileRepository implements PortCallRepository {
 
         //If id already exists, edit instead of adding
         Optional<PortCall> maybeOld = portcalls.stream().filter(x -> x.getInternalId() == newPortCall.getInternalId()).findFirst();
-        if(maybeOld.isPresent()){ //Update old
+        if(maybeOld.isPresent() && newPortCall.getInternalId() != 0){ //Update old
             System.out.println("This is an edit!");
             PortCall old = maybeOld.get();
             old.setCargoIn(newPortCall.getCargoIn());
@@ -69,7 +69,10 @@ public class PortCallFileRepository implements PortCallRepository {
             old.setSlopOpReqRecieved(newPortCall.getSlopOpReqRecieved());
             old.setArrivalVesselBerth(newPortCall.getArrivalVesselBerth());
             old.setDepartureVesselBerth(newPortCall.getDepartureVesselBerth());
-        }else portcalls.add(newPortCall);
+        }else {
+            newPortCall.setInternalId(portcalls.size() + 1);
+            portcalls.add(newPortCall);
+        }
 
         savePortCallsToFile();
     }

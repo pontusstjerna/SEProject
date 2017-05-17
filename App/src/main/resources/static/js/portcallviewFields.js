@@ -1,13 +1,14 @@
 $("#btnEditCargoIn").click(function() {switchEdit("cargoIn")});
 $("#btnEditCargoOut").click(function() {switchEdit("cargoOut")});
-$("#btnEditLaycanStart").click(function() {switchEdit("laycanStart")});
-$("#btnEditLaycanEnd").click(function() {switchEdit("laycanEnd")});
 $("#btnEditName").click(function() {switchEdit("name")});
 $("#btnEditVesselId").click(function() {switchEdit("vesselId")});
 $("#btnEditPortcallId").click(function() {switchEdit("portcallId")});
+$("#btnEditBerth").click(function(){switchEdit("berth");});
 
 //Timestamps
 $("#btnEditCargoOpCommenced").click(function(){switchTimeEdit("cargoOpCommenced");});
+$("#btnEditLaycanStart").click(function() {switchTimeEdit("laycanStart")});
+$("#btnEditLaycanEnd").click(function() {switchTimeEdit("laycanEnd")});
 
 function setBtnSave(button){
     $("#" + button).html("Save");
@@ -56,14 +57,15 @@ function saveChanges(){
     var newPortCall = {
         cargoIn : $("#cargoIn").val(),
         cargoOut : $("#cargoOut").val(),
-        laycanStart : $("#laycanStart").val(),
-        laycanEnd : $("#laycanEnd").val(),
         name : $("#name").val(),
         vesselId : $("#vesselId").val(),
         portcallId : $("#portcallId").val(),
+        berth : $("#berth").val(),
         internalId : id,
         //Timestamps
-        cargoOpCommenced : getTimestamp("cargoOpCommenced")
+        cargoOpCommenced : getTimestamp("cargoOpCommenced", currentPortcall.cargoOpCommenced),
+        laycanStart : getTimestamp("laycanStart", currentPortcall.laycanStart),
+        laycanEnd : getTimestamp("laycanEnd", currentPortcall.laycanEnd)
     };
 
     $.ajax({
@@ -75,25 +77,50 @@ function saveChanges(){
     });
 }
 
-function getTimestamp(field){
+function getStringFromDate(field){
     var timeSelect = $("#time-type-select").val().toString();
 
     var date = $("#" + field + "Date").val();
     var time = $("#" + field + "Time").val();
 
-    if(date === "" || time === "") return {};
+    if(date === "" || time === "") return "";
+    else return date + "T" + time + "Z";
+}
 
-    var timeStmp = date + "T" + time + "Z";
+function getTimestamp(field, previousStamp){
+    var timeSelect = $("#time-type-select").val().toString();
+
+    var timeStmp = getStringFromDate(field);
 
     switch(timeSelect){
         case "ESTIMATED":
-            return {estimated : timeStmp};
+            return {
+                estimated : timeStmp,
+                target : previousStamp.target,
+                actual : previousStamp.actual,
+                recommended : previousStamp.recommended
+            };
         case "TARGET":
-            return {target : timeStmp};
+            return {
+                estimated : previousStamp.estimated,
+                target : timeStmp,
+                actual : previousStamp.actual,
+                recommended : previousStamp.recommended
+            };
         case "ACTUAL":
-            return {actual : timeStmp};
+            return {
+                estimated : previousStamp.estimated,
+                target : previousStamp.target,
+                actual : timeStmp,
+                recommended : previousStamp.recommended
+            };
         case "RECOMMENDED":
-            return {actual : timeStmp};
+            return {
+                estimated : previousStamp.estimated,
+                target : previousStamp.target,
+                actual : previousStamp.actual,
+                recommended : timeStmp
+            };
     }
 
     return {};
