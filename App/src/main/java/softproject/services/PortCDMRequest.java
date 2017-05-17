@@ -121,6 +121,36 @@ public class PortCDMRequest {
         return queueId;
     }
 
+    // Subscribe with one filter
+    public String subscribe(FilterType type, String elementToFind, String fromTime) {
+        Filter filter = new Filter();
+        filter.setType(type);
+        filter.setElement(elementToFind);
+
+        MessageQueueService queueService = new MessageQueueService(getClientInstance(), getBaseRequest());
+
+        String queueId = "";
+
+        try {
+            queueId = queueService.postMqs(Arrays.asList(filter),fromTime);
+        } catch (IllegalFilters illegalFilters) {
+            illegalFilters.printStackTrace();
+        } catch (CouldNotReachPortCDM couldNotReachPortCDM) {
+            couldNotReachPortCDM.printStackTrace();
+        } catch (BadRequest badRequest) {
+            badRequest.printStackTrace();
+        }
+
+        /*XMLGregorianCalendar time = null;
+        try {
+            time = DatatypeFactory.newInstance().newXMLGregorianCalendar(2017, 05, 01, 12, 00, 00, 00, 0);
+        } catch (DatatypeConfigurationException e) {
+            e.printStackTrace();
+        }*/
+
+        return queueId;
+    }
+
     
     /*public String subscribe() {
         Filter filter1 = new Filter();

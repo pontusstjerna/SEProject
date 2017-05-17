@@ -10,7 +10,6 @@ function loadProperties(portcall, textStatus){
     $("#portcallId").val(portcall.portcallId);
     $("#comment").val(portcall.comment);
 
-    console.log("start subb");
     startSubscription();
 }
 

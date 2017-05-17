@@ -23,7 +23,7 @@ public class PortCall implements Serializable {
     private ZonedDateTime laycanStart;
     private ZonedDateTime laycanEnd;
     private String queueID;
-    private List<PCMTimeWrapper> messages = new ArrayList<>();
+    private List<PortCallMessage> messages = new ArrayList<>();
 
     public PortCall() {
         portCallCount++;
@@ -109,9 +109,8 @@ public class PortCall implements Serializable {
         this.queueID = queueID;
     }
 
-    public List<PCMTimeWrapper> getMessages() { return messages; }
+    public List<PortCallMessage> getMessages() { return messages; }
 
-    public void setMessages(List<PCMTimeWrapper> messages) { this.messages = messages;
-                                                             }
+    public void setMessages(List<PortCallMessage> messages) { this.messages = messages; }
 }
 

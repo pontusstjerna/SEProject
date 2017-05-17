@@ -50,7 +50,51 @@ public class MessageQueueService {
                 throw new BadRequest(response.code());
             }
         } catch (IOException e) {
-            throw new CouldNotReachPortCDM(e, "from MessageQueueService::postMqs(List<Filter>");
+            throw new CouldNotReachPortCDM(e, "from MessageQueueService::postMqs(List<Filter> filters)");
+        }
+
+
+    }
+
+    // Tries to create a queue using filters and fromTime sent in as parameters
+    public String postMqs(List<Filter> filters, String fromTime) throws IllegalFilters, CouldNotReachPortCDM, BadRequest {
+        RequestBody reqBody = createRequestBody(filters);
+
+        Request request = this.baseRequest.newBuilder()
+                .url(this.baseRequest.urlString() + "/mqs?fromTime="+fromTime)
+                .post(reqBody)
+                .build();
+
+        try {
+            Response response = this.httpClient.newCall(request).execute();
+            if(response.isSuccessful()) {
+                return response.body().string();
+            } else {
+                throw new BadRequest(response.code());
+            }
+        } catch (IOException e) {
+            throw new CouldNotReachPortCDM(e, "from MessageQueueService::postMqs(List<Filter> filters, String fromTime)");
+        }
+
+
+    }
+
+    // Tries to create a queue using fromTime sent in as parameter
+    public String postMqs(String fromTime) throws IllegalFilters, CouldNotReachPortCDM, BadRequest {
+
+        Request request = this.baseRequest.newBuilder()
+                .url(this.baseRequest.urlString() + "/mqs?fromTime="+fromTime)
+                .build();
+
+        try {
+            Response response = this.httpClient.newCall(request).execute();
+            if(response.isSuccessful()) {
+                return response.body().string();
+            } else {
+                throw new BadRequest(response.code());
+            }
+        } catch (IOException e) {
+            throw new CouldNotReachPortCDM(e, "from MessageQueueService::postMqs(String fromTime)");
         }
 
 
@@ -81,12 +125,11 @@ public class MessageQueueService {
                 .url(this.baseRequest.urlString() + "/mqs/" + queue + "?count=" + limit)
                 .build();
 
-        Response response = null;
-        String messagesAsXML = "";
+
         try {
-            response = this.httpClient.newCall(request).execute();
+            Response response = this.httpClient.newCall(request).execute();
             if(response.isSuccessful()) {
-                messagesAsXML = response.body().string();
+                String messagesAsXML = response.body().string();
                 return convertFromXmlToPortCall(messagesAsXML);
             } else {
                 throw new BadRequest(response.code());

@@ -3,7 +3,6 @@ package softproject.controllers;
 import eu.portcdm.mb.dto.FilterType;
 import eu.portcdm.messaging.PortCallMessage;
 import org.springframework.web.bind.annotation.*;
-import softproject.model.PCMTimeWrapper;
 import softproject.model.PortCall;
 import softproject.model.PortCallRepository;
 import softproject.services.PortCDMRequest;
@@ -44,8 +43,16 @@ public class SubscriptionController {
 
     }
 
-    @GetMapping("/queue/{queueId}")
-    public List<PCMTimeWrapper> viewQueue(@PathVariable String queueId) {
+    @GetMapping("/queue/new/{queueId}")
+    public List<PortCallMessage> newQueue(@PathVariable String queueId) {
+        PortCDMRequest req = new PortCDMRequest();
+        List<PortCallMessage> result = req.getNewMessages(queueId);
+        System.out.println("New Queue " + result);
+        return result;
+    }
+
+    @GetMapping("/queue/old/{queueId}")
+    public List<PortCallMessage> oldQueue(@PathVariable String queueId) {
         PortCDMRequest req = new PortCDMRequest();
         PortCallRepository repo = PortCallRepository.getRepo();
         if(repo.getFromQueueId(queueId) == null){
@@ -53,19 +60,10 @@ public class SubscriptionController {
             return new ArrayList<>();
         }
         PortCall portCall = repo.getFromQueueId(queueId);
-        List<PortCallMessage> result = req.getNewMessages(queueId);
-        List<PCMTimeWrapper> wrapper = new ArrayList<>();
-        result.stream().forEach(m -> wrapper.add(new PCMTimeWrapper(m,new Date().getTime())));
-        if (portCall.getMessages() == null) {
-            portCall.setMessages(new ArrayList<>());
-        }
-        List<PCMTimeWrapper> storedMessages = portCall.getMessages();
-        System.out.println(storedMessages);
-        storedMessages.addAll(wrapper);
-        System.out.println(storedMessages);
-        portCall.setMessages(storedMessages);
-        //repo.savePortCallsToFile();
-        return storedMessages;
+        String qID = req.subscribe(FilterType.PORT_CALL, portCall.getPortcallId(), "1970-01-01T00%3A00%3A00Z");
+        List<PortCallMessage> result = req.getNewMessages(qID);
+        System.out.println("Old Queue: " + result);
+        return result;
     }
 
     @GetMapping("/message/post")

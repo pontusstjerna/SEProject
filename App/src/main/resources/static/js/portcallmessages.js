@@ -1,13 +1,11 @@
 var queueId;
-//"urn:x-mrn:stm:portcdm:port_call:SEGOT:ca1a795e-ee95-4c96-96d1-53896617c9ac";
+
 
 function startSubscription(){
     var vessId = $("#vesselId").val()
     var portId = $("#portcallId").val();
     var subUrl = "";
 
-    console.log(portId);
-    console.log(vessId);
     if(portId != "") {
         subUrl = "/queue/subscribe/portcalls/" + portId;
         getQidAndMessages(subUrl);
@@ -16,7 +14,7 @@ function startSubscription(){
         subUrl = "/queue/subscribe/portcalls/vessel/" + vessId;
         getQidAndMessages(subUrl);
     }else{
-        getNoFeedContainer()
+        $("#portcallmessages").html(getNoFeedContainer());
     }
 
 }
@@ -27,31 +25,38 @@ function getQidAndMessages(subUrl){
         context: document.body
     }).done(function(data) { //When response is recieved
         queueId = data;
-        //getNewMessages();
     });
 
+    //Get all old messages
+    getOldMessages();
     //Look for new messages every 10 seconds
     setInterval(getNewMessages, 10000);
 }
 
+function getOldMessages(){
+    $.ajax({
+        url: "/queue/old/" + queueId,
+        context: document.body
+    }).done(function(data) {
+        data.forEach(function (m){
+            $("#portcallmessages").prepend(getMessageContainer(new Date(m.reportedAt+7200000).toISOString().substr(0,19).replace('T', ' '), m.reportedBy.substring(22), m.serviceState.timeType, m.serviceState.serviceObject, m.serviceState.time));
+        });
+    });
+}
+
 function getNewMessages(){
    $.ajax({
-       url: "/queue/" + queueId,
+       url: "/queue/new/" + queueId,
        context: document.body
    }).done(function(data) {
-       data.forEach(function (wrapper){
-           var pcm = wrapper.portcallMessage;
-           console.log(pcm);
-           var time = warapper.time;
-           console.log(time);
-           console.log("hej");
-        $("#portcallmessages").html(getMessageContainer(new Date(time).toISOString().substr(0,19).replace('T', ' '), pcm.reportedBy, pcm.serviceState.timeType, pcm.serviceState.serviceObject, pcm.serviceState.time));
+       data.forEach(function (m){
+        $("#portcallmessages").prepend(getMessageContainer(new Date(m.reportedAt+7200000).toISOString().substr(0,19).replace('T', ' '), m.reportedBy.substring(22), m.serviceState.timeType, m.serviceState.serviceObject, m.serviceState.time));
        });
     });
 }
 
 function addTestMessage(){
-    $("#portcallmessages").html(getMessageContainer(new Date().getMilliseconds(),"Tug", "ACTUAL", "BERT_DEPARTURE", new Date().getMilliseconds()));
+    $("#portcallmessages").prepend(getMessageContainer(new Date().getMilliseconds(),"Tug", "ACTUAL", "BERT_DEPARTURE", new Date().getMilliseconds()));
 }
 
 function getMessageContainer(timeReceived, sender, timeType, serviceObject, time){
