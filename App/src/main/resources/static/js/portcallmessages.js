@@ -37,13 +37,13 @@ function getNewMessages(){
        context: document.body
    }).done(function(data) {
        data.forEach(function (m){
-        $("#portcallmessages").val(getMessageContainer(getCurrentDate(), m.reportedBy, m.serviceState.timeType, m.serviceState.serviceObject, m.serviceState.time));
+        $("#portcallmessages").html(getMessageContainer(getCurrentDate(), m.reportedBy, m.serviceState.timeType, m.serviceState.serviceObject, m.serviceState.time));
        });
     });
 }
 
 function addTestMessage(){
-    $("#portcallmessages").val(getMessageContainer(new Date().getMilliseconds(),"Tug", "ACTUAL", "BERT_DEPARTURE", new Date().getMilliseconds()));
+    $("#portcallmessages").html(getMessageContainer(new Date().getMilliseconds(),"Tug", "ACTUAL", "BERT_DEPARTURE", new Date().getMilliseconds()));
 }
 
 function getMessageContainer(timeReceived, sender, timeType, serviceObject, time){
