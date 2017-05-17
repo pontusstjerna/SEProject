@@ -18,6 +18,9 @@ var vesselIdInput = $('#vesselId-input');
 var portcallIdInput = $('#portcall-id-input');
 var cancelButton = $('#clear-new-portcall-button');
 
+function openPortCall(id){
+    window.open("/portcall?id=" + id,"_self");
+}
 
 // $('#load-port-calls').on('click',getAllPortCalls);
 
@@ -83,7 +86,7 @@ function updatePortCallList(listOfPortCalls, textStatus){
     for (i = 0; i < listOfPortCalls.length; i++){
         var portcall = listOfPortCalls[i];
 
-        var htmlForLi = '<li class=show-info-li>' +
+        var htmlForLi = '<li class=show-info-li onclick=openPortCall(' + portcall.internalId + ')>' +
                 '<div> <strong>Cargo to unload: </strong>' + portcall.cargoIn + '</div>' +
                 '<div> <strong>Cargo to load: </strong>' + portcall.cargoOut + '</div>' +
                 '<div> <strong>Laycan: </strong>' + portcall.laycanStart + ' to ' + portcall.laycanEnd +'</div>' +

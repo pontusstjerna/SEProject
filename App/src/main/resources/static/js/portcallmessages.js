@@ -1,10 +1,20 @@
 var queueId;
-var portCallId = "urn:x-mrn:stm:portcdm:port_call:SEGOT:ca1a795e-ee95-4c96-96d1-53896617c9ac";
+//"urn:x-mrn:stm:portcdm:port_call:SEGOT:ca1a795e-ee95-4c96-96d1-53896617c9ac";
 
-//Start subscription by getting a queueID
-window.onload = function () {
-    $.ajax({
-        url: "http://localhost:8080/queue/subscribe/portcalls/" + portCallId,
+function startSubscribtion(){
+    var vessId = $("#vesselId").val()
+    var portId = $("#portcallId").val();
+    var subUrl = "";
+
+    if(portId != "")
+        subUrl = "/queue/subscribe/portcalls/" + portId;
+    else if(vessId != "")
+        subUrl = "/queue/subscribe/WHATTAFACK/" + vessId;
+        else return;
+
+    console.log(portId)
+        $.ajax({
+        url: subUrl,
         context: document.body
     }).done(function(data) { //When response is recieved     
         queueId = data;
@@ -12,11 +22,11 @@ window.onload = function () {
 
     //Look for new messages every 10 seconds
     setInterval(getNewMessages, 10000);
-};
+}
 
 function getNewMessages(){
    $.ajax({
-       url: "http://localhost:8080/queue/" + queueId,
+       url: "/queue/" + queueId,
        context: document.body
    }).done(function(data) {
        data.forEach(function (m){
@@ -27,7 +37,7 @@ function getNewMessages(){
 }
 
 function addTestMessage(){
-    $("#portcallmessages").prepend(getMessageContainer("Tug 05:23:" + new Date().getSeconds(),"New ETB 22:12."));
+    $("#portcallmessages").prepend(getMessageContainer(new Date().getMilliseconds(),"Tug", "ACTUAL", "BERT_DEPARTURE", new Date().getMilliseconds()));
 }
 
 function getMessageContainer(timeReceived, sender, timeType, serviceObject, time){
@@ -50,6 +60,5 @@ function getMessageContainer(timeReceived, sender, timeType, serviceObject, time
 
 function getCurrentDate(){
     var currentDate = new Date(new Date().getTime() - new Date().getTimezoneOffset()*60*1000).toISOString().substr(0,19).replace('T', ' ');
-                                //getFullYear() + "-" + currentDate.getMonth() + "-" + currentDate.getDate() + " " + currentDate.getHours() + ":" + currentDate.getMinutes() + ":" + currentDate.getSeconds();
     return currentDate;
 }

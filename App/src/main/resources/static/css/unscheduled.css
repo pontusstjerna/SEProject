@@ -43,7 +43,11 @@
 #list-of-portcalls .show-info-li {
     border: 1px solid black;
     margin-bottom: 10px;
+    transition: 0.2s all;
+}
 
+.show-info-li:hover{
+    background-color: #DDDDDD;
 }
 
 

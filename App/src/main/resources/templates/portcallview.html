@@ -9,12 +9,34 @@
 </head>
 <body>
   <div class="maincontainer">
+    <button id="return" onclick="Return()">Schema</button>
     <div class="outercontainer">
-      <h1 align="center"> Portcall </h1>
+      <h1 id="portCallName"> Portcall </h1>
         <div class="innercontainer">
           <h3> Information </h3>
-          <span> Type: <br> Name: <br> Number: <br> Cargo: <br> Id: <br>
-          Cargo Loading: <br> Cargo Unloading: <br> </span>
+          <table class="tblInfo">
+            <tr>
+              <td><b>Cargo to unload: </b></td><td><input class="data" id="cargoIn" readonly=true><button id="btnEditCargoIn" class="button btnEdit">Edit</button></td>
+            </tr>
+            <tr>
+              <td><b>Cargo to load: </b></td><td><input class="data" id="cargoOut" readonly=true><button id="btnEditCargoOut" class="button btnEdit">Edit</button></td>
+            </tr>
+            <tr>
+              <td><b>Laycan start: </b></td><td><input class="data" id="laycanStart" readonly=true><button id="btnEditLaycanStart" class="button btnEdit">Edit</button></td>
+            </tr>
+            <tr>
+              <td><b>Laycan end: </b></td><td><input class="data" id="laycanEnd" readonly=true><button id="btnEditLaycanEnd" class="button btnEdit">Edit</button></td>
+            </tr>
+            <tr>
+              <td><b>Vessel name: </b></td><td><input class="data" id="name" readonly=true><button id="btnEditName" class="button btnEdit">Edit</button></td>
+            </tr>
+            <tr>
+              <td><b>Vessel ID: </b></td><td><input class="data" id="vesselId" readonly=true><button id="btnEditVesselId" class="button btnEdit">Edit</button></td>
+            </tr>
+            <tr>
+              <td><b>PortCall ID: </b></td><td><input class="data" id="portcallId" readonly=true><button id="btnEditPortcallId" class="button btnEdit">Edit</button></td>
+            </tr>
+          </table>
         </div>
       <div class="innercontainer">
         <h3> Reminders </h3>
@@ -22,7 +44,8 @@
       </div>
       <div class="innercontainer">
         <h3> Comments </h3>
-        <textarea rows="4" cols="50"></textarea>
+        <textarea id="comment"></textarea>
+        <br>
         <button> Add comment </button>
      </div>
   </div>
@@ -42,6 +65,8 @@
           integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="
           crossorigin="anonymous"></script>
 <script src="js/portcallmessages.js"></script>
+<script src="js/portcallview.js"></script>
+<script src="js/portcallviewFields.js"></script>
 <footer>
     <p class="copyright" align="center">&copy; Copyright 2017 Billy Corgan Project.</p>
 </footer>
