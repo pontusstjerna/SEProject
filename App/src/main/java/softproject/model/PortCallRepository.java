@@ -17,6 +17,7 @@ public interface PortCallRepository{
     PortCall getFromQueueId(String queueId);
     void add(PortCall newPortCall);
     boolean delete(PortCall portCallToDelete);
+    void savePortCallsToFile();
 
     static PortCallRepository getRepo() {
         return repo;

@@ -3,12 +3,12 @@ package softproject.controllers;
 import eu.portcdm.mb.dto.FilterType;
 import eu.portcdm.messaging.PortCallMessage;
 import org.springframework.web.bind.annotation.*;
+import softproject.model.PCMTimeWrapper;
 import softproject.model.PortCall;
 import softproject.model.PortCallRepository;
 import softproject.services.PortCDMRequest;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 
 @RestController
@@ -21,6 +21,7 @@ public class SubscriptionController {
         PortCallRepository repo = PortCallRepository.getRepo();
         PortCall portCall = repo.getFromPortcallId(portCallId);
         portCall.setQueueID(qID);
+        System.out.println("PortCallId found and saved!");
         return qID;
     }
 
@@ -31,6 +32,7 @@ public class SubscriptionController {
         PortCallRepository repo = PortCallRepository.getRepo();
         PortCall portCall = repo.getFromVesselId(vesselId);
         portCall.setQueueID(qID);
+        System.out.println("VesselId found and saved!");
         return qID;
     }
 
@@ -43,16 +45,27 @@ public class SubscriptionController {
     }
 
     @GetMapping("/queue/{queueId}")
-    public List<PortCallMessage> viewQueue(@PathVariable String queueId) {
+    public List<PCMTimeWrapper> viewQueue(@PathVariable String queueId) {
         PortCDMRequest req = new PortCDMRequest();
         PortCallRepository repo = PortCallRepository.getRepo();
+        if(repo.getFromQueueId(queueId) == null){
+            System.out.println("WARNING! Page was already up when server restarted. Therefore we have an old queueID polling but no corresponding PortCall!");
+            return new ArrayList<>();
+        }
         PortCall portCall = repo.getFromQueueId(queueId);
         List<PortCallMessage> result = req.getNewMessages(queueId);
+        List<PCMTimeWrapper> wrapper = new ArrayList<>();
+        result.stream().forEach(m -> wrapper.add(new PCMTimeWrapper(m,new Date().getTime())));
         if (portCall.getMessages() == null) {
             portCall.setMessages(new ArrayList<>());
         }
-        portCall.getMessages().addAll(result);
-        return portCall.getMessages();
+        List<PCMTimeWrapper> storedMessages = portCall.getMessages();
+        System.out.println(storedMessages);
+        storedMessages.addAll(wrapper);
+        System.out.println(storedMessages);
+        portCall.setMessages(storedMessages);
+        //repo.savePortCallsToFile();
+        return storedMessages;
     }
 
     @GetMapping("/message/post")

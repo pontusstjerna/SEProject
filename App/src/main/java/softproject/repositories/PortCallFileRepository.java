@@ -42,6 +42,7 @@ public class PortCallFileRepository implements PortCallRepository {
     public PortCall getFromPortcallId(String portCallId) {
         Optional<PortCall> maybePortCall =
                 portcalls.stream()
+                        .filter(p -> p.getPortcallId() != null)
                         .filter(p -> p.getPortcallId().equals(portCallId))
                         .findFirst();
 
@@ -53,6 +54,7 @@ public class PortCallFileRepository implements PortCallRepository {
     public PortCall getFromVesselId(String vesselId) {
         Optional<PortCall> maybePortCall =
                 portcalls.stream()
+                        .filter(p -> p.getVesselId() != null)
                         .filter(p -> p.getVesselId().equals(vesselId))
                         .findFirst();
 
@@ -64,6 +66,7 @@ public class PortCallFileRepository implements PortCallRepository {
     public PortCall getFromQueueId(String queueId) {
         Optional<PortCall> maybePortCall =
                 portcalls.stream()
+                        .filter(p -> p.getQueueID() != null)
                         .filter(p -> p.getQueueID().equals(queueId))
                         .findFirst();
 
@@ -126,7 +129,7 @@ public class PortCallFileRepository implements PortCallRepository {
     }
 
     // saves all the portcalls in our list to resources\files\portcallstorage.data
-    private void savePortCallsToFile() {
+    public void savePortCallsToFile() {
         try {
             FileOutputStream fileOut = new FileOutputStream(FILE_PATH);
             ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);

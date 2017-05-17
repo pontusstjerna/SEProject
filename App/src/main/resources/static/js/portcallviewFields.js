@@ -26,7 +26,7 @@ function switchEdit(field){
         jQuaryfield.attr("readonly", "readonly");
         saveChanges();
         if(field === "portcallId" || field === "vesselId"){
-            startSubscribtion();
+            startSubscription();
         }
     }
 }

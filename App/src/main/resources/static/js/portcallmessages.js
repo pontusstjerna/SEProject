@@ -1,11 +1,13 @@
 var queueId;
 //"urn:x-mrn:stm:portcdm:port_call:SEGOT:ca1a795e-ee95-4c96-96d1-53896617c9ac";
 
-function startSubscribtion(){
+function startSubscription(){
     var vessId = $("#vesselId").val()
     var portId = $("#portcallId").val();
     var subUrl = "";
 
+    console.log(portId);
+    console.log(vessId);
     if(portId != "") {
         subUrl = "/queue/subscribe/portcalls/" + portId;
         getQidAndMessages(subUrl);
@@ -25,6 +27,7 @@ function getQidAndMessages(subUrl){
         context: document.body
     }).done(function(data) { //When response is recieved
         queueId = data;
+        //getNewMessages();
     });
 
     //Look for new messages every 10 seconds
@@ -36,8 +39,13 @@ function getNewMessages(){
        url: "/queue/" + queueId,
        context: document.body
    }).done(function(data) {
-       data.forEach(function (m){
-        $("#portcallmessages").html(getMessageContainer(getCurrentDate(), m.reportedBy, m.serviceState.timeType, m.serviceState.serviceObject, m.serviceState.time));
+       data.forEach(function (wrapper){
+           var pcm = wrapper.portcallMessage;
+           console.log(pcm);
+           var time = warapper.time;
+           console.log(time);
+           console.log("hej");
+        $("#portcallmessages").html(getMessageContainer(new Date(time).toISOString().substr(0,19).replace('T', ' '), pcm.reportedBy, pcm.serviceState.timeType, pcm.serviceState.serviceObject, pcm.serviceState.time));
        });
     });
 }
@@ -77,9 +85,4 @@ function getNoFeedContainer(){
     container.appendChild(info);
 
     return container;
-}
-
-function getCurrentDate(){
-    var currentDate = new Date(new Date().getTime() - new Date().getTimezoneOffset()*60*1000).toISOString().substr(0,19).replace('T', ' ');
-    return currentDate;
 }
