@@ -16,25 +16,25 @@
           <h3> Information </h3>
           <table class="tblInfo">
             <tr>
-              <td><b>Cargo to unload: </b></td><td><input class="data" id="cargoIn" readonly=true><button id="btnEditCargoIn" class="button btnEdit">Edit</button></td>
+              <td><b>Cargo to unload: </b></td><td><input class="data" id="cargoIn" readonly=true></td><td><button id="btnEditCargoIn" class="button btnEdit">Edit</button></td>
             </tr>
             <tr>
-              <td><b>Cargo to load: </b></td><td><input class="data" id="cargoOut" readonly=true><button id="btnEditCargoOut" class="button btnEdit">Edit</button></td>
+              <td><b>Cargo to load: </b></td><td><input class="data" id="cargoOut" readonly=true></td><td><button id="btnEditCargoOut" class="button btnEdit">Edit</button></td>
             </tr>
             <tr>
-              <td><b>Laycan start: </b></td><td><input class="data" id="laycanStart" readonly=true><button id="btnEditLaycanStart" class="button btnEdit">Edit</button></td>
+              <td><b>Laycan start: </b></td><td><input class="data" id="laycanStart" readonly=true></td><td><button id="btnEditLaycanStart" class="button btnEdit">Edit</button></td>
             </tr>
             <tr>
-              <td><b>Laycan end: </b></td><td><input class="data" id="laycanEnd" readonly=true><button id="btnEditLaycanEnd" class="button btnEdit">Edit</button></td>
+              <td><b>Laycan end: </b></td><td><input class="data" id="laycanEnd" readonly=true></td><td><button id="btnEditLaycanEnd" class="button btnEdit">Edit</button></td>
             </tr>
             <tr>
-              <td><b>Vessel name: </b></td><td><input class="data" id="name" readonly=true><button id="btnEditName" class="button btnEdit">Edit</button></td>
+              <td><b>Vessel name: </b></td><td><input class="data" id="name" readonly=true></td><td><button id="btnEditName" class="button btnEdit">Edit</button></td>
             </tr>
             <tr>
-              <td><b>Vessel ID: </b></td><td><input class="data" id="vesselId" readonly=true><button id="btnEditVesselId" class="button btnEdit">Edit</button></td>
+              <td><b>Vessel ID: </b></td><td><input class="data" id="vesselId" readonly=true></td><td><button id="btnEditVesselId" class="button btnEdit">Edit</button></td>
             </tr>
             <tr>
-              <td><b>PortCall ID: </b></td><td><input class="data" id="portcallId" readonly=true><button id="btnEditPortcallId" class="button btnEdit">Edit</button></td>
+              <td><b>PortCall ID: </b></td><td><input class="data" id="portcallId" readonly=true></td><td><button id="btnEditPortcallId" class="button btnEdit">Edit</button></td>
             </tr>
           </table>
         </div>
@@ -52,13 +52,30 @@
   <div class="outercontainer" id="right">
     <h1 align="center">Timestamps</h1>
     <div class="innercontainer">
-          <h3> Cargo </h3>
-          <table class="tblInfo">
-            <tr>
-              <td><b>Cargo op commenced: </b></td><td><input type="date" class="data" id="cargoOpCommencedDate" readonly=true><input type="time" class="data" id="cargoOpCommencedTime"><button id="btnEditCargoOpCommencedDate" class="button btnEdit">Edit</button></td>
-            </tr>
-          </table>
-        </div>
+      <select id="time-type-select">
+        <option value="ESTIMATED">Estimated</option>
+        <option value="TARGET">Target</option>
+        <option value="ACTUAL">Actual</option>
+        <option value="RECOMMENDED">Recommended</option>
+      </select>
+      <h3> Cargo </h3>
+      <table class="tblInfo">
+        <tr>
+          <td><b>Cargo op commenced: </b></td>
+        </tr>
+        <tr>
+          <td>
+            <input type="date" class="time" id="cargoOpCommencedDate" readonly=true>
+          </td>
+          <td>
+            <input type="time" class="time" id="cargoOpCommencedTime" readonly>
+          </td>
+          <td>
+            <button id="btnEditCargoOpCommenced" class="button btnEdit">Edit</button>
+          </td>
+        </tr>
+      </table>
+    </div>
   </div>
   <div class="outercontainer" id="right">
     <h1 align="center">Feed</h1>

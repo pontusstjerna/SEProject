@@ -7,7 +7,7 @@ $("#btnEditVesselId").click(function() {switchEdit("vesselId")});
 $("#btnEditPortcallId").click(function() {switchEdit("portcallId")});
 
 //Timestamps
-$("#btnEditCargoOpCommenced").click(function(){switchEdit("cargoOpCommenced");});
+$("#btnEditCargoOpCommenced").click(function(){switchTimeEdit("cargoOpCommenced");});
 
 function setBtnSave(button){
     $("#" + button).html("Save");
@@ -18,14 +18,32 @@ function setBtnEdit(button){
 }
 
 function switchEdit(field){
-    var readonly = $("#" + field).attr("readonly");
+    var elem = $("#" + field);
+    var readonly = elem.attr("readonly");
     if(readonly == "readonly"){
-        $("#" + field).focus();
+        elem.focus();
         setBtnSave("btnEdit" + field.capitalize());    
-        $("#" + field).removeAttr("readonly");
+        elem.removeAttr("readonly");
     }else{
         setBtnEdit("btnEdit" + field.capitalize());
-        $("#" + field).attr("readonly", "readonly");
+        elem.attr("readonly", "readonly");
+        saveChanges();
+    }
+}
+
+function switchTimeEdit(field){
+    var elemDate = $("#" + field + "Date");
+    var elemTime = $("#" + field + "Time");
+    var readonly = elemDate.attr("readonly");
+    if(readonly === "readonly"){
+        elemDate.focus();
+        setBtnSave("btnEdit" + field.capitalize());
+        elemDate.removeAttr("readonly");
+        elemTime.removeAttr("readonly");
+    }else{
+        setBtnEdit("btnEdit" + field.capitalize());
+        elemDate.attr("readonly", "readonly");
+        elemTime.attr("readonly", "readonly");
         saveChanges();
     }
 }
@@ -35,12 +53,6 @@ String.prototype.capitalize = function() {
 }
 
 function saveChanges(){
-    var tmp = $("#cargoOpCommencedDate").val();
-    var tmp2 = $("#cargoOpCommencedTime").val();
-    var newCargoOpCommenced = {
-        estimated : tmp + "T" + tmp2 + "Z"
-    };
-
     var newPortCall = {
         cargoIn : $("#cargoIn").val(),
         cargoOut : $("#cargoOut").val(),
@@ -51,7 +63,7 @@ function saveChanges(){
         portcallId : $("#portcallId").val(),
         internalId : id,
         //Timestamps
-        cargoOpCommenced : newCargoOpCommenced
+        cargoOpCommenced : getTimestamp("cargoOpCommenced")
     };
 
     $.ajax({
@@ -61,5 +73,29 @@ function saveChanges(){
         data: JSON.stringify(newPortCall),
         dataType: 'json'
     });
+}
+
+function getTimestamp(field){
+    var timeSelect = $("#time-type-select").val().toString();
+
+    var date = $("#" + field + "Date").val();
+    var time = $("#" + field + "Time").val();
+
+    if(date === "" || time === "") return {};
+
+    var timeStmp = date + "T" + time + "Z";
+
+    switch(timeSelect){
+        case "ESTIMATED":
+            return {estimated : timeStmp};
+        case "TARGET":
+            return {target : timeStmp};
+        case "ACTUAL":
+            return {actual : timeStmp};
+        case "RECOMMENDED":
+            return {actual : timeStmp};
+    }
+
+    return {};
 }
 
