@@ -57,6 +57,18 @@ public class PortCallFileRepository implements PortCallRepository {
             old.setName(newPortCall.getName());
             old.setVesselId(newPortCall.getVesselId());
             old.setPortcallId(newPortCall.getPortcallId());
+            old.setComment(newPortCall.getComment());
+            old.setBerth(newPortCall.getBerth());
+
+            //Timestamps
+            old.setCargoOpCommenced(newPortCall.getCargoOpCommenced());
+            old.setCargoOpCompleted(newPortCall.getCargoOpCompleted());
+            old.setReadyToSail(newPortCall.getReadyToSail());
+            old.setSlopOpConfirmed(newPortCall.getSlopOpConfirmed());
+            old.setSlopOpDenied(newPortCall.getSlopOpDenied());
+            old.setSlopOpReqRecieved(newPortCall.getSlopOpReqRecieved());
+            old.setArrivalVesselBerth(newPortCall.getArrivalVesselBerth());
+            old.setDepartureVesselBerth(newPortCall.getDepartureVesselBerth());
         }else portcalls.add(newPortCall);
 
         savePortCallsToFile();

@@ -6,6 +6,9 @@ $("#btnEditName").click(function() {switchEdit("name")});
 $("#btnEditVesselId").click(function() {switchEdit("vesselId")});
 $("#btnEditPortcallId").click(function() {switchEdit("portcallId")});
 
+//Timestamps
+$("#btnEditCargoOpCommenced").click(function(){switchEdit("cargoOpCommenced");});
+
 function setBtnSave(button){
     $("#" + button).html("Save");
 }
@@ -32,6 +35,12 @@ String.prototype.capitalize = function() {
 }
 
 function saveChanges(){
+    var tmp = $("#cargoOpCommencedDate").val();
+    var tmp2 = $("#cargoOpCommencedTime").val();
+    var newCargoOpCommenced = {
+        estimated : tmp + "T" + tmp2 + "Z"
+    };
+
     var newPortCall = {
         cargoIn : $("#cargoIn").val(),
         cargoOut : $("#cargoOut").val(),
@@ -40,7 +49,9 @@ function saveChanges(){
         name : $("#name").val(),
         vesselId : $("#vesselId").val(),
         portcallId : $("#portcallId").val(),
-        internalId : id
+        internalId : id,
+        //Timestamps
+        cargoOpCommenced : newCargoOpCommenced
     };
 
     $.ajax({
