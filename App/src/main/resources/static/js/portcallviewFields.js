@@ -63,9 +63,9 @@ function saveChanges(){
         berth : $("#berth").val(),
         internalId : id,
         //Timestamps
-        cargoOpCommenced : getTimestamp("cargoOpCommenced", currentPortcall.cargoOpCommenced),
-        laycanStart : getTimestamp("laycanStart", currentPortcall.laycanStart),
-        laycanEnd : getTimestamp("laycanEnd", currentPortcall.laycanEnd)
+        cargoOpCommenced : getStringFromDate("cargoOpCommenced", currentPortcall.cargoOpCommenced),
+        laycanStart : getStringFromDate("laycanStart", currentPortcall.laycanStart),
+        laycanEnd : getStringFromDate("laycanEnd", currentPortcall.laycanEnd)
     };
 
     $.ajax({
@@ -78,51 +78,10 @@ function saveChanges(){
 }
 
 function getStringFromDate(field){
-    var timeSelect = $("#time-type-select").val().toString();
-
     var date = $("#" + field + "Date").val();
     var time = $("#" + field + "Time").val();
 
     if(date === "" || time === "") return "";
     else return date + "T" + time + "Z";
-}
-
-function getTimestamp(field, previousStamp){
-    var timeSelect = $("#time-type-select").val().toString();
-
-    var timeStmp = getStringFromDate(field);
-
-    switch(timeSelect){
-        case "ESTIMATED":
-            return {
-                estimated : timeStmp,
-                target : previousStamp.target,
-                actual : previousStamp.actual,
-                recommended : previousStamp.recommended
-            };
-        case "TARGET":
-            return {
-                estimated : previousStamp.estimated,
-                target : timeStmp,
-                actual : previousStamp.actual,
-                recommended : previousStamp.recommended
-            };
-        case "ACTUAL":
-            return {
-                estimated : previousStamp.estimated,
-                target : previousStamp.target,
-                actual : timeStmp,
-                recommended : previousStamp.recommended
-            };
-        case "RECOMMENDED":
-            return {
-                estimated : previousStamp.estimated,
-                target : previousStamp.target,
-                actual : previousStamp.actual,
-                recommended : timeStmp
-            };
-    }
-
-    return {};
 }
 

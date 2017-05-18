@@ -45,35 +45,14 @@ function Return(){
 }
 
 function setTimestamp(field, value){
-    var timeStmp;
     var date = $("#" + field + "Date");
     var time = $("#" + field + "Time");
-
-    var timeSelect = $("#time-type-select").val().toString();
-
-    if(value != null){
-        switch(timeSelect){
-            case "ESTIMATED":
-                timeStmp = value.estimated;
-                break;
-            case "TARGET":
-                timeStmp = value.target;
-                break;
-            case "ACTUAL":
-                timeStmp = value.actual;
-                break;
-            case "RECOMMENDED":
-                timeStmp = value.recommended;
-                break;
-        }
-    }
     
-
-    if(timeStmp === undefined || timeStmp === null){
+    if(value === undefined || value === null){
         date.val("");
         time.val("");
     }else{
-        var dateTime = timeStmp.split("T");
+        var dateTime = value.split("T");
         date.val(dateTime[0]);
         time.val(dateTime[1].substr(0,5)); //Time will be like 23:00UTC
     }

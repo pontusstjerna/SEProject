@@ -53,18 +53,8 @@ addPortCallForm.on('submit', function(){
     var newPortCall = {
         cargoIn : cargoInInput.val(),
         cargoOut : cargoOutInput.val(),
-        laycanStart : {
-            estimated : laycanStart, 
-            actual : laycanStart, 
-            recommended : laycanStart, 
-            target : laycanStart
-        },
-        laycanEnd : {
-            estimated : laycanEnd,
-            actual : laycanEnd,
-            recommended : laycanEnd,
-            target : laycanEnd
-        },
+        laycanStart : laycanStart,
+        laycanEnd : laycanEnd,
         name : nameInput.val(),
         vesselId : vesselIdInput.val(),
         portcallId : portcallIdInput.val(),
@@ -99,7 +89,7 @@ function updatePortCallList(listOfPortCalls, textStatus){
         var htmlForLi = '<li class=show-info-li onclick=openPortCall(' + portcall.internalId + ')>' +
                 '<div> <strong>Cargo to unload: </strong>' + portcall.cargoIn + '</div>' +
                 '<div> <strong>Cargo to load: </strong>' + portcall.cargoOut + '</div>' +
-                '<div> <strong>Laycan: </strong>' + portcall.laycanStart.estimated + ' to ' + portcall.laycanEnd.estimated +'</div>' +
+                '<div> <strong>Laycan: </strong>' + portcall.laycanStart + ' to ' + portcall.laycanEnd +'</div>' +
                 '<div> <strong>Name: </strong>' + portcall.name + '</div>' +
                 '<div> <strong>Vessel ID: </strong>' + portcall.vesselId + '</div>' +
                 '<div> <strong>PortCDM Portcall ID: </strong>' + portcall.portcallId + '</div>' +
