@@ -5,6 +5,7 @@ import eu.portcdm.messaging.*;
 import softproject.services.exceptions.IncompletePortCallMessage;
 
 import javax.xml.datatype.XMLGregorianCalendar;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class PortCallMessageBuilder {
@@ -51,8 +52,8 @@ public class PortCallMessageBuilder {
         return this;
     }
 
-    public PortCallMessageBuilder reportedAt(XMLGregorianCalendar calendar) {
-        this.message.setReportedAt(calendar);
+    public PortCallMessageBuilder reportedAt(LocalDateTime time) {
+        this.message.setReportedAt(time);
         return this;
     }
 
@@ -68,7 +69,7 @@ public class PortCallMessageBuilder {
 
     public PortCallMessageBuilder locationState(LocationReferenceObject refObject,
                                                 TimeType timeType,
-                                                XMLGregorianCalendar time,
+                                                LocalDateTime time,
                                                 LocationState.ArrivalLocation arrivalLocation,
                                                 LocationState.DepartureLocation departureLocation) {
         LocationState locationState = new LocationState();
@@ -91,7 +92,7 @@ public class PortCallMessageBuilder {
                                                eu.portcdm.messaging.ServiceState.Between between,
                                                String performingActor,
                                                ServiceObject serviceObject,
-                                               XMLGregorianCalendar time,
+                                               LocalDateTime time,
                                                ServiceTimeSequence serviceTimeSequence,
                                                TimeType timeType
                                                ) {

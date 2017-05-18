@@ -84,6 +84,7 @@ public class MessageQueueService {
 
         Request request = this.baseRequest.newBuilder()
                 .url(this.baseRequest.urlString() + "/mqs?fromTime="+fromTime)
+                .post(RequestBody.create(MediaType.parse("application/json"),""))
                 .build();
 
         try {

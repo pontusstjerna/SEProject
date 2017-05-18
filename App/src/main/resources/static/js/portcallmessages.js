@@ -23,21 +23,22 @@ function getQidAndMessages(subUrl){
     $.ajax({
         url: subUrl,
         context: document.body
-    }).done(function(data) { //When response is recieved
+    }).done(function(data) { //When response is received
         queueId = data;
-    });
+        getOldMessages();
 
-    //Get all old messages
-    getOldMessages();
-    //Look for new messages every 10 seconds
-    setInterval(getNewMessages, 10000);
+        //Look for new messages every 10 seconds
+        setInterval(getNewMessages, 10000);
+    });
 }
 
 function getOldMessages(){
+    console.log("old runnin");
     $.ajax({
         url: "/queue/old/" + queueId,
         context: document.body
     }).done(function(data) {
+        console.log(data);
         data.forEach(function (m){
             $("#portcallmessages").prepend(getMessageContainer(new Date(m.reportedAt+7200000).toISOString().substr(0,19).replace('T', ' '), m.reportedBy.substring(22), m.serviceState.timeType, m.serviceState.serviceObject, m.serviceState.time));
         });
@@ -45,6 +46,7 @@ function getOldMessages(){
 }
 
 function getNewMessages(){
+    console.log("new runnin");
    $.ajax({
        url: "/queue/new/" + queueId,
        context: document.body
