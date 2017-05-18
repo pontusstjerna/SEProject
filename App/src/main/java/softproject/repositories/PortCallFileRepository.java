@@ -66,7 +66,7 @@ public class PortCallFileRepository implements PortCallRepository {
             old.setReadyToSail(newPortCall.getReadyToSail());
             old.setSlopOpConfirmed(newPortCall.getSlopOpConfirmed());
             old.setSlopOpDenied(newPortCall.getSlopOpDenied());
-            old.setSlopOpReqRecieved(newPortCall.getSlopOpReqRecieved());
+            old.setSlopOpReqReceived(newPortCall.getSlopOpReqReceived());
             old.setArrivalVesselBerth(newPortCall.getArrivalVesselBerth());
             old.setDepartureVesselBerth(newPortCall.getDepartureVesselBerth());
         }else {

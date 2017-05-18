@@ -7,6 +7,13 @@ $("#btnEditBerth").click(function(){switchEdit("berth");});
 
 //Timestamps
 $("#btnEditCargoOpCommenced").click(function(){switchTimeEdit("cargoOpCommenced");});
+$("#btnEditCargoOpCompleted").click(function(){switchTimeEdit("cargoOpCompleted");});
+$("#btnEditSlopOpConfirmed").click(function(){switchTimeEdit("slopOpConfirmed");});
+$("#btnEditSlopOpDenied").click(function(){switchTimeEdit("slopOpDenied");});
+$("#btnEditSlopOpReqReceived").click(function(){switchTimeEdit("slopOpReqReceived");});
+$("#btnEditReadyToSail").click(function(){switchTimeEdit("readyToSail");});
+$("#btnEditArrivalVesselBerth").click(function(){switchTimeEdit("arrivalVesselBerth");});
+$("#btnEditDepartureVesselBerth").click(function(){switchTimeEdit("departureVesselBerth");});
 $("#btnEditLaycanStart").click(function() {switchTimeEdit("laycanStart")});
 $("#btnEditLaycanEnd").click(function() {switchTimeEdit("laycanEnd")});
 
@@ -64,6 +71,13 @@ function saveChanges(){
         internalId : id,
         //Timestamps
         cargoOpCommenced : getStringFromDate("cargoOpCommenced", currentPortcall.cargoOpCommenced),
+        cargoOpCompleted : getStringFromDate("cargoOpCompleted", currentPortcall.cargoOpCompleted),
+        slopOpConfirmed : getStringFromDate("slopOpConfirmed", currentPortcall.slopOpConfirmed),
+        slopOpDenied : getStringFromDate("slopOpDenied", currentPortcall.slopOpDenied),
+        slopOpReqReceived : getStringFromDate("slopOpReqReceived", currentPortcall.slopOpReqReceived),
+        readyToSail : getStringFromDate("readyToSail", currentPortcall.readyToSail),
+        arrivalVesselBerth : getStringFromDate("arrivalVesselBerth", currentPortcall.arrivalVesselBerth),
+        departureVesselBerth : getStringFromDate("departureVesselBerth", currentPortcall.departureVesselBerth),
         laycanStart : getStringFromDate("laycanStart", currentPortcall.laycanStart),
         laycanEnd : getStringFromDate("laycanEnd", currentPortcall.laycanEnd)
     };
