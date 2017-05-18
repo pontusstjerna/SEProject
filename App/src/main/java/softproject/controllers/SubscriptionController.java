@@ -10,11 +10,11 @@ import java.util.List;
 @RestController
 public class SubscriptionController {
 
-    @GetMapping("/queue/subscribe/portcalls/{portCallId}")
-    public String getQueueId(@PathVariable String portCallId){
-        PortCDMRequest portCDMRequest = new PortCDMRequest();
-        return portCDMRequest.subscribe(portCallId);
-    }
+//    @GetMapping("/queue/subscribe/portcalls/{portCallId}")
+//    public String getQueueId(@PathVariable String portCallId){
+//        PortCDMRequest portCDMRequest = new PortCDMRequest();
+//        return portCDMRequest.subscribe(portCallId);
+//    }
 
     @GetMapping("/ship/subscribe")
     public String subscribe() {
@@ -24,19 +24,19 @@ public class SubscriptionController {
 
     }
 
-    @GetMapping("/queue/{queueId}")
-    public List<PortCallMessage> viewQueue(@PathVariable String queueId) {
-        PortCDMRequest req = new PortCDMRequest();
-        List<PortCallMessage> result = req.getNewMessages(queueId);
-        return result;
-    }
+//    @GetMapping("/queue/{queueId}")
+//    public List<PortCallMessage> viewQueue(@PathVariable String queueId) {
+//        PortCDMRequest req = new PortCDMRequest();
+//        List<PortCallMessage> result = req.getNewMessages(queueId);
+//        return result;
+//    }
 
-    @GetMapping("/message/post")
-    public String postMessage() {
-        PortCDMRequest req = new PortCDMRequest();
-        String result = req.sendMessage();
-
-        return result;
-    }
+//    @GetMapping("/message/post")
+//    public String postMessage() {
+//        PortCDMRequest req = new PortCDMRequest();
+//        String result = req.sendMessage();
+//
+//        return result;
+//    }
 
 }

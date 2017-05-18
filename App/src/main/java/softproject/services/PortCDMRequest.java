@@ -32,6 +32,10 @@ public class PortCDMRequest {
     public static Request getBaseRequest() {
         if (baseRequest == null) {
             baseRequest = new Request.Builder()
+//                    .header("X-PortCDM-UserId", "test1")
+//                    .header("X-PortCDM-Password", "test123")
+//                    .header("X-PortCDM-APIKey", "Terminal_2")
+//                    .url("http://sandbox-5.portcdm.eu:8080")
                     .header("X-PortCDM-UserId", "porter")
                     .header("X-PortCDM-Password", "porter")
                     .header("X-PortCDM-APIKey", "eeee")
@@ -64,112 +68,112 @@ public class PortCDMRequest {
         return result;
     }
 
-    public String sendMessage() {
-        Amss amss = new Amss(getClientInstance(), getBaseRequest());
-
-        XMLGregorianCalendar time = null;
-        try {
-            time = DatatypeFactory.newInstance().newXMLGregorianCalendar(2017, 05, 01, 12, 00, 00, 00, 0);
-        } catch (DatatypeConfigurationException e) {
-            e.printStackTrace();
-        }
-
-        LocationState.ArrivalLocation arrivalLocation = new LocationState.ArrivalLocation();
-        Location location = new Location();
-        location.setLocationType(LogicalLocation.BERTH);
-        arrivalLocation.setTo(location);
-
-        PortCallMessage message = PortCallMessageBuilder.newBuilder()
-                .vesselId("urn:x-mrn:stm:vessel:IMO:9398917")
-                .portCallId("urn:x-mrn:stm:portcdm:port_call:SEGOT:ca1a795e-ee95-4c96-96d1-53896617c9ac")
-                .locationState(LocationReferenceObject.VESSEL, TimeType.RECOMMENDED, time, arrivalLocation, null)
-                .build();
-
-        if (message != null)
-            amss.postStateUpdate(message);
-        return "";
-    }
-
-
-    public String subscribe(String portCallIdToFind) {
-        Filter portCallIdFilter = new Filter();
-        portCallIdFilter.setType(FilterType.PORT_CALL);
-        portCallIdFilter.setElement(portCallIdToFind);
-
-        MessageQueueService queueService = new MessageQueueService(getClientInstance(), getBaseRequest());
-
-        String queueId = "";
-
-        try {
-            queueId = queueService.postMqs(Arrays.asList(portCallIdFilter));
-        } catch (IllegalFilters illegalFilters) {
-            illegalFilters.printStackTrace();
-        } catch (CouldNotReachPortCDM couldNotReachPortCDM) {
-            couldNotReachPortCDM.printStackTrace();
-        } catch (BadRequest badRequest) {
-            badRequest.printStackTrace();
-        }
-
-        XMLGregorianCalendar time = null;
-        try {
-            time = DatatypeFactory.newInstance().newXMLGregorianCalendar(2017, 05, 01, 12, 00, 00, 00, 0);
-        } catch (DatatypeConfigurationException e) {
-            e.printStackTrace();
-        }
-
-        return queueId;
-    }
-
-    
-    /*public String subscribe() {
-        Filter filter1 = new Filter();
-        filter1.setType(FilterType.SERVICE_STATE_LOCATION_TYPE);
-        filter1.setElement("BERTH");
-
-        Filter filter2 = new Filter();
-        filter2.setType(FilterType.VESSEL);
-        filter2.setElement("urn:x-mrn:stm:vessel:IMO:9398917");
-
-        MessageQueueService queueService = new MessageQueueService(getClientInstance(), getBaseRequest());
-
-        String queueId = "";
-
-        try {
-            queueId = queueService.postMqs(Arrays.asList(filter1, filter2));
-        } catch (IllegalFilters illegalFilters) {
-            illegalFilters.printStackTrace();
-        } catch (CouldNotReachPortCDM couldNotReachPortCDM) {
-            couldNotReachPortCDM.printStackTrace();
-        } catch (BadRequest badRequest) {
-            badRequest.printStackTrace();
-        }
-
-        XMLGregorianCalendar time = null;
-        try {
-            time = DatatypeFactory.newInstance().newXMLGregorianCalendar(2017, 05, 01, 12, 00, 00, 00, 0);
-        } catch (DatatypeConfigurationException e) {
-            e.printStackTrace();
-        }
-
-        return queueId;
-    }*/
-
-    public List<PortCallMessage> getNewMessages(String queueId) {
-        List<PortCallMessage> messages = null;
-        MessageQueueService queueService = new MessageQueueService(getClientInstance(), getBaseRequest());
-        try {
-            messages = queueService.getMqs(queueId);
-        } catch (CouldNotReachPortCDM couldNotReachPortCDM) {
-            couldNotReachPortCDM.printStackTrace();
-        } catch (BadRequest badRequest) {
-            badRequest.printStackTrace();
-        }
-
-        //Filtrera ut alla meddeleanden för kaj 520
-        messages.stream()
-                .filter(m -> m.getServiceState().getBetween().getTo().getName().contains("520"));
-
-        return messages;
-    }
+//    public String sendMessage() {
+//        Amss amss = new Amss(getClientInstance(), getBaseRequest());
+//
+//        XMLGregorianCalendar time = null;
+//        try {
+//            time = DatatypeFactory.newInstance().newXMLGregorianCalendar(2017, 05, 01, 12, 00, 00, 00, 0);
+//        } catch (DatatypeConfigurationException e) {
+//            e.printStackTrace();
+//        }
+//
+//        LocationState.ArrivalLocation arrivalLocation = new LocationState.ArrivalLocation();
+//        Location location = new Location();
+////        location.setLocationType(LogicalLocation.BERTH);
+//        arrivalLocation.setTo(location);
+//
+//        PortCallMessage message = PortCallMessageBuilder.newBuilder()
+//                .vesselId("urn:x-mrn:stm:vessel:IMO:9398917")
+//                .portCallId("urn:x-mrn:stm:portcdm:port_call:SEGOT:ca1a795e-ee95-4c96-96d1-53896617c9ac")
+//                .locationState(LocationReferenceObject.VESSEL, TimeType.RECOMMENDED, time, arrivalLocation, null)
+//                .build();
+//
+//        if (message != null)
+//            amss.postStateUpdate(message);
+//        return "";
+//    }
+//
+//
+//    public String subscribe(String portCallIdToFind) {
+//        Filter portCallIdFilter = new Filter();
+//        portCallIdFilter.setType(FilterType.PORT_CALL);
+//        portCallIdFilter.setElement(portCallIdToFind);
+//
+//        MessageQueueService queueService = new MessageQueueService(getClientInstance(), getBaseRequest());
+//
+//        String queueId = "";
+//
+//        try {
+//            queueId = queueService.postMqs(Arrays.asList(portCallIdFilter));
+//        } catch (IllegalFilters illegalFilters) {
+//            illegalFilters.printStackTrace();
+//        } catch (CouldNotReachPortCDM couldNotReachPortCDM) {
+//            couldNotReachPortCDM.printStackTrace();
+//        } catch (BadRequest badRequest) {
+//            badRequest.printStackTrace();
+//        }
+//
+//        XMLGregorianCalendar time = null;
+//        try {
+//            time = DatatypeFactory.newInstance().newXMLGregorianCalendar(2017, 05, 01, 12, 00, 00, 00, 0);
+//        } catch (DatatypeConfigurationException e) {
+//            e.printStackTrace();
+//        }
+//
+//        return queueId;
+//    }
+//
+//
+//    /*public String subscribe() {
+//        Filter filter1 = new Filter();
+//        filter1.setType(FilterType.SERVICE_STATE_LOCATION_TYPE);
+//        filter1.setElement("BERTH");
+//
+//        Filter filter2 = new Filter();
+//        filter2.setType(FilterType.VESSEL);
+//        filter2.setElement("urn:x-mrn:stm:vessel:IMO:9398917");
+//
+//        MessageQueueService queueService = new MessageQueueService(getClientInstance(), getBaseRequest());
+//
+//        String queueId = "";
+//
+//        try {
+//            queueId = queueService.postMqs(Arrays.asList(filter1, filter2));
+//        } catch (IllegalFilters illegalFilters) {
+//            illegalFilters.printStackTrace();
+//        } catch (CouldNotReachPortCDM couldNotReachPortCDM) {
+//            couldNotReachPortCDM.printStackTrace();
+//        } catch (BadRequest badRequest) {
+//            badRequest.printStackTrace();
+//        }
+//
+//        XMLGregorianCalendar time = null;
+//        try {
+//            time = DatatypeFactory.newInstance().newXMLGregorianCalendar(2017, 05, 01, 12, 00, 00, 00, 0);
+//        } catch (DatatypeConfigurationException e) {
+//            e.printStackTrace();
+//        }
+//
+//        return queueId;
+//    }*/
+//
+//    public List<PortCallMessage> getNewMessages(String queueId) {
+//        List<PortCallMessage> messages = null;
+//        MessageQueueService queueService = new MessageQueueService(getClientInstance(), getBaseRequest());
+//        try {
+//            messages = queueService.getMqs(queueId);
+//        } catch (CouldNotReachPortCDM couldNotReachPortCDM) {
+//            couldNotReachPortCDM.printStackTrace();
+//        } catch (BadRequest badRequest) {
+//            badRequest.printStackTrace();
+//        }
+//
+//        //Filtrera ut alla meddeleanden för kaj 520
+////        messages.stream()
+////                .filter(m -> m.getServiceState().getBetween().getTo().getName().contains("520"));
+//
+//        return messages;
+//    }
 
 }
