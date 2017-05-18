@@ -25,7 +25,6 @@ public class HomeController {
         String password = requestParams.get("password");
 
         if (username != null && password != null && username.equals("potatis") && password.equals("kakor")) {
-
             return "index";
         }
         else return "login";
@@ -39,5 +38,10 @@ public class HomeController {
     @GetMapping("/unscheduled")
     public String getUnscheduled() {
         return "unscheduled";
+    }
+
+    @GetMapping("/report")
+    public String reportTestPage() {
+        return "reportTestPage";
     }
 }

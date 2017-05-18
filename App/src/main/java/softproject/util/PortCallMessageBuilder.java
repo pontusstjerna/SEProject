@@ -3,9 +3,7 @@ package softproject.util;
 import eu.portcdm.dto.DepartureLocation;
 import eu.portcdm.messaging.*;
 import softproject.services.exceptions.IncompletePortCallMessage;
-
-import javax.xml.datatype.XMLGregorianCalendar;
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.UUID;
 
 public class PortCallMessageBuilder {
@@ -18,7 +16,7 @@ public class PortCallMessageBuilder {
     }
 
     public static PortCallMessageBuilder newBuilder() {
-        return new PortCallMessageBuilder("urn:x-mrn:stm:portcdm:message:" + UUID.randomUUID().toString());
+        return new PortCallMessageBuilder("urn:mrn:stm:portcdm:message:" + UUID.randomUUID().toString());
     }
 
 
@@ -52,7 +50,7 @@ public class PortCallMessageBuilder {
         return this;
     }
 
-    public PortCallMessageBuilder reportedAt(LocalDateTime time) {
+    public PortCallMessageBuilder reportedAt(ZonedDateTime time) {
         this.message.setReportedAt(time);
         return this;
     }
@@ -69,13 +67,13 @@ public class PortCallMessageBuilder {
 
     public PortCallMessageBuilder locationState(LocationReferenceObject refObject,
                                                 TimeType timeType,
-                                                LocalDateTime time,
+                                                ZonedDateTime time,
                                                 LocationState.ArrivalLocation arrivalLocation,
                                                 LocationState.DepartureLocation departureLocation) {
         LocationState locationState = new LocationState();
         locationState.setReferenceObject(refObject);
         locationState.setTimeType(timeType);
-        locationState.setTime(time);
+        locationState.setTime(time.toLocalDateTime());
         locationState.setArrivalLocation(arrivalLocation);
         locationState.setDepartureLocation(departureLocation);
         this.message.setLocationState(locationState);
@@ -92,7 +90,7 @@ public class PortCallMessageBuilder {
                                                eu.portcdm.messaging.ServiceState.Between between,
                                                String performingActor,
                                                ServiceObject serviceObject,
-                                               LocalDateTime time,
+                                               ZonedDateTime time,
                                                ServiceTimeSequence serviceTimeSequence,
                                                TimeType timeType
                                                ) {
@@ -101,7 +99,7 @@ public class PortCallMessageBuilder {
         serviceState.setBetween(between);
         serviceState.setPerformingActor(performingActor);
         serviceState.setServiceObject(serviceObject);
-        serviceState.setTime(time);
+        serviceState.setTime(time.toLocalDateTime());
         serviceState.setTimeSequence(serviceTimeSequence);
         serviceState.setTimeType(timeType);
         this.message.setServiceState(serviceState);

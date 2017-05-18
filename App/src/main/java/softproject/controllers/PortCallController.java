@@ -55,6 +55,8 @@ public class PortCallController {
 
     @GetMapping("/portcalls")
     public List<PortCall> getAllPortCalls() {
+
+
         return PortCallRepository.getRepo().getAll();
     }
 }
