@@ -6,6 +6,7 @@
   <title>Portcallview</title>
   <link rel="stylesheet" href="/css/main.css">
   <link rel="stylesheet" href="/css/portcallview.css">
+  <link rel="stylesheet" href="/css/sendPCmessage.css">
 </head>
 <body>
   <div class="maincontainer">
@@ -48,9 +49,9 @@
   </div>
   <div class="outercontainer" id="right">
     <h1 align="center">Timestamps</h1>
-    <div class="innercontainer">
+    <tr class="innercontainer">
       <h3>Cargo</h3>
-      <table class="tblInfo">
+      <tr class="tblInfo">
         <tr>
           <td><b>Cargo op commenced: </b></td>
         </tr>
@@ -63,6 +64,19 @@
           </td>
           <td>
             <button id="btnEditCargoOpCommenced" class="button btnEdit">Edit</button>
+          </td>
+        </tr>
+      </table>
+      <table>
+        <tr>
+          <td>
+            <button id="btnSendPCM" class="button">Send to PortCDM</button>
+            <div id="messageBox" class="modal">
+              <div class="modal-content">
+                <span class="close">&times;</span><!--kryss, stäng ner-->
+                <p>Some text in the Modal..</p>
+              </div>
+            </div>
           </td>
         </tr>
       </table>
@@ -114,6 +128,7 @@
 <script src="js/portcallmessages.js"></script>
 <script src="js/portcallview.js"></script>
 <script src="js/portcallviewFields.js"></script>
+<script scr="js/sendPCM.js"></script>
 <footer>
     <p class="copyright" align="center">&copy; Copyright 2017 Billy Corgan Project.</p>
 </footer>
