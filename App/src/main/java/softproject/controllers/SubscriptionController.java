@@ -63,12 +63,12 @@ public class SubscriptionController {
         PortCallRepository repo = PortCallRepository.getRepo();
         PortCall portCall = repo.getFromQueueId(queueId);
         if(portCall.getPortcallId() == null || portCall.getPortcallId().equals("")){
-            String qID = req.subscribe("2017-04-20T00:00:00Z");
+            String qID = req.subscribe(FilterType.VESSEL, portCall.getVesselId(),"2017-04-20T00:00:00Z");
             List<PortCallMessage> result = req.getNewMessages(qID);
             System.out.println("Old Queue: " + result);
             return result;
         }
-        String qID = req.subscribe("2017-04-20T00:00:00Z");
+        String qID = req.subscribe(FilterType.PORT_CALL, portCall.getPortcallId(),"2017-04-20T00:00:00Z");
         List<PortCallMessage> result = req.getNewMessages(qID);
         System.out.println("Old Queue: " + result);
         return result;

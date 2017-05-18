@@ -3,6 +3,8 @@ package softproject.util;
 import eu.portcdm.dto.DepartureLocation;
 import eu.portcdm.messaging.*;
 import softproject.services.exceptions.IncompletePortCallMessage;
+
+import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.UUID;
 
@@ -51,7 +53,7 @@ public class PortCallMessageBuilder {
     }
 
     public PortCallMessageBuilder reportedAt(ZonedDateTime time) {
-        this.message.setReportedAt(time);
+        this.message.setReportedAt(time.toLocalDateTime());
         return this;
     }
 
@@ -106,10 +108,10 @@ public class PortCallMessageBuilder {
         return this;
     }
 
-    public PortCallMessageBuilder messageOperation(String operation) {
+    public PortCallMessageBuilder messageOperation(String operatioN) {
         MessageOperation op = new MessageOperation();
         op.setMessageId(this.message.getMessageId());
-        op.setOperation(operation);
+        op.setOperation(operatioN);
         this.message.setMessageOperation(op);
         return this;
     }

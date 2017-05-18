@@ -4,7 +4,12 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.squareup.okhttp.*;
 import eu.portcdm.mb.dto.Filter;
 import eu.portcdm.messaging.PortCallMessage;
@@ -20,7 +25,6 @@ public class MessageQueueService {
     private OkHttpClient httpClient;
     private MediaType mediaType;
     private Request baseRequest;
-
 
     public MessageQueueService(OkHttpClient httpClient, Request baseRequest) {
         this.httpClient = httpClient;
@@ -141,6 +145,7 @@ public class MessageQueueService {
 
     private List<PortCallMessage> convertFromXmlToPortCall(String messagesAsXML) throws IOException {
         XmlMapper mapper = new XmlMapper();
+        mapper.registerModule(new JavaTimeModule());
         return mapper.readValue(messagesAsXML, new TypeReference<List<PortCallMessage>>() {});
     }
 
