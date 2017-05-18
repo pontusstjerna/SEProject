@@ -3,8 +3,6 @@ package softproject.util;
 import eu.portcdm.dto.DepartureLocation;
 import eu.portcdm.messaging.*;
 import softproject.services.exceptions.IncompletePortCallMessage;
-
-import javax.xml.datatype.XMLGregorianCalendar;
 import java.time.ZonedDateTime;
 import java.util.UUID;
 
@@ -52,10 +50,10 @@ public class PortCallMessageBuilder {
         return this;
     }
 
-//    public PortCallMessageBuilder reportedAt(XMLGregorianCalendar calendar) {
-//        this.message.setReportedAt(calendar);
-//        return this;
-//    }
+    public PortCallMessageBuilder reportedAt(ZonedDateTime time) {
+        this.message.setReportedAt(time);
+        return this;
+    }
 
     public PortCallMessageBuilder comment(String comment) {
         this.message.setComment(comment);

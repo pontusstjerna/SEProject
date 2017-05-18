@@ -38,29 +38,48 @@ public class PortCallFileRepository implements PortCallRepository {
     }
 
     @Override
+    // returns the portcall with the specified portcallid, or NULL if the id can't be found
+    public PortCall getFromPortcallId(String portCallId) {
+        Optional<PortCall> maybePortCall =
+                portcalls.stream()
+                        .filter(p -> p.getPortcallId() != null)
+                        .filter(p -> p.getPortcallId().equals(portCallId))
+                        .findFirst();
+
+        return maybePortCall.orElse(null);
+    }
+
+    @Override
+    // returns the portcall with the specified portcallid, or NULL if the id can't be found
+    public PortCall getFromVesselId(String vesselId) {
+        Optional<PortCall> maybePortCall =
+                portcalls.stream()
+                        .filter(p -> p.getVesselId() != null)
+                        .filter(p -> p.getVesselId().equals(vesselId))
+                        .findFirst();
+
+        return maybePortCall.orElse(null);
+    }
+
+    @Override
+    // returns the portcall with the specified portcallid, or NULL if the id can't be found
+    public PortCall getFromQueueId(String queueId) {
+        Optional<PortCall> maybePortCall =
+                portcalls.stream()
+                        .filter(p -> p.getQueueID() != null)
+                        .filter(p -> p.getQueueID().equals(queueId))
+                        .findFirst();
+
+        return maybePortCall.orElse(null);
+    }
+
+    @Override
     public void add(PortCall newPortCall) {
-
-        System.out.println("Adding or editing portcall " + newPortCall.getInternalId());
-
-        System.out.println("PRESENT::");
-        for(PortCall p : portcalls) System.out.println("Portcall: " + p.getInternalId());
-
-        //If id already exists, edit instead of adding
-        Optional<PortCall> maybeOld = portcalls.stream().filter(x -> x.getInternalId() == newPortCall.getInternalId()).findFirst();
-        if(maybeOld.isPresent()){ //Update old
-            System.out.println("This is an edit!");
-            PortCall old = maybeOld.get();
-            old.setCargoIn(newPortCall.getCargoIn());
-            old.setCargoOut(newPortCall.getCargoOut());
-            old.setLaycanStart(newPortCall.getLaycanStart());
-            old.setLaycanEnd(newPortCall.getLaycanEnd());
-            old.setName(newPortCall.getName());
-            old.setVesselId(newPortCall.getVesselId());
-            old.setPortcallId(newPortCall.getPortcallId());
-        }else portcalls.add(newPortCall);
-
+        // TODO check so that the id isn't already in the list
+        portcalls.add(newPortCall);
         savePortCallsToFile();
     }
+
 
     @Override
     // deletes the portcall sent in as a parameter
@@ -88,7 +107,7 @@ public class PortCallFileRepository implements PortCallRepository {
         try {
             File file = new File(FILE_PATH);
             if(!file.exists()) {
-                return new ArrayList<PortCall>();
+                return new ArrayList<>();
             }
 
             fileIn = new FileInputStream(file);
@@ -106,11 +125,11 @@ public class PortCallFileRepository implements PortCallRepository {
             e.printStackTrace();
         }
 
-        return new ArrayList<PortCall>();
+        return new ArrayList<>();
     }
 
     // saves all the portcalls in our list to resources\files\portcallstorage.data
-    private void savePortCallsToFile() {
+    public void savePortCallsToFile() {
         try {
             FileOutputStream fileOut = new FileOutputStream(FILE_PATH);
             ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);

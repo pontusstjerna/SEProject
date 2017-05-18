@@ -15,15 +15,19 @@ function setBtnEdit(button){
 }
 
 function switchEdit(field){
-    var readonly = $("#" + field).attr("readonly");
-    if(readonly == "readonly"){
-        $("#" + field).focus();
+    var jQuaryfield = $("#" + field);
+    var readonly = jQuaryfield.attr("readonly");
+    if(readonly === "readonly"){
+        jQuaryfield.focus();
         setBtnSave("btnEdit" + field.capitalize());    
-        $("#" + field).removeAttr("readonly");
+        jQuaryfield.removeAttr("readonly");
     }else{
         setBtnEdit("btnEdit" + field.capitalize());
-        $("#" + field).attr("readonly", "readonly");
+        jQuaryfield.attr("readonly", "readonly");
         saveChanges();
+        if(field === "portcallId" || field === "vesselId"){
+            startSubscription();
+        }
     }
 }
     

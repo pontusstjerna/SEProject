@@ -1,42 +1,76 @@
 package softproject.controllers;
 
+import eu.portcdm.mb.dto.FilterType;
 import eu.portcdm.messaging.PortCallMessage;
 import org.springframework.web.bind.annotation.*;
-import softproject.services.PortCDMRequest;
+import softproject.model.PortCall;
+import softproject.model.PortCallRepository;
+import softproject.services.SubscriptionService;
 
-import java.util.List;
+import java.util.*;
 
 
 @RestController
 public class SubscriptionController {
 
-//    @GetMapping("/queue/subscribe/portcalls/{portCallId}")
-//    public String getQueueId(@PathVariable String portCallId){
-//        PortCDMRequest portCDMRequest = new PortCDMRequest();
-//        return portCDMRequest.subscribe(portCallId);
-//    }
-
-    @GetMapping("/ship/subscribe")
-    public String subscribe() {
-        PortCDMRequest req = new PortCDMRequest();
-
-        return req.createQueue();
-
+    @GetMapping("/queue/subscribe/portcalls/{portCallId}")
+    public String getPortCallQueueId(@PathVariable String portCallId) {
+        SubscriptionService subService = new SubscriptionService();
+        PortCallRepository repo = PortCallRepository.getRepo();
+        PortCall portCall = repo.getFromPortcallId(portCallId);
+        String qID;
+        if (portCall.getQueueID() == null || portCall.getQueueID().equals("")) {
+            qID = subService.subscribe(FilterType.PORT_CALL, portCallId);
+            portCall.setQueueID(qID);
+            repo.add(portCall);
+            System.out.println("PortCallId found and saved! queueId did not exists! Created and saved!");
+            return qID;
+        }
+        qID = portCall.getQueueID();
+        System.out.println("PortCallId found and saved! queueId already existed and was fetched!");
+        return qID;
     }
 
-//    @GetMapping("/queue/{queueId}")
-//    public List<PortCallMessage> viewQueue(@PathVariable String queueId) {
-//        PortCDMRequest req = new PortCDMRequest();
-//        List<PortCallMessage> result = req.getNewMessages(queueId);
-//        return result;
-//    }
+    @GetMapping("/queue/subscribe/portcalls/vessel/{vesselId}")
+    public String getVesselQueueId(@PathVariable String vesselId) {
+        SubscriptionService subService = new SubscriptionService();
+        PortCallRepository repo = PortCallRepository.getRepo();
+        PortCall portCall = repo.getFromVesselId(vesselId);
+        String qID;
+        if (portCall.getQueueID() == null || portCall.getQueueID().equals("")) {
+            qID = subService.subscribe(FilterType.VESSEL, vesselId);
+            portCall.setQueueID(qID);
+            repo.add(portCall);
+            System.out.println("PortCallId found and saved! queueId did not exists! Created and saved!");
+            return qID;
+        }
+        qID = portCall.getQueueID();
+        System.out.println("PortCallId found and saved! queueId already existed and was fetched!");
+        return qID;
+    }
 
-//    @GetMapping("/message/post")
-//    public String postMessage() {
-//        PortCDMRequest req = new PortCDMRequest();
-//        String result = req.sendMessage();
-//
-//        return result;
-//    }
+    @GetMapping("/queue/new/{queueId}")
+    public List<PortCallMessage> newQueue(@PathVariable String queueId) {
+        SubscriptionService req = new SubscriptionService();
+        List<PortCallMessage> result = req.getNewMessages(queueId);
+        System.out.println("New Queue " + result);
+        return result;
+    }
 
+    @GetMapping("/queue/old/{queueId}")
+    public List<PortCallMessage> oldQueue(@PathVariable String queueId) {
+        SubscriptionService req = new SubscriptionService();
+        PortCallRepository repo = PortCallRepository.getRepo();
+        PortCall portCall = repo.getFromQueueId(queueId);
+        if(portCall.getPortcallId() == null || portCall.getPortcallId().equals("")){
+            String qID = req.subscribe("2017-04-20T00:00:00Z");
+            List<PortCallMessage> result = req.getNewMessages(qID);
+            System.out.println("Old Queue: " + result);
+            return result;
+        }
+        String qID = req.subscribe("2017-04-20T00:00:00Z");
+        List<PortCallMessage> result = req.getNewMessages(qID);
+        System.out.println("Old Queue: " + result);
+        return result;
+    }
 }
