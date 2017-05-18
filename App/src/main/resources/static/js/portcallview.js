@@ -14,6 +14,13 @@ function loadProperties(portcall, textStatus){
     
     //Timestamps
     setTimestamp("cargoOpCommenced", portcall.cargoOpCommenced);
+    setTimestamp("cargoOpCompleted", portcall.cargoOpCompleted);
+    setTimestamp("slopOpConfirmed", portcall.slopOpConfirmed);
+    setTimestamp("slopOpDenied", portcall.slopOpDenied);
+    setTimestamp("slopOpReqReceived", portcall.slopOpReqReceived);
+    setTimestamp("readyToSail", portcall.readyToSail);
+    setTimestamp("arrivalVesselBerth", portcall.arrivalVesselBerth);
+    setTimestamp("departureVesselBerth", portcall.departureVesselBerth);
     setTimestamp("laycanStart", portcall.laycanStart);
     setTimestamp("laycanEnd", portcall.laycanEnd);
 

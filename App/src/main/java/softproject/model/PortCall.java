@@ -3,9 +3,7 @@ package softproject.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import javax.annotation.PostConstruct;
 import java.io.Serializable;
-import java.sql.Time;
 import java.time.ZonedDateTime;
 
 public class PortCall implements Serializable{
@@ -25,11 +23,11 @@ public class PortCall implements Serializable{
     private ZonedDateTime cargoOpCommenced;
     private ZonedDateTime cargoOpCompleted;
     private ZonedDateTime readyToSail;
-    private ZonedDateTime SlopOpConfirmed;
-    private ZonedDateTime SlopOpDenied;
-    private ZonedDateTime SlopOpReqRecieved;
-    private ZonedDateTime ArrivalVesselBerth;
-    private ZonedDateTime DepartureVesselBerth;
+    private ZonedDateTime slopOpConfirmed;
+    private ZonedDateTime slopOpDenied;
+    private ZonedDateTime slopOpReqReceived;
+    private ZonedDateTime arrivalVesselBerth;
+    private ZonedDateTime departureVesselBerth;
     
 
     public long getInternalId(){
@@ -137,46 +135,46 @@ public class PortCall implements Serializable{
 
     @JsonFormat (shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd'T'HH:mmz")
     public ZonedDateTime getSlopOpConfirmed() {
-        return SlopOpConfirmed;
+        return slopOpConfirmed;
     }
 
     public void setSlopOpConfirmed(ZonedDateTime slopOpConfirmed) {
-        SlopOpConfirmed = slopOpConfirmed;
+        this.slopOpConfirmed = slopOpConfirmed;
     }
 
     @JsonFormat (shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd'T'HH:mmz")
     public ZonedDateTime getSlopOpDenied() {
-        return SlopOpDenied;
+        return slopOpDenied;
     }
 
     public void setSlopOpDenied(ZonedDateTime slopOpDenied) {
-        SlopOpDenied = slopOpDenied;
+        this.slopOpDenied = slopOpDenied;
     }
 
     @JsonFormat (shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd'T'HH:mmz")
-    public ZonedDateTime getSlopOpReqRecieved() {
-        return SlopOpReqRecieved;
+    public ZonedDateTime getSlopOpReqReceived() {
+        return slopOpReqReceived;
     }
 
-    public void setSlopOpReqRecieved(ZonedDateTime slopOpReqRecieved) {
-        SlopOpReqRecieved = slopOpReqRecieved;
+    public void setSlopOpReqReceived(ZonedDateTime slopOpReqReceived) {
+        this.slopOpReqReceived = slopOpReqReceived;
     }
 
     @JsonFormat (shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd'T'HH:mmz")
     public ZonedDateTime getArrivalVesselBerth() {
-        return ArrivalVesselBerth;
+        return arrivalVesselBerth;
     }
 
     public void setArrivalVesselBerth(ZonedDateTime arrivalVesselBerth) {
-        ArrivalVesselBerth = arrivalVesselBerth;
+        this.arrivalVesselBerth = arrivalVesselBerth;
     }
 
     @JsonFormat (shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd'T'HH:mmz")
     public ZonedDateTime getDepartureVesselBerth() {
-        return DepartureVesselBerth;
+        return departureVesselBerth;
     }
 
     public void setDepartureVesselBerth(ZonedDateTime departureVesselBerth) {
-        DepartureVesselBerth = departureVesselBerth;
+        this.departureVesselBerth = departureVesselBerth;
     }
 }

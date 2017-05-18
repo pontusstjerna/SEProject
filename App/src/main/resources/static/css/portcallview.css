@@ -60,6 +60,12 @@ b{
 
 .tblInfo{
   width: 100%;
+  height: 50%;
+  font-size: 0.8em;
+}
+
+td{
+  white-space: nowrap;
 }
 
 #right{
