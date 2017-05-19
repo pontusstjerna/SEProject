@@ -27,8 +27,8 @@ function getQidAndMessages(subUrl) {
         queueId = data;
         getOldMessages();
 
-        //Look for new messages every 10 seconds
-        setInterval(getNewMessages, 10000);
+        //Look for new messages every 3 seconds
+        setInterval(getNewMessages, 3000);
     });
 }
 
