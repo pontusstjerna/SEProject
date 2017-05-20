@@ -109,6 +109,9 @@
           </td>
         </tr>
         <tr>
+          <td><button id="btnSendPCM" class="button">Send to PortCDM</button></td>
+        </tr>
+        <tr>
           <td><b>Slop operation request received: </b></td>
         </tr>
         <tr>
@@ -123,7 +126,7 @@
           </td>
         </tr>
       </table>
-     <button id="btnSendPCM" class="button">.</button>
+
       <h3>Berth and locations</h3>
       <table class="tblInfo">
         <tr>
@@ -199,10 +202,9 @@
       </table>
       </div>
   </div>
-  <div class="outercontainer" id="right">
-    <h1 align="center">Feed</h1>
-      <div class="innercontainer" id="portcallmessages">
-      </div>
+    <div class="outercontainer" id="right">
+      <h1 align="center">Feed</h1>
+      <div class="innercontainer" id="portcallmessages"></div>
       <button onclick="addTestMessage()">Add dummy message</button>
     </div>
   </div>
