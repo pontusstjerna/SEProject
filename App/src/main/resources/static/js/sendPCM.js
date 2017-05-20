@@ -1,5 +1,5 @@
-var msgModal = document.getElementById('messageBox');
-var msgButton = $('#btnSendPCM');
+var msgModal = document.getElementById('messageBoxSlopOpDenied');
+var msgButton = $('#btnPCDMSendSlopOpDenied');
 
 console.log("halloo");
 
