@@ -118,22 +118,17 @@ function getPortCDMPortCall(){
     var portcallId = $("#portcallId").val();
 
     if(portcallId === ""){
-        if(vesselId === "")
-            return {};
-        else{
-            return {vesselId : vesselId};
-        }
+        if(vesselId === "") return {};
+        else return {vesselId : vesselId};
+    }else{
+        if(vesselId === "") return {portcallId : portcallId};
+        else return {portcallId : portcallId, vesselId : vesselId};
     }
-
-    return {
-        vesselId: vesselId,
-        portcallId: portcallId
-    };
 }
 
+var modalPanel = document.getElementById("modalPanel");
 function setModalPanel(visible){
-    var modalPanel = document.getElementById("modalPanel");
-
+    
     if(visible)
         modalPanel.style.display = "block";
     else 
@@ -141,5 +136,5 @@ function setModalPanel(visible){
 }
 
 window.onclick = function(){
-    setModalPanel(false);
+    //setModalPanel(false);
 }
