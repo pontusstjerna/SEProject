@@ -2,6 +2,7 @@ function sendCargoOpCommenced(){
     console.log("Sending cargoOpCommenced to PortCDM...");
 
     var timeType = "ESTIMATED"; //TODO MIKI
+    setModalPanel(true);
 
     var timeStamp = getStringFromDate("cargoOpCommenced");
 
@@ -116,8 +117,29 @@ function getPortCDMPortCall(){
     var vesselId = $("#vesselId").val();
     var portcallId = $("#portcallId").val();
 
+    if(portcallId === ""){
+        if(vesselId === "")
+            return {};
+        else{
+            return {vesselId : vesselId};
+        }
+    }
+
     return {
         vesselId: vesselId,
         portcallId: portcallId
     };
+}
+
+function setModalPanel(visible){
+    var modalPanel = document.getElementById("modalPanel");
+
+    if(visible)
+        modalPanel.style.display = "block";
+    else 
+        modalPanel.style.display = "none";
+}
+
+window.onclick = function(){
+    setModalPanel(false);
 }
