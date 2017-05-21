@@ -185,7 +185,7 @@
             <input type="time" class="time" id="departureVesselBerthTime" readonly>
           </td>
           <td>
-            <button id="btnEditdepartureVesselBerth" class="button btnEdit">Edit</button>
+            <button id="btnEditDepartureVesselBerth" class="button btnEdit">Edit</button>
           </td>
           <td>
             <button class="button" onclick="sendDepartureVesselBerth()">Send to PortCDM</button>
@@ -231,8 +231,16 @@
   </div>
   <div id="modalPanel" class="modal">
     <div class="modal-content">
-      <span class="close" onclick="setModalVisible(false)">&times;</span><!--kryss, stäng ner-->
-      <p>Some text in the Modal..</p>
+      <span class="close" onclick="setModalPanel(false)">&times;</span><!--kryss, stäng ner-->
+      <h3>Please select time type: </h3>
+      <form onclick="enableSending()">
+        <input type="radio" name="timeType" value="ESTIMATED"> Estimated
+        <input type="radio" name="timeType" value="ACTUAL"> Actual
+        <input type="radio" name="timeType" value="TARGET"> Target
+        <input type="radio" name="timeType" value="RECOMMENDED"> Recommended
+      </form>
+      <br>
+      <button id="btnSendToPortCDM" disabled="true">Send to PortCDM</button>
     </div>
   </div>
 </body>
@@ -242,7 +250,6 @@
 <script src="js/portcallmessages.js"></script>
 <script src="js/portcallview.js"></script>
 <script src="js/portcallviewFields.js"></script>
-<script src="js/sendPCM.js"></script>
 <script src="js/portcallviewSend.js"></script>
 <footer>
     <p class="copyright" align="center">&copy; Copyright 2017 Billy Corgan Project.</p>

@@ -1,115 +1,145 @@
 function sendCargoOpCommenced(){
-    console.log("Sending cargoOpCommenced to PortCDM...");
-
-    var timeType = "ESTIMATED"; //TODO MIKI
     setModalPanel(true);
 
-    var timeStamp = getStringFromDate("cargoOpCommenced");
+    $("#btnSendToPortCDM").off("click").on("click", function(){
+        setModalPanel(false);
+        var timeType = getTimeType(); 
+        var timeStamp = getStringFromDate("cargoOpCommenced");
 
-    $.ajax({
-        url: 'report/cargo/commenced?time=' + timeStamp + '&timeType=' + timeType, 
-        type: 'POST',
-        contentType: 'application/json',
-        data: JSON.stringify(getPortCDMPortCall()),
-        dataType: 'json'
+        $.ajax({
+            url: 'report/cargo/commenced?time=' + timeStamp + '&timeType=' + timeType, 
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(getPortCDMPortCall()),
+            dataType: 'json'
+        });
     });
+    
 }
 
 function sendReadyToSail(){
-    var timeType = "ESTIMATED"; //TODO MIKI
+    setModalPanel(true);
 
-    var timeStamp = getStringFromDate("readyToSail");
+    $("#btnSendToPortCDM").off("click").on("click", function(){
+        setModalPanel(false);
+        var timeType = getTimeType();
+        var timeStamp = getStringFromDate("readyToSail");
 
-    $.ajax({
-        url: 'report/readytosailop/completed?time=' + timeStamp + '&timeType=' + timeType, // this URL only works when the server is on the same machine!
-        type: 'POST',
-        contentType: 'application/json',
-        data: JSON.stringify(getPortCDMPortCall()),
-        dataType: 'json'
+        $.ajax({
+            url: 'report/readytosailop/completed?time=' + timeStamp + '&timeType=' + timeType, // this URL only works when the server is on the same machine!
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(getPortCDMPortCall()),
+            dataType: 'json'
+        });
     });
 }
 
 function sendSlopOpConfirmed(){
-    var timeType = "ESTIMATED"; //TODO MIKI
+    setModalPanel(true);
 
-    var timeStamp = getStringFromDate("slopOpConfirmed");
+    $("#btnSendToPortCDM").off("click").on("click", function(){
+        setModalPanel(false);
+        var timeType = getTimeType();
+        var timeStamp = getStringFromDate("slopOpConfirmed");
 
-    $.ajax({
-        url: 'report/slopop/completed?time=' + timeStamp + '&timeType=' + timeType,
-        type: 'POST',
-        contentType: 'application/json',
-        data: JSON.stringify(getPortCDMPortCall()),
-        dataType: 'json'
+        $.ajax({
+            url: 'report/slopop/confirmed?time=' + timeStamp + '&timeType=' + timeType,
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(getPortCDMPortCall()),
+            dataType: 'json'
+        });
     });
 }
 
 function sendSlopOpDenied(){
-    var timeType = "ESTIMATED"; //TODO MIKI
+    setModalPanel(true);
 
-    var timeStamp = getStringFromDate("slopOpDenied");
+    $("#btnSendToPortCDM").off("click").on("click", function(){
+        setModalPanel(false);
+        var timeType = getTimeType();
+        var timeStamp = getStringFromDate("slopOpDenied");
 
-    $.ajax({
-        url: 'report/slopop/denied?time=' + timeStamp + '&timeType=' + timeType,
-        type: 'POST',
-        contentType: 'application/json',
-        data: JSON.stringify(getPortCDMPortCall()),
-        dataType: 'json'
+        $.ajax({
+            url: 'report/slopop/denied?time=' + timeStamp + '&timeType=' + timeType,
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(getPortCDMPortCall()),
+            dataType: 'json'
+        });
     });
 }
 
 function sendSlopOpReqReceived(){
-    var timeType = "ESTIMATED"; //TODO MIKI
+    setModalPanel(true);
 
-    var timeStamp = getStringFromDate("slopOpReqReceived");
+    $("#btnSendToPortCDM").off("click").on("click", function(){
+        setModalPanel(false);
+        var timeType = getTimeType();
+        var timeStamp = getStringFromDate("slopOpReqReceived");
 
-    $.ajax({
-        url: 'report/slopop/received?time=' + timeStamp + '&timeType=' + timeType,
-        type: 'POST',
-        contentType: 'application/json',
-        data: JSON.stringify(getPortCDMPortCall()),
-        dataType: 'json'
+        $.ajax({
+            url: 'report/slopop/received?time=' + timeStamp + '&timeType=' + timeType,
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(getPortCDMPortCall()),
+            dataType: 'json'
+        });
     });
 }
 
 function sendArrivalVesselBerth(){
-    var timeType = "ESTIMATED"; //TODO MIKI
+    setModalPanel(true);
 
-    var timeStamp = getStringFromDate("arrivalVesselBerth");
+    $("#btnSendToPortCDM").off("click").on("click", function(){
+        setModalPanel(false);
+        var timeType = getTimeType();
+        var timeStamp = getStringFromDate("arrivalVesselBerth");
 
-    $.ajax({
-        url: 'report/vessel/arrival?time=' + timeStamp + '&timeType=' + timeType,
-        type: 'POST',
-        contentType: 'application/json',
-        data: JSON.stringify(getPortCDMPortCall()),
-        dataType: 'json'
+        $.ajax({
+            url: 'report/vessel/arrival?time=' + timeStamp + '&timeType=' + timeType,
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(getPortCDMPortCall()),
+            dataType: 'json'
+        });
     });
 }
 
 function sendDepartureVesselBerth(){
-    var timeType = "ESTIMATED"; //TODO MIKI
+    setModalPanel(true);
 
-    var timeStamp = getStringFromDate("departureVesselBerth");
+    $("#btnSendToPortCDM").off("click").on("click", function(){
+        setModalPanel(false);
+        var timeType = getTimeType();
+        var timeStamp = getStringFromDate("departureVesselBerth");
 
-    $.ajax({
-        url: 'report/vessel/departure?time=' + timeStamp + '&timeType=' + timeType,
-        type: 'POST',
-        contentType: 'application/json',
-        data: JSON.stringify(getPortCDMPortCall()),
-        dataType: 'json'
+        $.ajax({
+            url: 'report/vessel/departure?time=' + timeStamp + '&timeType=' + timeType,
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(getPortCDMPortCall()),
+            dataType: 'json'
+        });
     });
 }
 
 function sendCargoOpCompleted(){
-    var timeType = "ESTIMATED"; //TODO MIKI
+    setModalPanel(true);
 
-    var timeStamp = getStringFromDate("cargoOpCompleted");
+    $("#btnSendToPortCDM").off("click").on("click", function(){
+        setModalPanel(false);
+        var timeType = getTimeType();
+        var timeStamp = getStringFromDate("cargoOpCompleted");
 
-    $.ajax({
-        url: 'report/cargo/completed?time=' + timeStamp + '&timeType=' + timeType,
-        type: 'POST',
-        contentType: 'application/json',
-        data: JSON.stringify(getPortCDMPortCall()),
-        dataType: 'json'
+        $.ajax({
+            url: 'report/cargo/completed?time=' + timeStamp + '&timeType=' + timeType,
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(getPortCDMPortCall()),
+            dataType: 'json'
+        });
     });
 }
 
@@ -126,15 +156,30 @@ function getPortCDMPortCall(){
     }
 }
 
-var modalPanel = document.getElementById("modalPanel");
 function setModalPanel(visible){
-    
-    if(visible)
+    var modalPanel = document.getElementById("modalPanel");
+
+    if(visible){
         modalPanel.style.display = "block";
-    else 
+    }else 
         modalPanel.style.display = "none";
 }
 
-window.onclick = function(){
-    //setModalPanel(false);
+/*window.onclick = function(){
+    if (event.target !== document.getElementById("modalPanel")) {
+        setModalPanel(false);
+    }
+}*/
+
+function getTimeType(){
+    return $('input[name=timeType]:checked').val();
 }
+
+function enableSending(){
+    var vesselId = $("#vesselId").val();
+    var portcallId = $("#portcallId").val();
+
+    if(getTimeType() !== "" && (vesselId !== "" || portcallId !== ""))
+        $("#btnSendToPortCDM").attr("disabled", false);
+}
+

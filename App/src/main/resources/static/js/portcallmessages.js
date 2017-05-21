@@ -30,8 +30,12 @@ function getNewMessages(){
        context: document.body
    }).done(function(data) {
        data.forEach(function (m){
-        console.log(m.serviceState);
-        $("#portcallmessages").prepend(getMessageContainer(getCurrentDate(), "unknown", m.serviceState.timeType, m.serviceState.serviceObject, m.serviceState.time));
+        console.log(m);
+
+        if(m.serviceState === null)
+            $("#portcallmessages").prepend(getMessageContainer(getCurrentDate(), "unknown", m.locationState.timeType, m.locationState.referenceObject, m.locationState.time));
+        else
+            $("#portcallmessages").prepend(getMessageContainer(getCurrentDate(), "unknown", m.serviceState.timeType, m.serviceState.serviceObject, m.serviceState.time));
        });
     });
 }
