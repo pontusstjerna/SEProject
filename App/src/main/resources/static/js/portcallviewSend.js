@@ -147,13 +147,10 @@ function getPortCDMPortCall(){
     var vesselId = $("#vesselId").val();
     var portcallId = $("#portcallId").val();
 
-    if(portcallId === ""){
-        if(vesselId === "") return {};
-        else return {vesselId : vesselId};
-    }else{
-        if(vesselId === "") return {portcallId : portcallId};
-        else return {portcallId : portcallId, vesselId : vesselId};
-    }
+    if(vesselId === "") vesselId = null;
+    if(portcallId === "") portcallId = null;
+
+    return {vesselId : vesselId, portcallId : portcallId};
 }
 
 function setModalPanel(visible){
