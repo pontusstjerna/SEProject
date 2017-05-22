@@ -17,7 +17,7 @@ public class SubscriptionController {
     public String getPortCallQueueId(@PathVariable String portCallId) {
         SubscriptionService subService = new SubscriptionService();
         PortCallRepository repo = PortCallRepository.getRepo();
-        if(repo.getFromPortcallId(portCallId) == null){
+        if(repo.getFromPortcallId(portCallId) == null || repo.getFromPortcallId(portCallId).equals("")){
             return "";
         }
         PortCall portCall = repo.getFromPortcallId(portCallId);
@@ -38,7 +38,7 @@ public class SubscriptionController {
     public String getVesselQueueId(@PathVariable String vesselId) {
         SubscriptionService subService = new SubscriptionService();
         PortCallRepository repo = PortCallRepository.getRepo();
-        if(repo.getFromPortcallId(vesselId) == null){
+        if(repo.getFromVesselId(vesselId) == null || repo.getFromVesselId(vesselId).equals("")){
             return "";
         }
         PortCall portCall = repo.getFromVesselId(vesselId);
@@ -80,19 +80,20 @@ public class SubscriptionController {
 
     @GetMapping("/queue/old/{queueId}")
     public List<PortCallMessage> oldQueue(@PathVariable String queueId) {
+
         SubscriptionService subService = new SubscriptionService();
         PortCallRepository repo = PortCallRepository.getRepo();
-        if(repo.getFromPortcallId(queueId) == null){
+        if(repo.getFromQueueId(queueId) == null || repo.getFromQueueId(queueId).equals("")){
             return new ArrayList<>();
         }
         PortCall portCall = repo.getFromQueueId(queueId);
         if(portCall.getPortcallId() == null || portCall.getPortcallId().equals("")){
-            String qID = subService.subscribe(FilterType.VESSEL, portCall.getVesselId(),"2017-04-20T00:00:00Z");
+            String qID = subService.subscribe(FilterType.VESSEL, portCall.getVesselId(),"2017-05-20T00:00:00Z");
             List<PortCallMessage> result = subService.getNewMessages(qID);
             System.out.println("Old Queue: " + result);
             return result;
         }
-        String qID = subService.subscribe(FilterType.PORT_CALL, portCall.getPortcallId(),"2017-04-20T00:00:00Z");
+        String qID = subService.subscribe(FilterType.PORT_CALL, portCall.getPortcallId(),"2017-05-20T00:00:00Z");
         List<PortCallMessage> result = subService.getNewMessages(qID);
         System.out.println("Old Queue: " + result);
         return result;
