@@ -63,18 +63,18 @@ public class SubscriptionController {
         PortCallRepository repo = PortCallRepository.getRepo();
         PortCall portcall = repo.getFromQueueId(queueId);
 
-        if(portcall != null && portcall.getVesselId() != null && portcall.getVesselId().length() <= 0) {
+        System.out.println("New Queue " + result);
+
+        if(portcall != null && (portcall.getVesselId() == null || portcall.getVesselId().equals(""))) {
             for(PortCallMessage m : result) {
-                if(m.getVesselId() != null && m.getVesselId().length() > 0) {
+                if(m.getVesselId() != null && !m.getVesselId().equals("")) {
                     portcall.setVesselId(m.getVesselId());
                     repo.add(portcall);
-                    break;
+                    return result;
                 }
             }
         }
 
-
-        System.out.println("New Queue " + result);
         return result;
     }
 

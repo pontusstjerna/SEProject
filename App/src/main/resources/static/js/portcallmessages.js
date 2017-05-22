@@ -58,7 +58,7 @@ function getNewMessages() {
 
 function buildMessageToDisplay(m){
     if (m.serviceState !== null) {
-        $("#portcallmessages").prepend(getMessageContainer("Posted at " + m.reportedAt.replace('T', ' ') + " by " + m.reportedBy.substring(20), "New " +  m.serviceState.serviceObject.replace('_',' ').toLowerCase() + " " + m.serviceState.timeType.toLowerCase() + " to be " + m.serviceState.timeSequence.replace('_',' ').toLowerCase() + " at:", new Date(m.serviceState.time).toISOString().substr(0, 19).replace('T', ' '), "PortCallID: " + m.portCallId));
+        $("#portcallmessages").prepend(getMessageContainer("Posted at " + m.reportedAt.replace('T', ' ') + " by " + m.reportedBy.substring(20), "New " + m.serviceState.timeType.toLowerCase() + " " +   m.serviceState.serviceObject.replace(/_/g,' ').toLowerCase() + " " + m.serviceState.timeSequence.replace(/_/g,' ').toLowerCase() + " at:", new Date(m.serviceState.time).toISOString().substr(0, 19).replace('T', ' '), "PortCallID: " + m.portCallId));
     } else if (m.locationState !== null) {
         if (m.locationState.arrivalLocation !== null) {     
             if (m.locationState.arrivalLocation.to !== null) {
