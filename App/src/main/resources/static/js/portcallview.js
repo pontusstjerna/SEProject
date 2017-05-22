@@ -1,8 +1,5 @@
-var id;
-var currentPortcall;
 
-function loadProperties(portcall, textStatus){
-    currentPortcall = portcall;
+function loadProperties(portcall){
 
     $("#cargoIn").val(portcall.cargoIn);
     $("#cargoOut").val(portcall.cargoOut);
@@ -28,9 +25,9 @@ function loadProperties(portcall, textStatus){
 }
 
 window.onload = function(){
-    id = getId();
+    var id = getId();
     $("#portCallName").append(" " + id);
-    getPortCall();
+    getPortCall(id);
     $("#time-type-select").change(getPortCall);
 }
     
@@ -39,7 +36,7 @@ function getId(){
     return arguments.split("=")[1];
 }
 
-function getPortCall(){
+function getPortCall(id){
  $.ajax({
      url: '/internalPortcall?id=' + id,
      type: 'GET',
