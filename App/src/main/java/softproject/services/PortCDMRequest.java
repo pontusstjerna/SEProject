@@ -35,7 +35,7 @@ public class PortCDMRequest {
                     .header("X-PortCDM-UserId", "test1")
                     .header("X-PortCDM-Password", "test123")
 
-                    .header("X-PortCDM-APIKey", "eeee")
+                    .header("X-PortCDM-APIKey", "Terminal 2")
                     .url("http://sandbox-5.portcdm.eu:8080")
                     .build();
         }

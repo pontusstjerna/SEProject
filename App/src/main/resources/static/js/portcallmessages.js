@@ -58,24 +58,24 @@ function getNewMessages() {
 
 function buildMessageToDisplay(m){
     if (m.serviceState !== null) {
-        $("#portcallmessages").prepend(getMessageContainer("Posted at " + m.reportedAt.replace('T', ' ') + " by " + m.reportedBy.substring(22), "New " +  m.serviceState.serviceObject.replace('_',' ').toLowerCase() + " " + m.serviceState.timeType.toLowerCase() + " to be " + m.serviceState.timeSequence.replace('_',' ').toLowerCase() + " at:", new Date(m.serviceState.time).toISOString().substr(0, 19).replace('T', ' '), "PortCallID: " + m.portCallId));
+        $("#portcallmessages").prepend(getMessageContainer("Posted at " + m.reportedAt.replace('T', ' ') + " by " + m.reportedBy.substring(20), "New " +  m.serviceState.serviceObject.replace('_',' ').toLowerCase() + " " + m.serviceState.timeType.toLowerCase() + " to be " + m.serviceState.timeSequence.replace('_',' ').toLowerCase() + " at:", new Date(m.serviceState.time).toISOString().substr(0, 19).replace('T', ' '), "PortCallID: " + m.portCallId));
     } else if (m.locationState !== null) {
         if (m.locationState.arrivalLocation !== null) {     
             if (m.locationState.arrivalLocation.to !== null) {
-                $("#portcallmessages").prepend(getMessageContainer("Posted at " + m.reportedAt.replace('T', ' ') + " by " + m.reportedBy.substring(22), "New " + m.locationState.timeType.toLowerCase() + " arrival of " + m.locationState.referenceObject.toLowerCase() + " to " + m.locationState.arrivalLocation.to.locationMRN.substring(27).replace('_', ' ').toLowerCase(), new Date(m.locationState.time).toISOString().substr(0, 19).replace('T', ' '), "PortCallID: " + m.portCallId ));
+                $("#portcallmessages").prepend(getMessageContainer("Posted at " + m.reportedAt.replace('T', ' ') + " by " + m.reportedBy.substring(20), "New " + m.locationState.timeType.toLowerCase() + " arrival of " + m.locationState.referenceObject.toLowerCase() + " to " + m.locationState.arrivalLocation.to.locationMRN.substring(27).replace('_', ' ').toLowerCase(), new Date(m.locationState.time).toISOString().substr(0, 19).replace('T', ' '), "PortCallID: " + m.portCallId ));
             }else{
-                $("#portcallmessages").prepend(getMessageContainer("Posted at " + m.reportedAt.replace('T', ' ') + " by " + m.reportedBy.substring(22), "New " + m.locationState.timeType.toLowerCase() + " arrival of " + m.locationState.referenceObject.toLowerCase() + " from " + m.locationState.arrivalLocation.from.locationMRN.substring(27).replace('_', ' ').toLowerCase(), new Date(m.locationState.time).toISOString().substr(0, 19).replace('T', ' '), "PortCallID: " + m.portCallId ));
+                $("#portcallmessages").prepend(getMessageContainer("Posted at " + m.reportedAt.replace('T', ' ') + " by " + m.reportedBy.substring(20), "New " + m.locationState.timeType.toLowerCase() + " arrival of " + m.locationState.referenceObject.toLowerCase() + " from " + m.locationState.arrivalLocation.from.locationMRN.substring(27).replace('_', ' ').toLowerCase(), new Date(m.locationState.time).toISOString().substr(0, 19).replace('T', ' '), "PortCallID: " + m.portCallId ));
             }
         }else {
             if (m.locationState.departureLocation.from !== null) {
-                $("#portcallmessages").prepend(getMessageContainer("Posted at " + m.reportedAt.replace('T', ' ') + " by " + m.reportedBy.substring(22), "New " + m.locationState.timeType.toLowerCase() + " departure of " + m.locationState.referenceObject.toLowerCase() + " from " + m.locationState.departureLocation.from.locationMRN.substring(27).replace('_', ' ').toLowerCase(), new Date(m.locationState.time).toISOString().substr(0, 19).replace('T', ' '), "PortCallID: " + m.portCallId));
+                $("#portcallmessages").prepend(getMessageContainer("Posted at " + m.reportedAt.replace('T', ' ') + " by " + m.reportedBy.substring(20), "New " + m.locationState.timeType.toLowerCase() + " departure of " + m.locationState.referenceObject.toLowerCase() + " from " + m.locationState.departureLocation.from.locationMRN.substring(27).replace('_', ' ').toLowerCase(), new Date(m.locationState.time).toISOString().substr(0, 19).replace('T', ' '), "PortCallID: " + m.portCallId));
             }else{
-                $("#portcallmessages").prepend(getMessageContainer("Posted at " + m.reportedAt.replace('T', ' ') + " by " + m.reportedBy.substring(22), "New " + m.locationState.timeType.toLowerCase() + " departure of " + m.locationState.referenceObject.toLowerCase() + " to " + m.locationState.departureLocation.to.locationMRN.substring(27).replace('_', ' ').toLowerCase(), new Date(m.locationState.time).toISOString().substr(0, 19).replace('T', ' '), "PortCallID: " + m.portCallId));
+                $("#portcallmessages").prepend(getMessageContainer("Posted at " + m.reportedAt.replace('T', ' ') + " by " + m.reportedBy.substring(20), "New " + m.locationState.timeType.toLowerCase() + " departure of " + m.locationState.referenceObject.toLowerCase() + " to " + m.locationState.departureLocation.to.locationMRN.substring(27).replace('_', ' ').toLowerCase(), new Date(m.locationState.time).toISOString().substr(0, 19).replace('T', ' '), "PortCallID: " + m.portCallId));
 
             }
         }
     } else {
-        $("#portcallmessages").prepend(getMessageContainer("Posted at " + m.reportedAt.replace('T', ' ') + " by " + m.reportedBy.substring(22), "New " +  m.messageOperation.operation.toLowerCase(), "No time to display"), "PortCallID: " + m.portCallId);
+        $("#portcallmessages").prepend(getMessageContainer("Posted at " + m.reportedAt.replace('T', ' ') + " by " + m.reportedBy.substring(20), "New " +  m.messageOperation.operation.toLowerCase(), "No time to display"), "PortCallID: " + m.portCallId);
     }
 }
 
