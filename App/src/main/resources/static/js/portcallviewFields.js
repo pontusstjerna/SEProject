@@ -53,6 +53,9 @@ function switchTimeEdit(field){
         elemDate.attr("readonly", "readonly");
         elemTime.attr("readonly", "readonly");
         saveChanges();
+        if(field === "portcallId" || field === "vesselId"){
+            startSubscription();
+        }
     }
 }
     
@@ -70,16 +73,16 @@ function saveChanges(){
         berth : $("#berth").val(),
         internalId : id,
         //Timestamps
-        cargoOpCommenced : getStringFromDate("cargoOpCommenced", currentPortcall.cargoOpCommenced),
-        cargoOpCompleted : getStringFromDate("cargoOpCompleted", currentPortcall.cargoOpCompleted),
-        slopOpConfirmed : getStringFromDate("slopOpConfirmed", currentPortcall.slopOpConfirmed),
-        slopOpDenied : getStringFromDate("slopOpDenied", currentPortcall.slopOpDenied),
-        slopOpReqReceived : getStringFromDate("slopOpReqReceived", currentPortcall.slopOpReqReceived),
-        readyToSail : getStringFromDate("readyToSail", currentPortcall.readyToSail),
-        arrivalVesselBerth : getStringFromDate("arrivalVesselBerth", currentPortcall.arrivalVesselBerth),
-        departureVesselBerth : getStringFromDate("departureVesselBerth", currentPortcall.departureVesselBerth),
-        laycanStart : getStringFromDate("laycanStart", currentPortcall.laycanStart),
-        laycanEnd : getStringFromDate("laycanEnd", currentPortcall.laycanEnd)
+        cargoOpCommenced : getStringFromDate("cargoOpCommenced"),
+        cargoOpCompleted : getStringFromDate("cargoOpCompleted"),
+        slopOpConfirmed : getStringFromDate("slopOpConfirmed"),
+        slopOpDenied : getStringFromDate("slopOpDenied"),
+        slopOpReqReceived : getStringFromDate("slopOpReqReceived"),
+        readyToSail : getStringFromDate("readyToSail"),
+        arrivalVesselBerth : getStringFromDate("arrivalVesselBerth"),
+        departureVesselBerth : getStringFromDate("departureVesselBerth"),
+        laycanStart : getStringFromDate("laycanStart"),
+        laycanEnd : getStringFromDate("laycanEnd")
     };
 
     $.ajax({

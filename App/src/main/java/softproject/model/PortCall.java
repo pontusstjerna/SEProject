@@ -2,11 +2,14 @@ package softproject.model;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import eu.portcdm.messaging.PortCallMessage;
 
 import java.io.Serializable;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
-public class PortCall implements Serializable{
+public class PortCall implements Serializable {
 
     private long internalId;
     private String comment;
@@ -20,6 +23,8 @@ public class PortCall implements Serializable{
     //Timestamps
     private ZonedDateTime laycanStart;
     private ZonedDateTime laycanEnd;
+    private String queueID;
+    
     private ZonedDateTime cargoOpCommenced;
     private ZonedDateTime cargoOpCompleted;
     private ZonedDateTime readyToSail;
@@ -30,7 +35,7 @@ public class PortCall implements Serializable{
     private ZonedDateTime departureVesselBerth;
     
 
-    public long getInternalId(){
+    public long getInternalId() {
         return internalId;
     }
 
@@ -52,7 +57,7 @@ public class PortCall implements Serializable{
         this.cargoOut = cargoOut;
     }
 
-    @JsonFormat (shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd'T'HH:mmz")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mmz")
     public ZonedDateTime getLaycanStart() {
         return laycanStart;
     }
@@ -61,7 +66,7 @@ public class PortCall implements Serializable{
         this.laycanStart = laycanStart;
     }
 
-    @JsonFormat (shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd'T'HH:mmz")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mmz")
     public ZonedDateTime getLaycanEnd() {
         return laycanEnd;
     }
@@ -100,6 +105,14 @@ public class PortCall implements Serializable{
 
     public void setPortcallId(String portcallId) {
         this.portcallId = portcallId;
+    }
+
+    public String getQueueID() {
+        return queueID;
+    }
+
+    public void setQueueID(String queueID) {
+        this.queueID = queueID;
     }
 
     public String getBerth(){return berth;}
@@ -177,4 +190,6 @@ public class PortCall implements Serializable{
     public void setDepartureVesselBerth(ZonedDateTime departureVesselBerth) {
         this.departureVesselBerth = departureVesselBerth;
     }
+
 }
+

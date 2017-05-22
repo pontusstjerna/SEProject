@@ -12,8 +12,12 @@ public interface PortCallRepository{
 
     List<PortCall> getAll();
     PortCall get(int id);
+    PortCall getFromPortcallId(String portCallId);
+    PortCall getFromVesselId(String vesselId);
+    PortCall getFromQueueId(String queueId);
     void add(PortCall newPortCall);
     boolean delete(PortCall portCallToDelete);
+    void savePortCallsToFile();
 
     static PortCallRepository getRepo() {
         return repo;

@@ -36,7 +36,7 @@ public class ServiceStateBuilder extends StateBuilder{
 
     public ServiceStateBuilder time (ZonedDateTime zonedDateTime){
 
-        state.setTime(createXmlGregorianCalendar(zonedDateTime));
+        state.setTime(zonedDateTime.toLocalDateTime());
         return this;
     }
 
@@ -45,16 +45,16 @@ public class ServiceStateBuilder extends StateBuilder{
         return this;
     }
 
-    public ServiceStateBuilder at (String name, LogicalLocation logicalLocation, Position position){
-        Location location = createLocation(name, logicalLocation, position);
+    public ServiceStateBuilder at (String locationMRN, Position position){
+        Location location = createLocation(locationMRN, position);
         state.setAt(location);
         return this;
     }
 
-    public ServiceStateBuilder between (String toName, LogicalLocation toLogicalLocation, Position toPosition,
-                                        String fromName, LogicalLocation fromLogicalLocation, Position fromPosition){
-        Location toLocation = createLocation(toName, toLogicalLocation, toPosition);
-        Location fromLocation = createLocation(fromName, fromLogicalLocation, fromPosition);
+    public ServiceStateBuilder between (String toLocationMRN, Position toPosition,
+                                        String fromlocationMRN, Position fromPosition){
+        Location toLocation = createLocation(toLocationMRN, toPosition);
+        Location fromLocation = createLocation(fromlocationMRN, fromPosition);
         ServiceState.Between between = new ServiceState.Between();
         between.setTo(toLocation);
         between.setFrom(fromLocation);
