@@ -39,17 +39,7 @@ function getOldMessages() {
     }).done(function (data) {
         console.log(data);
         data.forEach(function (m) {
-            if (m.serviceState !== null) {
-                $("#portcallmessages").prepend(getServiceContainer(m.reportedAt.replace('T', ' '), m.reportedBy.substring(22), m.serviceState.timeType, m.serviceState.serviceObject, m.serviceState.time, m.serviceState.timeSequence));
-            } else if (m.locationState !== null) {
-                if (m.locationState.arrivalLocation !== null) {       // FIXA CASES FÖR ALLA ARRIVAL OCH DEPARTURE LOCATIONS!!!!!!!!!!!!!!
-                    if (m.locationState.arrivalLocation.to !== null) {
-                        $("#portcallmessages").prepend(getLocationContainer(m.reportedAt.replace('T', ' '), m.reportedBy.substring(22), m.locationState.timeType, m.locationState.referenceObject, m.locationState.time, m.locationState.arrivalLocation.to.locationMRN));
-                    }
-                }
-            } else {
-                $("#portcallmessages").prepend(getMessageContainer(m.reportedAt.replace('T', ' '), m.reportedBy.substring(22), m.messageOperation.operatioN));
-            }
+            buildMessageToDisplay(m);
         });
     });
 }
@@ -61,75 +51,55 @@ function getNewMessages() {
         context: document.body
     }).done(function (data) {
         data.forEach(function (m) {
-            if (m.serviceState !== null) {
-                $("#portcallmessages").prepend(getServiceContainer(m.reportedAt.replace('T', ' '), m.reportedBy.substring(22), m.serviceState.timeType, m.serviceState.serviceObject, m.serviceState.time, m.serviceState.timeSequence));
-            } else if (m.locationState !== null) {
-                if (m.locationState.arrivalLocation !== null) {           // FIXA CASES FÖR ALLA ARRIVAL OCH DEPARTURE LOCATIONS!!!!!!!!!!!!!!
-                    if (m.locationState.arrivalLocation.to !== null) {
-                        $("#portcallmessages").prepend(getLocationContainer(m.reportedAt.replace('T', ' '), m.reportedBy.substring(22), m.locationState.timeType, m.locationState.referenceObject, m.locationState.time, m.locationState.arrivalLocation.to.locationMRN));
-                    }
-                }
-            } else {
-                $("#portcallmessages").prepend(getMessageContainer(m.reportedAt.replace('T', ' '), m.reportedBy.substring(22), m.messageOperation.operatioN));
-            }
+            buildMessageToDisplay(m);
         });
     });
 }
 
-function getServiceContainer(timeReceived, sender, timeType, serviceObject, time, timeSequence) {
+function buildMessageToDisplay(m){
+    if (m.serviceState !== null) {
+        $("#portcallmessages").prepend(getMessageContainer("Posted at " + m.reportedAt.replace('T', ' ') + " by " + m.reportedBy.substring(22), "New " +  m.serviceState.serviceObject.replace('_',' ').toLowerCase() + " " + m.serviceState.timeType.toLowerCase() + " to be " + m.serviceState.timeSequence.replace('_',' ').toLowerCase() + " at:", new Date(m.serviceState.time).toISOString().substr(0, 19).replace('T', ' '), "PortCallID: " + m.portCallId));
+    } else if (m.locationState !== null) {
+        if (m.locationState.arrivalLocation !== null) {     
+            if (m.locationState.arrivalLocation.to !== null) {
+                $("#portcallmessages").prepend(getMessageContainer("Posted at " + m.reportedAt.replace('T', ' ') + " by " + m.reportedBy.substring(22), "New " + m.locationState.timeType.toLowerCase() + " arrival of " + m.locationState.referenceObject.toLowerCase() + " to " + m.locationState.arrivalLocation.to.locationMRN.substring(27).replace('_', ' ').toLowerCase(), new Date(m.locationState.time).toISOString().substr(0, 19).replace('T', ' '), "PortCallID: " + m.portCallId ));
+            }else{
+                $("#portcallmessages").prepend(getMessageContainer("Posted at " + m.reportedAt.replace('T', ' ') + " by " + m.reportedBy.substring(22), "New " + m.locationState.timeType.toLowerCase() + " arrival of " + m.locationState.referenceObject.toLowerCase() + " from " + m.locationState.arrivalLocation.from.locationMRN.substring(27).replace('_', ' ').toLowerCase(), new Date(m.locationState.time).toISOString().substr(0, 19).replace('T', ' '), "PortCallID: " + m.portCallId ));
+            }
+        }else {
+            if (m.locationState.departureLocation.from !== null) {
+                $("#portcallmessages").prepend(getMessageContainer("Posted at " + m.reportedAt.replace('T', ' ') + " by " + m.reportedBy.substring(22), "New " + m.locationState.timeType.toLowerCase() + " departure of " + m.locationState.referenceObject.toLowerCase() + " from " + m.locationState.departureLocation.from.locationMRN.substring(27).replace('_', ' ').toLowerCase(), new Date(m.locationState.time).toISOString().substr(0, 19).replace('T', ' '), "PortCallID: " + m.portCallId));
+            }else{
+                $("#portcallmessages").prepend(getMessageContainer("Posted at " + m.reportedAt.replace('T', ' ') + " by " + m.reportedBy.substring(22), "New " + m.locationState.timeType.toLowerCase() + " departure of " + m.locationState.referenceObject.toLowerCase() + " to " + m.locationState.departureLocation.to.locationMRN.substring(27).replace('_', ' ').toLowerCase(), new Date(m.locationState.time).toISOString().substr(0, 19).replace('T', ' '), "PortCallID: " + m.portCallId));
+
+            }
+        }
+    } else {
+        $("#portcallmessages").prepend(getMessageContainer("Posted at " + m.reportedAt.replace('T', ' ') + " by " + m.reportedBy.substring(22), "New " +  m.messageOperation.operation.toLowerCase(), "No time to display"), "PortCallID: " + m.portCallId);
+    }
+}
+
+
+function getMessageContainer(headerText, typeAndObjectText, newTimeText, portCallIdText) {
     var container = document.createElement("div");
     container.classList.add("portcallmessage");
     var header = document.createElement("b");
-    var headerText = document.createTextNode("Posted at " + timeReceived + " by " + sender);
+    var headerText = document.createTextNode(headerText);
     header.appendChild(headerText);
     container.appendChild(header);
 
-    var typeAndObject = document.createTextNode("New " + timeType.toLowerCase() + " " + timeSequence.toLowerCase() + " " + serviceObject.toLowerCase());
-    var newTime = document.createTextNode(new Date(time).toISOString().substr(0, 19).replace('T', ' '));
+    var typeAndObject = document.createTextNode(typeAndObjectText);
+    var newTime = document.createTextNode(newTimeText);
+    var portCallId = document.createTextNode(portCallIdText);
     container.appendChild(document.createElement("br"));
     container.appendChild(typeAndObject);
     container.appendChild(document.createElement("br"));
     container.appendChild(newTime);
+    container.appendChild(document.createElement("br"));
+    container.appendChild(portCallId);
 
     return container;
 }
-
-function getLocationContainer(timeReceived, sender, timeType, referenceObject, time, locationMRN) {
-    var container = document.createElement("div");
-    container.classList.add("portcallmessage");
-    var header = document.createElement("b");
-    var headerText = document.createTextNode("Posted at " + timeReceived + " by " + sender);
-    header.appendChild(headerText);
-    container.appendChild(header);
-
-    var typeAndObject = document.createTextNode("New " + timeType.toLowerCase() + " arrival of " + referenceObject.toLowerCase() + " to " + locationMRN.toLowerCase());
-    var newTime = document.createTextNode(new Date(time).toISOString().substr(0, 19).replace('T', ' '));
-    container.appendChild(document.createElement("br"));
-    container.appendChild(typeAndObject);
-    container.appendChild(document.createElement("br"));
-    container.appendChild(newTime);
-
-    return container;
-}
-
-function getMessageContainer(timeReceived, sender, operatioN) {
-    var container = document.createElement("div");
-    container.classList.add("portcallmessage");
-    var header = document.createElement("b");
-    var headerText = document.createTextNode("Posted at " + timeReceived + " by " + sender);
-    header.appendChild(headerText);
-    container.appendChild(header);
-
-    var typeAndObject = document.createTextNode("New " + operatioN.toLowerCase());
-    //var newTime = document.createTextNode(new Date(time).toISOString().substr(0, 19).replace('T', ' '));
-    container.appendChild(document.createElement("br"));
-    container.appendChild(typeAndObject);
-    //container.appendChild(document.createElement("br"));
-    //container.appendChild(newTime);
-
-    return container;
-}
-
 
 function getNoFeedContainer() {
     var container = document.createElement("div");
