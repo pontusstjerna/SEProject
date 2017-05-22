@@ -1,7 +1,6 @@
 var queueId;
 
-
-function startSubscription() {
+function startSubscription(){
     var vessId = $("#vesselId").val()
     var portId = $("#portcallId").val();
     var subUrl = "";

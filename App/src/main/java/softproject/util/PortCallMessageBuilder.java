@@ -117,14 +117,17 @@ public class PortCallMessageBuilder {
     }
 
     public PortCallMessage build() {
-        if(this.message.getMessageId() != null
-                && this.message.getVesselId() != null
-                && !(this.message.getLocationState() == null && this.message.getServiceState() == null)) {
-            return this.message;
-        } else {
-//            throw new IncompletePortCallMessage();
-            return null;
-        }
+//        if(this.message.getMessageId() != null
+//                && this.message.getVesselId() != null
+//                && !(this.message.getLocationState() == null && this.message.getServiceState() == null)) {
+//            return this.message;
+//        } else {
+////            throw new IncompletePortCallMessage();
+//            return null;
+//        }
+//    }
+
+        return this.message;
     }
 
 }
