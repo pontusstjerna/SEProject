@@ -59,6 +59,21 @@ public class SubscriptionController {
     public List<PortCallMessage> newQueue(@PathVariable String queueId) {
         SubscriptionService subService = new SubscriptionService();
         List<PortCallMessage> result = subService.getNewMessages(queueId);
+
+        PortCallRepository repo = PortCallRepository.getRepo();
+        PortCall portcall = repo.getFromQueueId(queueId);
+
+        if(portcall != null && portcall.getVesselId() != null && portcall.getVesselId().length() <= 0) {
+            for(PortCallMessage m : result) {
+                if(m.getVesselId() != null && m.getVesselId().length() > 0) {
+                    portcall.setVesselId(m.getVesselId());
+                    repo.add(portcall);
+                    break;
+                }
+            }
+        }
+
+
         System.out.println("New Queue " + result);
         return result;
     }
