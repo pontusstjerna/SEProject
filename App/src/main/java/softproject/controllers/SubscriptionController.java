@@ -60,21 +60,9 @@ public class SubscriptionController {
         SubscriptionService subService = new SubscriptionService();
         List<PortCallMessage> result = subService.getNewMessages(queueId);
 
-        PortCallRepository repo = PortCallRepository.getRepo();
-        PortCall portcall = repo.getFromQueueId(queueId);
+
 
         System.out.println("New Queue " + result);
-
-        if(portcall != null && (portcall.getVesselId() == null || portcall.getVesselId().equals(""))) {
-            for(PortCallMessage m : result) {
-                if(m.getVesselId() != null && !m.getVesselId().equals("")) {
-                    portcall.setVesselId(m.getVesselId());
-                    repo.add(portcall);
-                    return result;
-                }
-            }
-        }
-
         return result;
     }
 
@@ -95,6 +83,17 @@ public class SubscriptionController {
         }
         String qID = subService.subscribe(FilterType.PORT_CALL, portCall.getPortcallId(),"2017-05-20T00:00:00Z");
         List<PortCallMessage> result = subService.getNewMessages(qID);
+
+        if(portCall != null && (portCall.getVesselId() == null || portCall.getVesselId().equals(""))) {
+            for(PortCallMessage m : result) {
+                if(m.getVesselId() != null && !m.getVesselId().equals("")) {
+                    portCall.setVesselId(m.getVesselId());
+                    repo.add(portCall);
+                    return result;
+                }
+            }
+        }
+
         System.out.println("Old Queue: " + result);
         return result;
     }
