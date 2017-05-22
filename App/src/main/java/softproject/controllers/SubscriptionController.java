@@ -65,9 +65,10 @@ public class SubscriptionController {
 
     @GetMapping("/queue/old/{queueId}")
     public List<PortCallMessage> oldQueue(@PathVariable String queueId) {
+
         SubscriptionService subService = new SubscriptionService();
         PortCallRepository repo = PortCallRepository.getRepo();
-        if(repo.getFromPortcallId(queueId) == null){
+        if(repo.getFromQueueId(queueId) == null){
             return new ArrayList<>();
         }
         PortCall portCall = repo.getFromQueueId(queueId);

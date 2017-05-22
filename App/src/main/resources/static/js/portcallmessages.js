@@ -37,6 +37,7 @@ function getOldMessages() {
         url: "/queue/old/" + queueId,
         context: document.body
     }).done(function (data) {
+        console.log(data);
         data.forEach(function (m) {
             if (m.serviceState !== null) {
                 $("#portcallmessages").prepend(getServiceContainer(m.reportedAt.replace('T', ' '), m.reportedBy.substring(22), m.serviceState.timeType, m.serviceState.serviceObject, m.serviceState.time, m.serviceState.timeSequence));
