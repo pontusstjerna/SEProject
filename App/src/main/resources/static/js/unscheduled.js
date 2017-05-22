@@ -92,7 +92,7 @@ function updatePortCallList(listOfPortCalls, textStatus){
                 '<div> <strong>Cargo to load: </strong>' + portcall.cargoOut + '</div>' +
                 '<div> <strong>Laycan: </strong>' + portcall.laycanStart + ' to ' + portcall.laycanEnd +'</div>' +
                 '<div> <strong>Name: </strong>' + portcall.name + '</div>' +
-                '<div> <strong>Vessel ID: </strong>' + portcall.vesselId + '</div>' +
+                '<div> <strong>Vessel IMO: </strong>' + portcall.vesselId + '</div>' +
                 '<div> <strong>PortCDM Portcall ID: </strong>' + portcall.portcallId + '</div>' +
                 '</li>';
         console.log(portcall);

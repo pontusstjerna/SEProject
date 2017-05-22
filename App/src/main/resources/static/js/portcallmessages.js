@@ -75,10 +75,6 @@ function getNewMessages() {
     });
 }
 
-function addTestMessage() {
-    $("#portcallmessages").prepend(getMessageContainer(new Date().getMilliseconds(), "Tug", "ACTUAL", "BERT_DEPARTURE", new Date().getMilliseconds()));
-}
-
 function getServiceContainer(timeReceived, sender, timeType, serviceObject, time, timeSequence) {
     var container = document.createElement("div");
     container.classList.add("portcallmessage");
