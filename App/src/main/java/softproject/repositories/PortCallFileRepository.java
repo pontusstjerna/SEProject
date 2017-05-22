@@ -47,7 +47,7 @@ public class PortCallFileRepository implements PortCallRepository {
 
         //If id already exists, edit instead of adding
         Optional<PortCall> maybeOld = portcalls.stream().filter(x -> x.getInternalId() == newPortCall.getInternalId()).findFirst();
-        if(maybeOld.isPresent()){ //Update old
+        if(maybeOld.isPresent() && newPortCall.getInternalId() != 0){ //Update old
             System.out.println("This is an edit!");
             PortCall old = maybeOld.get();
             old.setCargoIn(newPortCall.getCargoIn());
@@ -57,7 +57,22 @@ public class PortCallFileRepository implements PortCallRepository {
             old.setName(newPortCall.getName());
             old.setVesselId(newPortCall.getVesselId());
             old.setPortcallId(newPortCall.getPortcallId());
-        }else portcalls.add(newPortCall);
+            old.setComment(newPortCall.getComment());
+            old.setBerth(newPortCall.getBerth());
+
+            //Timestamps
+            old.setCargoOpCommenced(newPortCall.getCargoOpCommenced());
+            old.setCargoOpCompleted(newPortCall.getCargoOpCompleted());
+            old.setReadyToSail(newPortCall.getReadyToSail());
+            old.setSlopOpConfirmed(newPortCall.getSlopOpConfirmed());
+            old.setSlopOpDenied(newPortCall.getSlopOpDenied());
+            old.setSlopOpReqReceived(newPortCall.getSlopOpReqReceived());
+            old.setArrivalVesselBerth(newPortCall.getArrivalVesselBerth());
+            old.setDepartureVesselBerth(newPortCall.getDepartureVesselBerth());
+        }else {
+            newPortCall.setInternalId(portcalls.size() + 1);
+            portcalls.add(newPortCall);
+        }
 
         savePortCallsToFile();
     }

@@ -41,7 +41,6 @@ cancelButton.on('click',function(){
 });
 
 addPortCallForm.on('submit', function(){
-
     var laycanStart = laycanStartDateInput.val() + 'T' + laycanStartTimeInput.val() + 'Z';
     var laycanEnd   = laycanEndDateInput.val() + 'T' + laycanEndTimeInput.val() + 'Z';
 
@@ -58,7 +57,8 @@ addPortCallForm.on('submit', function(){
         laycanEnd : laycanEnd,
         name : nameInput.val(),
         vesselId : vesselIdInput.val(),
-        portcallId : portcallIdInput.val()
+        portcallId : portcallIdInput.val(),
+        internalId : 0
     };
 
     $.ajax({

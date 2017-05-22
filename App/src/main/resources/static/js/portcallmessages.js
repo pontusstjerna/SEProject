@@ -1,7 +1,7 @@
 var queueId;
 //"urn:x-mrn:stm:portcdm:port_call:SEGOT:ca1a795e-ee95-4c96-96d1-53896617c9ac";
 
-function startSubscribtion(){
+function startSubscription(){
     var vessId = $("#vesselId").val()
     var portId = $("#portcallId").val();
     var subUrl = "";
@@ -30,8 +30,12 @@ function getNewMessages(){
        context: document.body
    }).done(function(data) {
        data.forEach(function (m){
-        console.log(m.serviceState);
-        $("#portcallmessages").prepend(getMessageContainer(getCurrentDate(), "unknown", m.serviceState.timeType, m.serviceState.serviceObject, m.serviceState.time));
+        console.log(m);
+
+        if(m.serviceState === null)
+            $("#portcallmessages").prepend(getMessageContainer(getCurrentDate(), "unknown", m.locationState.timeType, m.locationState.referenceObject, m.locationState.time));
+        else
+            $("#portcallmessages").prepend(getMessageContainer(getCurrentDate(), "unknown", m.serviceState.timeType, m.serviceState.serviceObject, m.serviceState.time));
        });
     });
 }

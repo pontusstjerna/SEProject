@@ -175,7 +175,14 @@ public class ReportController {
 
 
     private PortCallMessage createMessage(PortCall portcall, ServiceState serviceState, LocationState locationState) {
-        return PortCallMessageBuilder.newBuilder()
+        if(portcall.getVesselId() == null){
+            return PortCallMessageBuilder.newBuilder()
+                    .serviceState(serviceState)
+                    .locationState(locationState)
+                    .portCallId(portcall.getPortcallId())
+                    .build();
+        }else
+            return PortCallMessageBuilder.newBuilder()
                 .serviceState(serviceState)
                 .locationState(locationState)
                 .vesselId(portcall.getVesselId())
@@ -185,7 +192,11 @@ public class ReportController {
 
     private void sendMessage(PortCallMessage message) {
         Amss amss = new Amss(PortCDMRequest.getClientInstance(), PortCDMRequest.getBaseRequest());
-        amss.postStateUpdate(message);
+
+        if(message.getVesselId() == null)
+            amss.postMSS(message);
+        else
+            amss.postStateUpdate(message);
     }
 
 }
