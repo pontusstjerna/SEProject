@@ -38,8 +38,45 @@ public class PortCallFileRepository implements PortCallRepository {
     }
 
     @Override
-    public void add(PortCall newPortCall) {
+    // returns the portcall with the specified portcallid, or NULL if the id can't be found
+    public PortCall getFromPortcallId(String portCallId) {
+        Optional<PortCall> maybePortCall =
+                portcalls.stream()
+                        .filter(p -> p.getPortcallId() != null)
+                        .filter(p -> p.getPortcallId().equals(portCallId))
+                        .findFirst();
 
+        return maybePortCall.orElse(null);
+    }
+
+    @Override
+    // returns the portcall with the specified portcallid, or NULL if the id can't be found
+    public PortCall getFromVesselId(String vesselId) {
+        Optional<PortCall> maybePortCall =
+                portcalls.stream()
+                        .filter(p -> p.getVesselId() != null)
+                        .filter(p -> p.getVesselId().equals(vesselId))
+                        .findFirst();
+
+        return maybePortCall.orElse(null);
+    }
+
+    @Override
+    // returns the portcall with the specified portcallid, or NULL if the id can't be found
+    public PortCall getFromQueueId(String queueId) {
+        Optional<PortCall> maybePortCall =
+                portcalls.stream()
+                        .filter(p -> p.getQueueID() != null)
+                        .filter(p -> p.getQueueID().equals(queueId))
+                        .findFirst();
+
+
+        return maybePortCall.orElse(null);
+    }
+
+    @Override
+    public void add(PortCall newPortCall) {
+      
         System.out.println("Adding or editing portcall " + newPortCall.getInternalId());
 
         System.out.println("PRESENT::");
@@ -77,6 +114,7 @@ public class PortCallFileRepository implements PortCallRepository {
         savePortCallsToFile();
     }
 
+
     @Override
     // deletes the portcall sent in as a parameter
     // returns TRUE if something was deleted, FALSE otherwise
@@ -103,7 +141,7 @@ public class PortCallFileRepository implements PortCallRepository {
         try {
             File file = new File(FILE_PATH);
             if(!file.exists()) {
-                return new ArrayList<PortCall>();
+                return new ArrayList<>();
             }
 
             fileIn = new FileInputStream(file);
@@ -121,11 +159,11 @@ public class PortCallFileRepository implements PortCallRepository {
             e.printStackTrace();
         }
 
-        return new ArrayList<PortCall>();
+        return new ArrayList<>();
     }
 
     // saves all the portcalls in our list to resources\files\portcallstorage.data
-    private void savePortCallsToFile() {
+    public void savePortCallsToFile() {
         try {
             FileOutputStream fileOut = new FileOutputStream(FILE_PATH);
             ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);

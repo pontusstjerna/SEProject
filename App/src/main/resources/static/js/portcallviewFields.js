@@ -53,6 +53,9 @@ function switchTimeEdit(field){
         elemDate.attr("readonly", "readonly");
         elemTime.attr("readonly", "readonly");
         saveChanges();
+        if(field === "portcallId" || field === "vesselId"){
+            startSubscription();
+        }
     }
 }
     

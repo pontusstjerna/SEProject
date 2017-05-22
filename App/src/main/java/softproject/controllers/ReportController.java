@@ -27,7 +27,7 @@ public class ReportController {
                 .timeSequence(ServiceTimeSequence.COMMENCED)
                 .time(dateTime)
                 .timeType(timeType)
-                .at(LOCATION_NAME, LOGICAL_LOCATION, null)
+                .at("urn:mrn:stm:location:segot:BERTH:skarvik520", null)
                 .build();
 
         PortCallMessage message = createMessage(portcall, state, null);
@@ -46,7 +46,7 @@ public class ReportController {
                 .timeSequence(ServiceTimeSequence.COMPLETED)
                 .time(dateTime)
                 .timeType(timeType)
-                .at(LOCATION_NAME, LOGICAL_LOCATION, null)
+                .at("urn:mrn:stm:location:segot:BERTH:skarvik520", null)
                 .build();
 
         PortCallMessage message = createMessage(portcall, state, null); //comment "From reportCargoOpCompleted"
@@ -65,7 +65,7 @@ public class ReportController {
                 .referenceObject(LocationReferenceObject.VESSEL)
                 .time(dateTime)
                 .timeType(timeType)
-                .departureLocation(LOCATION_NAME, LOGICAL_LOCATION, null)
+                .departureLocation("urn:mrn:stm:location:segot:BERTH:skarvik520", null)
                 .build();
 
         PortCallMessage message = createMessage(portcall, null, state);
@@ -84,7 +84,7 @@ public class ReportController {
                 .referenceObject(LocationReferenceObject.VESSEL)
                 .time(dateTime)
                 .timeType(timeType)
-                .arrivalLocation(LOCATION_NAME, LOGICAL_LOCATION, null)
+                .arrivalLocation("urn:mrn:stm:location:segot:BERTH:skarvik520", null)
                 .build();
 
         PortCallMessage message = createMessage(portcall, null, state);
@@ -103,7 +103,7 @@ public class ReportController {
                 .timeSequence(ServiceTimeSequence.COMPLETED)
                 .time(dateTime)
                 .timeType(timeType)
-                .at(LOCATION_NAME, LOGICAL_LOCATION, null)
+                .at("urn:mrn:stm:location:segot:BERTH:skarvik520", null)
                 .build();
 
         PortCallMessage message = createMessage(portcall, state, null); //.comment("Ready-to-Sail Operations Completed")
@@ -124,7 +124,7 @@ public class ReportController {
                 .timeSequence(ServiceTimeSequence.REQUEST_RECEIVED)
                 .time(dateTime)
                 .timeType(timeType)
-                .at(LOCATION_NAME, LOGICAL_LOCATION, null)
+                .at("urn:mrn:stm:location:segot:BERTH:skarvik520", null)
                 .build();
 
         PortCallMessage message = createMessage(portcall, state, null);
@@ -144,7 +144,7 @@ public class ReportController {
                 .timeSequence(ServiceTimeSequence.CONFIRMED)
                 .time(dateTime)
                 .timeType(timeType)
-                .at(LOCATION_NAME, LOGICAL_LOCATION, null)
+                .at("urn:mrn:stm:location:segot:BERTH:skarvik520", null)
                 .build();
 
         PortCallMessage message = createMessage(portcall, state, null);
@@ -165,7 +165,7 @@ public class ReportController {
                     .timeSequence(ServiceTimeSequence.DENIED)
                     .time(dateTime)
                     .timeType(timeType)
-                    .at(LOCATION_NAME, LOGICAL_LOCATION, null)
+                    .at("urn:mrn:stm:location:segot:BERTH:skarvik520", null)
                     .build();
 
             PortCallMessage message = createMessage(portcall, state, null);

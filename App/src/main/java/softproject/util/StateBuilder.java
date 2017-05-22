@@ -25,10 +25,9 @@ abstract class StateBuilder {
         return xmlGregCal;
     }
 
-    Location createLocation(String name, LogicalLocation logicalLocation, Position position){
+    Location createLocation(String locationMRN, Position position){
         Location location = new Location();
-        location.setName(name);
-        location.setLocationType(logicalLocation);
+        location.setLocationMRN(locationMRN);
         location.setPosition(position);
         return location;
     }

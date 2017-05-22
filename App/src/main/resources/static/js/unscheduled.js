@@ -86,6 +86,7 @@ function updatePortCallList(listOfPortCalls, textStatus){
     for (i = 0; i < listOfPortCalls.length; i++){
         var portcall = listOfPortCalls[i];
 
+        console.log(portcall);
         var htmlForLi = '<li class=show-info-li onclick=openPortCall(' + portcall.internalId + ')>' +
                 '<div> <strong>Cargo to unload: </strong>' + portcall.cargoIn + '</div>' +
                 '<div> <strong>Cargo to load: </strong>' + portcall.cargoOut + '</div>' +
@@ -94,7 +95,7 @@ function updatePortCallList(listOfPortCalls, textStatus){
                 '<div> <strong>Vessel ID: </strong>' + portcall.vesselId + '</div>' +
                 '<div> <strong>PortCDM Portcall ID: </strong>' + portcall.portcallId + '</div>' +
                 '</li>';
-
+        console.log(portcall);
         portCallList.append(htmlForLi);
     }
 }

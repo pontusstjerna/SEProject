@@ -13,8 +13,8 @@ var baseURL = 'http://localhost:8080/';
 
 console.log('reportTest entered!');
 var newPortCall = {
-    vesselId: 'urn:x-mrn:stm:vessel:IMO:9398917',
-    portcallId: 'urn:x-mrn:stm:portcdm:port_call:SEGOT:ca1a795e-ee95-4c96-96d1-53896617c9ac'
+    vesselId: 'urn:mrn:stm:vessel:IMO:9398917'
+    // portcallId: 'urn:x-mrn:stm:portcdm:port_call:SEGOT:ca1a795e-ee95-4c96-96d1-53896617c9ac'
 };
 
 
