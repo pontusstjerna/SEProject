@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 import softproject.model.PortCall;
 import softproject.model.PortCallRepository;
 
-import javax.annotation.PostConstruct;
 import java.util.List;
 
 
@@ -52,6 +51,12 @@ public class PortCallController {
         public String getVesselName(){
             return vesselName;
         }
+    }
+
+    @PostMapping("/portcalls/delete")
+    public void deletePortCall(@RequestBody PortCall portcallToDelete) {
+        PortCallRepository repo = PortCallRepository.getRepo();
+        repo.delete(portcallToDelete);
     }
 
     @GetMapping("/portcalls")

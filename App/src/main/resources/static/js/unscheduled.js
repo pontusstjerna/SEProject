@@ -1,7 +1,7 @@
 var baseURL = 'http://localhost:8080/';
 
 // How often we should poll the backend for new portcalls, in milliseconds
-var pollingFrequency = 10000;
+var pollingFrequency = 3000;
 
 // Things we are interested in from HTML
 var addPortCallButton = $('#add-portcall-button');
@@ -20,6 +20,26 @@ var cancelButton = $('#clear-new-portcall-button');
 
 function openPortCall(id){
     window.open("/portcall?id=" + id,"_self");
+}
+
+function liHoverOut(internalId) {
+    console.log("liHoverOut");
+    var btn = $(this).find('.delete-portcall-btn');
+    btn.addClass('hidden-icon');
+}
+
+function liHoverIn(internalId) {
+    console.log(internalId);
+    // console.log("liHoverIn: " + internalId);
+    // var btn = $(this).find('.delete-portcall-btn');
+    // btn.removeClass('hidden-icon');
+    // btn.on('click', function (e) {
+    //     e.stopImmediatePropagation();
+    //     e.stopPropagation();
+    //     if(confirm('Are you sure you want to delete this portcall?')) {
+    //         deletePortCall(internalId);
+    //     }
+    // });
 }
 
 // $('#load-port-calls').on('click',getAllPortCalls);
@@ -73,14 +93,6 @@ addPortCallForm.on('submit', function(){
     return false;
 });
 
-function getAllPortCalls(){
- $.ajax({
-     url: baseURL + 'portcalls', // this URL only works when the server is on the same machine!
-     type: 'GET',
-     success: updatePortCallList
- });
-}
-
 function updatePortCallList(listOfPortCalls, textStatus){
     portCallList.empty();
     for (i = 0; i < listOfPortCalls.length; i++){
@@ -94,6 +106,8 @@ function updatePortCallList(listOfPortCalls, textStatus){
                 '<div> <strong>Name: </strong>' + portcall.name + '</div>' +
                 '<div> <strong>Vessel IMO: </strong>' + portcall.vesselId + '</div>' +
                 '<div> <strong>PortCDM Portcall ID: </strong>' + portcall.portcallId + '</div>' +
+                '<button class="fa fa-trash-o delete-portcall-btn hidden-icon" aria-hidden="true" ' +
+                    'onmouseenter=liHoverIn(10)></button>' +
                 '</li>';
         console.log(portcall);
         portCallList.append(htmlForLi);
@@ -115,7 +129,28 @@ function clearAllInputs() {
     // var portcallIdInput = $('#portcall-id-input');
 }
 
+// portCallList.on('mouseenter', 'li', liHoverIn);
+// portCallList.on('mouseleave', 'li', liHoverOut);
 
-// get all port calls immediately, and then every 10 seconds
+
+
+function deletePortCall(internalId) {
+    $.ajax({
+        url: 'portcalls/delete/' + internalId,
+        type: 'GET',
+        contentType: 'application/json',
+        dataType: 'json'
+    });
+}
+
+function getAllPortCalls(){
+    $.ajax({
+        url: baseURL + 'portcalls', // this URL only works when the server is on the same machine!
+        type: 'GET',
+        success: updatePortCallList
+    });
+}
+
+// get all port calls immediately, and then every pollingFrequency seconds
 getAllPortCalls();
 setInterval(getAllPortCalls, pollingFrequency);

@@ -2,6 +2,10 @@
     font-family: 'Hind', sans-serif;
 }
 
+.hover {
+    background-color: red;
+}
+
 .centered {
     margin: auto;
     text-align: center;
@@ -10,6 +14,7 @@
 .unscheduled-container {
     width: 70%;
 }
+
 .hidden {
     display: none;
 }
@@ -41,25 +46,22 @@
 }
 
 #list-of-portcalls .show-info-li {
+    position: relative;
     border: 1px solid black;
     margin-bottom: 10px;
     transition: 0.2s all;
 }
 
+.hidden-icon {
+    visibility: hidden;
+}
+
+.delete-portcall-btn {
+    position: absolute;
+    top: 5px;
+    right: 6px;
+}
+
 .show-info-li:hover{
     background-color: #DDDDDD;
 }
-
-
-/*#add-portcall-form label{*/
-    /*display: inline-block;*/
-    /*text-align: right;*/
-    /*float: left;*/
-    /*clear: left;*/
-/*}*/
-
-/*#add-portcall-form input {*/
-    /*width: auto;*/
-    /*display: inline-block;*/
-    /*float: left;*/
-/*}*/
