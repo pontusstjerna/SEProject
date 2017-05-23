@@ -45,18 +45,7 @@ public class MessageQueueService {
                 .post(reqBody)
                 .build();
 
-        try {
-            Response response = this.httpClient.newCall(request).execute();
-            if(response.isSuccessful()) {
-                return response.body().string();
-            } else {
-                throw new BadRequest(response.code());
-            }
-        } catch (IOException e) {
-            throw new CouldNotReachPortCDM(e, "from MessageQueueService::postMqs(List<Filter> filters)");
-        }
-
-
+        return executeRequest(request);
     }
 
     // Tries to create a queue using filters and fromTime sent in as parameters
@@ -68,40 +57,32 @@ public class MessageQueueService {
                 .post(reqBody)
                 .build();
 
+        return executeRequest(request);
+    }
+
+    // Tries to create a queue using fromTime sent in as parameter
+    public String postMqs(String fromTime) throws IllegalFilters, CouldNotReachPortCDM, BadRequest {
+        Request request = this.baseRequest.newBuilder()
+                .url(this.baseRequest.urlString() + "/mqs?fromTime="+fromTime)
+                .post(RequestBody.create(MediaType.parse("application/json"),""))
+                .build();
+
+        return executeRequest(request);
+    }
+
+    private String executeRequest(Request request) {
         try {
             Response response = this.httpClient.newCall(request).execute();
             if(response.isSuccessful()) {
-                return response.body().string();
+                String result = response.body().string();
+                response.body().close();
+                return result;
             } else {
                 throw new BadRequest(response.code());
             }
         } catch (IOException e) {
             throw new CouldNotReachPortCDM(e, "from MessageQueueService::postMqs(List<Filter> filters, String fromTime)");
         }
-
-
-    }
-
-    // Tries to create a queue using fromTime sent in as parameter
-    public String postMqs(String fromTime) throws IllegalFilters, CouldNotReachPortCDM, BadRequest {
-
-        Request request = this.baseRequest.newBuilder()
-                .url(this.baseRequest.urlString() + "/mqs?fromTime="+fromTime)
-                .post(RequestBody.create(MediaType.parse("application/json"),""))
-                .build();
-
-        try {
-            Response response = this.httpClient.newCall(request).execute();
-            if(response.isSuccessful()) {
-                return response.body().string();
-            } else {
-                throw new BadRequest(response.code());
-            }
-        } catch (IOException e) {
-            throw new CouldNotReachPortCDM(e, "from MessageQueueService::postMqs(String fromTime)");
-        }
-
-
     }
 
     // creates the RequestBody for a postMqs call, converting filters to a JSON array
@@ -134,6 +115,7 @@ public class MessageQueueService {
             Response response = this.httpClient.newCall(request).execute();
             if(response.isSuccessful()) {
                 String messagesAsXML = response.body().string();
+                response.body().close();
                 return convertFromXmlToPortCall(messagesAsXML);
             } else {
                 throw new BadRequest(response.code());
