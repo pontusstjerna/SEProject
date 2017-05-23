@@ -14,8 +14,9 @@ import softproject.services.VesselRegistryService;
 public class VesselController {
 
     @GetMapping("/vessel/{vesselURN}")
-    public Vessel getVessel(@PathVariable String vesselURN) {
+    public boolean getVessel(@PathVariable String vesselURN) {
         VesselRegistryService api = new VesselRegistryService(PortCDMRequest.getClientInstance(), PortCDMRequest.getBaseRequest());
+        boolean nameSet = false;
 
         PortCallRepository repo = PortCallRepository.getRepo();
         PortCall portCall = repo.getFromVesselId(vesselURN);
@@ -26,12 +27,13 @@ public class VesselController {
             if(!portCall.getName().equals(vessel.getName())) {
                 portCall.setName(vessel.getName());
                 repo.add(portCall);
+                nameSet = true;
                 System.out.println("Vessel name was set to: " + vessel.getName());
             }else{
                 System.out.println("Vessel name already exists and matches!");
             }
         }
 
-        return vessel;
+        return nameSet;
     }
 }

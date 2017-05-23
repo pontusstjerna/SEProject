@@ -38,6 +38,9 @@ function switchEdit(field){
         saveChanges();
         if(field === "portcallId"){
             startSubscription();
+            $(document).ajaxStop(function () {
+                location.reload(true);
+            });
         }else if(field === "vesselId"){
             startSubscription();
             getNsetVesselName();

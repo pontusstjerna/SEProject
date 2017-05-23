@@ -2,6 +2,7 @@ package softproject.controllers;
 
 import eu.portcdm.mb.dto.FilterType;
 import eu.portcdm.messaging.PortCallMessage;
+import javafx.util.Pair;
 import org.springframework.web.bind.annotation.*;
 import softproject.model.PortCall;
 import softproject.model.PortCallRepository;
@@ -17,7 +18,7 @@ public class SubscriptionController {
     public String getPortCallQueueId(@PathVariable String portCallId) {
         SubscriptionService subService = new SubscriptionService();
         PortCallRepository repo = PortCallRepository.getRepo();
-        if(repo.getFromPortcallId(portCallId) == null || repo.getFromPortcallId(portCallId).equals("")){
+        if (repo.getFromPortcallId(portCallId) == null) {
             return "";
         }
         PortCall portCall = repo.getFromPortcallId(portCallId);
@@ -38,7 +39,7 @@ public class SubscriptionController {
     public String getVesselQueueId(@PathVariable String vesselId) {
         SubscriptionService subService = new SubscriptionService();
         PortCallRepository repo = PortCallRepository.getRepo();
-        if(repo.getFromVesselId(vesselId) == null || repo.getFromVesselId(vesselId).equals("")){
+        if (repo.getFromVesselId(vesselId) == null) {
             return "";
         }
         PortCall portCall = repo.getFromVesselId(vesselId);
@@ -56,51 +57,74 @@ public class SubscriptionController {
     }
 
     @GetMapping("/queue/new/{queueId}")
-    public List<PortCallMessage> newQueue(@PathVariable String queueId) {
+    public PortNBool newQueue(@PathVariable String queueId) {
         SubscriptionService subService = new SubscriptionService();
         List<PortCallMessage> result = subService.getNewMessages(queueId);
 
-        checkNsetVesselId(result,queueId);
+        boolean vessIdSet = checkNsetVesselId(result, queueId);
 
         System.out.println("New Queue " + result);
-        return result;
+        return new PortNBool(result,vessIdSet);
     }
 
     @GetMapping("/queue/old/{queueId}")
-    public List<PortCallMessage> oldQueue(@PathVariable String queueId) {
-
+    public PortNBool oldQueue(@PathVariable String queueId) {
         SubscriptionService subService = new SubscriptionService();
         PortCallRepository repo = PortCallRepository.getRepo();
-        if(repo.getFromQueueId(queueId) == null || repo.getFromQueueId(queueId).equals("")){
-            return new ArrayList<>();
+        if (repo.getFromQueueId(queueId) == null) {
+            return new PortNBool(new ArrayList<>(),false);
         }
         PortCall portCall = repo.getFromQueueId(queueId);
-        if(portCall.getPortcallId() == null || portCall.getPortcallId().equals("")){
-            String qID = subService.subscribe(FilterType.VESSEL, portCall.getVesselId(),"2017-05-20T00:00:00Z");
+        if (portCall.getPortcallId() == null || portCall.getPortcallId().equals("")) {
+            String qID = subService.subscribe(FilterType.VESSEL, portCall.getVesselId(), "2017-05-20T00:00:00Z");
             List<PortCallMessage> result = subService.getNewMessages(qID);
             System.out.println("Old Queue: " + result);
-            return result;
+            return new PortNBool(result,false);
         }
-        String qID = subService.subscribe(FilterType.PORT_CALL, portCall.getPortcallId(),"2017-05-20T00:00:00Z");
+        String qID = subService.subscribe(FilterType.PORT_CALL, portCall.getPortcallId(), "2017-05-20T00:00:00Z");
         List<PortCallMessage> result = subService.getNewMessages(qID);
 
-        checkNsetVesselId(result,queueId);
+        boolean vessIdSet = checkNsetVesselId(result, queueId);
 
         System.out.println("Old Queue: " + result);
-        return result;
+        return new PortNBool(result,vessIdSet);
     }
 
-    private void checkNsetVesselId(List<PortCallMessage> result, String queueId) {
+    private boolean checkNsetVesselId(List<PortCallMessage> result, String queueId) {
         PortCallRepository repo = PortCallRepository.getRepo();
         PortCall portCall = repo.getFromQueueId(queueId);
 
-        if(portCall != null && (portCall.getVesselId() == null || portCall.getVesselId().equals(""))) {
-            for(PortCallMessage m : result) {
-                if(m.getVesselId() != null && !m.getVesselId().equals("")) {
+        if (portCall != null && (portCall.getVesselId() == null || portCall.getVesselId().equals(""))) {
+            for (PortCallMessage m : result) {
+                if (m.getVesselId() != null && !m.getVesselId().equals("")) {
                     portCall.setVesselId(m.getVesselId());
                     repo.add(portCall);
+                    System.out.println("VesselId found and set based on portcallId!");
+                    return true;
                 }
             }
         }
+        System.out.println("VesselId already set!");
+        return false;
     }
 }
+
+class PortNBool {
+    private final List<PortCallMessage> pcmList;
+    private final boolean vessIdSet;
+
+    PortNBool(List<PortCallMessage> pcmList, boolean vessIdSet){
+        this.pcmList = pcmList;
+        this.vessIdSet = vessIdSet;
+    }
+
+    public List<PortCallMessage> getPcmList() {
+        return pcmList;
+    }
+
+    public boolean isVessIdSet() {
+        return vessIdSet;
+    }
+}
+
+

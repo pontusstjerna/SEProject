@@ -69,7 +69,11 @@ function getNsetVesselName() {
     $.ajax({
         url: '/vessel/' + vesselId,
         context: document.body
-    }).done(
-        $(document).ajaxStop(function() { location.reload(true); })
-    );
+    }).done(function (data) {
+        if (data) {
+            $(document).ajaxStop(function () {
+                location.reload(true);
+            })
+        }
+    });
 }
