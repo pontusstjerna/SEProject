@@ -23,7 +23,7 @@ public class VesselController {
         Vessel vessel = api.getVessel(vesselURN);
 
         if (portCall != null && (portCall.getVesselId() != null || !portCall.getVesselId().equals("")) && portCall.getVesselId().contains("urn:mrn:stm:vessel:IMO:")) {
-            if(portCall.getName() != vessel.getName()) {
+            if(!portCall.getName().equals(vessel.getName())) {
                 portCall.setName(vessel.getName());
                 repo.add(portCall);
                 System.out.println("Vessel name was set to: " + vessel.getName());
