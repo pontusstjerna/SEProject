@@ -1,16 +1,14 @@
 /* The Modal (background) */
 .modal {
     display: none; /* Hidden by default */
-    /*margin: auto;*/
-    /*vertical-align: top;*/
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top, dvs lagret ovanpå alla andra saker */
-    left: 0;
-    top: 0;
     width: 50%; /* not Full width */
     height: 60%; /*not  Full height */
     overflow: auto; /* Enable scroll if needed */
     background-color: #9999ff;
+    position: fixed; /* Stay in place */
+    left: 400px;
+    top: 80px;
+    z-index: 1; /* Sit on top, dvs lagret ovanpå alla andra saker */
 }
 
 /* Modal Content/Box */
