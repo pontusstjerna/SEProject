@@ -36,6 +36,12 @@ function switchEdit(field){
         setBtnEdit("btnEdit" + field.capitalize());
         elem.attr("readonly", "readonly");
         saveChanges();
+        if(field === "portcallId"){
+            startSubscription();
+        }else if(field === "vesselId"){
+            startSubscription();
+            getNsetVesselName();
+        }
     }
 }
 
@@ -53,9 +59,6 @@ function switchTimeEdit(field){
         elemDate.attr("readonly", "readonly");
         elemTime.attr("readonly", "readonly");
         saveChanges();
-        if(field === "portcallId" || field === "vesselId"){
-            startSubscription();
-        }
     }
 }
     

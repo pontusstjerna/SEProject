@@ -1,5 +1,8 @@
+var id = getId();
+var currentPortcall;
 
 function loadProperties(portcall){
+    currentPortcall = portcall;
 
     $("#cargoIn").val(portcall.cargoIn);
     $("#cargoOut").val(portcall.cargoOut);
@@ -25,9 +28,8 @@ function loadProperties(portcall){
 }
 
 window.onload = function(){
-    var id = getId();
     $("#portCallName").append(" " + id);
-    getPortCall(id);
+    getPortCall();
     $("#time-type-select").change(getPortCall);
 }
     
@@ -36,7 +38,7 @@ function getId(){
     return arguments.split("=")[1];
 }
 
-function getPortCall(id){
+function getPortCall(){
  $.ajax({
      url: '/internalPortcall?id=' + id,
      type: 'GET',
@@ -60,4 +62,12 @@ function setTimestamp(field, value){
         date.val(dateTime[0]);
         time.val(dateTime[1].substr(0,5)); //Time will be like 23:00UTC
     }
+}
+
+function getNsetVesselName(){
+    var vesselId = currentPortcall.vesselId;
+        $.ajax({
+            url: '/vessel/' + vesselId,
+            context: document.body
+        });
 }
