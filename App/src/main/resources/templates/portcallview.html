@@ -6,15 +6,35 @@
   <title>Portcallview</title>
   <link rel="stylesheet" href="/css/main.css">
   <link rel="stylesheet" href="/css/portcallview.css">
+  <link rel="stylesheet" href="/css/sendPCmessage.css">
 </head>
 <body>
   <div class="maincontainer">
+    <button id="return" onclick="Return()">Schema</button>
     <div class="outercontainer">
-      <h1 align="center"> Portcall </h1>
+      <h1 id="portCallName"> Portcall </h1>
         <div class="innercontainer">
           <h3> Information </h3>
-          <span> Type: <br> Name: <br> Number: <br> Cargo: <br> Id: <br>
-          Cargo Loading: <br> Cargo Unloading: <br> </span>
+          <table class="tblInfo">
+            <tr>
+              <td><b>Cargo to unload: </b></td><td><input class="data" id="cargoIn" readonly=true></td><td><button id="btnEditCargoIn" class="button btnEdit">Edit</button></td>
+            </tr>
+            <tr>
+              <td><b>Cargo to load: </b></td><td><input class="data" id="cargoOut" readonly=true></td><td><button id="btnEditCargoOut" class="button btnEdit">Edit</button></td>
+            </tr>
+            <tr>
+              <td><b>Assigned birth: </b></td><td><input class="data" id="berth" readonly=true></td><td><button id="btnEditBerth" class="button btnEdit">Edit</button></td>
+            </tr>
+            <tr>
+              <td><b>Vessel name: </b></td><td><input class="data" id="name" readonly=true></td><td><button id="btnEditName" class="button btnEdit">Edit</button></td>
+            </tr>
+            <tr>
+              <td><b>Vessel IMO: </b></td><td><input class="data" id="vesselId" readonly=true></td><td><button id="btnEditVesselId" class="button btnEdit">Edit</button></td>
+            </tr>
+            <tr>
+              <td><b>PortCall ID: </b></td><td><input class="data" id="portcallId" readonly=true></td><td><button id="btnEditPortcallId" class="button btnEdit">Edit</button></td>
+            </tr>
+          </table>
         </div>
       <div class="innercontainer">
         <h3> Reminders </h3>
@@ -22,19 +42,128 @@
       </div>
       <div class="innercontainer">
         <h3> Comments </h3>
-        <textarea rows="4" cols="50"></textarea>
+        <textarea id="comment"></textarea>
+        <br>
         <button> Add comment </button>
      </div>
   </div>
   <div class="outercontainer" id="right">
-    <h1 align="center">Schema</h1>
-    </h1>
+    <h1 align="center">Timestamps</h1>
+    <div class="innercontainer">
+      <h3>Cargo</h3>
+      <table class="tblInfo">
+        <tr>
+          <td><b>Cargo operaton commenced: </b></td>
+        </tr>
+        <tr>
+          <td><input type="date" class="time" id="cargoOpCommencedDate" readonly></td>
+          <td><input type="time" class="time" id="cargoOpCommencedTime" readonly></td>
+          <td><button id="btnEditCargoOpCommenced" class="button btnEdit">Edit</button></td>
+          <td><button class="button" onclick="sendCargoOpCommenced()">Send</button></td>
+        </tr>
+        <tr>
+          <td><b>Cargo operation completed: </b></td>
+        </tr>
+        <tr>
+          <td><input type="date" class="time" id="cargoOpCompletedDate" readonly></td>
+          <td><input type="time" class="time" id="cargoOpCompletedTime" readonly></td>
+          <td><button id="btnEditCargoOpCompleted" class="button btnEdit">Edit</button></td>
+          <td><button class="button" onclick="sendCargoOpCompleted()">Send</button></td>
+        </tr>
+        <tr>
+          <td><b>Slop operation confirmed: </b></td>
+        </tr>
+        <tr>
+          <td><input type="date" class="time" id="slopOpConfirmedDate" readonly></td>
+          <td><input type="time" class="time" id="slopOpConfirmedTime" readonly></td>
+          <td><button id="btnEditSlopOpConfirmed" class="button btnEdit">Edit</button></td>
+          <td><button class="button" onclick="sendSlopOpConfirmed()">Send</button></td>
+        </tr>
+        <tr>
+          <td><b>Slop operation denied: </b></td>
+        </tr>
+        <tr>
+          <td><input type="date" class="time" id="slopOpDeniedDate" readonly></td>
+          <td><input type="time" class="time" id="slopOpDeniedTime" readonly></td>
+          <td><button id="btnEditSlopOpDenied" class="button btnEdit">Edit</button></td>
+          <td><button class="button" onclick="sendSlopOpDenied()">Send</button></td>
+        </tr>
+        <tr>
+          <td><b>Slop operation request received: </b></td>
+        </tr>
+        <tr>
+          <td><input type="date" class="time" id="slopOpReqReceivedDate" readonly></td>
+          <td><input type="time" class="time" id="slopOpReqReceivedTime" readonly></td>
+          <td><button id="btnEditSlopOpReqReceived" class="button btnEdit">Edit</button></td>
+          <td><button class="button" onclick="sendSlopOpReqReceived()">Send</button></td>
+        </tr>
+      </table>
+      <h3>Berth and locations</h3>
+      <table class="tblInfo">
+        <tr>
+          <td><b>Ready to sail: </b></td>
+        </tr>
+        <tr>
+          <td><input type="date" class="time" id="readyToSailDate" readonly></td>
+          <td><input type="time" class="time" id="readyToSailTime" readonly></td>
+          <td><button id="btnEditReadyToSail" class="button btnEdit">Edit</button></td>
+          <td><button class="button" onclick="sendReadyToSail()">Send</button></td>
+        </tr>
+        <tr>
+          <td><b>Arrival vessel berth date: </b></td>
+        </tr>
+        <tr>
+          <td><input type="date" class="time" id="arrivalVesselBerthDate" readonly></td>
+          <td><input type="time" class="time" id="arrivalVesselBerthTime" readonly></td>
+          <td><button id="btnEditArrivalVesselBerth" class="button btnEdit">Edit</button></td>
+          <td><button class="button" onclick="sendArrivalVesselBerth()">Send</button></td>
+        </tr>
+        <tr>
+          <td><b>Departure vessel berth date: </b></td>
+        </tr>
+        <tr>
+          <td><input type="date" class="time" id="departureVesselBerthDate" readonly></td>
+          <td><input type="time" class="time" id="departureVesselBerthTime" readonly></td>
+          <td><button id="btnEditDepartureVesselBerth" class="button btnEdit">Edit</button></td>
+          <td><button class="button" onclick="sendDepartureVesselBerth()">Send</button></td>
+        </tr>
+        <tr>
+          <td><b>Laycan start: </b></td>
+        </tr>
+        <tr>
+          <td><input type="date" class="time" id="laycanStartDate" readonly></td>
+          <td><input type="time" class="time" id="laycanStartTime" readonly></td>
+          <td><button id="btnEditlaycanStart" class="button btnEdit">Edit</button></td>
+        </tr>
+        <tr>
+          <td><b>Laycan end: </b></td>
+        </tr>
+        <tr>
+          <td><input type="date" class="time" id="laycanEndDate" readonly></td>
+          <td><input type="time" class="time" id="laycanEndTime" readonly></td>
+          <td><button id="btnEditlaycanEnd" class="button btnEdit">Edit</button></td>
+        </tr>
+      </table>
+      </div>
   </div>
   <div class="outercontainer" id="right">
     <h1 align="center">Feed</h1>
       <div class="innercontainer" id="portcallmessages">
       </div>
-      <button onclick="addTestMessage()">Add dummy message</button>
+    </div>
+  </div>
+  <div id="modalPanel" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="setModalPanel(false)">&times;</span><!--kryss, stäng ner-->
+      <h3>Please select time type: </h3>
+      <form onclick="enableSending()">
+        <input type="radio" name="timeType" value="ESTIMATED"> Estimated
+        <input type="radio" name="timeType" value="ACTUAL"> Actual
+        <input type="radio" name="timeType" value="TARGET"> Target
+        <input type="radio" name="timeType" value="RECOMMENDED"> Recommended
+      </form>
+      <br>
+      <button id="btnSendToPortCDM" disabled="true">Send</button>
     </div>
   </div>
 </body>
@@ -42,6 +171,9 @@
           integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="
           crossorigin="anonymous"></script>
 <script src="js/portcallmessages.js"></script>
+<script src="js/portcallview.js"></script>
+<script src="js/portcallviewFields.js"></script>
+<script src="js/portcallviewSend.js"></script>
 <footer>
     <p class="copyright" align="center">&copy; Copyright 2017 Billy Corgan Project.</p>
 </footer>
