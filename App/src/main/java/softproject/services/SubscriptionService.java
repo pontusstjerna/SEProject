@@ -10,20 +10,14 @@ import softproject.services.exceptions.IllegalFilters;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * Created by Skillzore on 2017-05-18.
- */
 public class SubscriptionService {
-
-    PortCDMRequest portCDMRequest = new PortCDMRequest();
-
     // Subscribe with one filter
     public String subscribe(FilterType type, String elementToFind) {
         Filter filter = new Filter();
         filter.setType(type);
         filter.setElement(elementToFind);
 
-        MessageQueueService queueService = new MessageQueueService(portCDMRequest.getClientInstance(), portCDMRequest.getBaseRequest());
+        MessageQueueService queueService = new MessageQueueService(PortCDMRequest.getClientInstance(), PortCDMRequest.getBaseRequest());
 
         String queueId = "";
 
@@ -46,7 +40,7 @@ public class SubscriptionService {
         filter.setType(type);
         filter.setElement(elementToFind);
 
-        MessageQueueService queueService = new MessageQueueService(portCDMRequest.getClientInstance(), portCDMRequest.getBaseRequest());
+        MessageQueueService queueService = new MessageQueueService(PortCDMRequest.getClientInstance(), PortCDMRequest.getBaseRequest());
 
         String queueId = "";
 
@@ -66,7 +60,7 @@ public class SubscriptionService {
     // Subscribe with fromTime
     public String subscribe(String fromTime) {
 
-        MessageQueueService queueService = new MessageQueueService(portCDMRequest.getClientInstance(), portCDMRequest.getBaseRequest());
+        MessageQueueService queueService = new MessageQueueService(PortCDMRequest.getClientInstance(), PortCDMRequest.getBaseRequest());
 
         String queueId = "";
 
@@ -86,7 +80,7 @@ public class SubscriptionService {
     //Get new messages from queue
     public List<PortCallMessage> getNewMessages(String queueId) {
         List<PortCallMessage> messages = null;
-        MessageQueueService queueService = new MessageQueueService(portCDMRequest.getClientInstance(), portCDMRequest.getBaseRequest());
+        MessageQueueService queueService = new MessageQueueService(PortCDMRequest.getClientInstance(), PortCDMRequest.getBaseRequest());
         try {
             messages = queueService.getMqs(queueId);
         } catch (CouldNotReachPortCDM couldNotReachPortCDM) {
