@@ -1,5 +1,6 @@
 package softproject.controllers;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import eu.portcdm.messaging.PortCallMessage;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,11 +13,13 @@ import softproject.services.VesselRegistryService;
 
 @RestController
 public class VesselController {
+    @JsonProperty
+    private boolean nameSet = false;
 
     @GetMapping("/vessel/{vesselURN}")
     public boolean getVessel(@PathVariable String vesselURN) {
         VesselRegistryService api = new VesselRegistryService(PortCDMRequest.getClientInstance(), PortCDMRequest.getBaseRequest());
-        boolean nameSet = false;
+
 
         PortCallRepository repo = PortCallRepository.getRepo();
         PortCall portCall = repo.getFromVesselId(vesselURN);
