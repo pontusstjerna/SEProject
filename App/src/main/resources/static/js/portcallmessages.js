@@ -38,9 +38,7 @@ function getOldMessages() {
         context: document.body
     }).done(function (data) {
         console.log(data);
-        data.forEach(function (m) {
-            buildMessageToDisplay(m);
-        });
+        handleMessageData(data);
     });
 }
 
@@ -50,10 +48,22 @@ function getNewMessages() {
         url: "/queue/new/" + queueId,
         context: document.body
     }).done(function (data) {
-        data.forEach(function (m) {
-            buildMessageToDisplay(m);
-        });
+        handleMessageData(data);
     });
+}
+
+function handleMessageData(data){
+    data.pcmList.forEach(function (m) {
+        buildMessageToDisplay(m);
+    });
+    console.log(data.vessIdSet);
+    if(data.vessIdSet){
+        $(document).ajaxStop(function () {
+            location.reload(true);
+        });
+        console.log('hej');
+        getNsetVesselName();
+    }
 }
 
 function buildMessageToDisplay(m){
