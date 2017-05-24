@@ -13,7 +13,7 @@ import java.time.ZonedDateTime;
 @RestController
 public class ReportController {
 
-    private final String LOCATION_NAME = "519";
+    private final String LOCATION_NAME = "511";
     private final LogicalLocation LOGICAL_LOCATION = LogicalLocation.BERTH;
 
     @PostMapping("/report/cargo/commenced")
