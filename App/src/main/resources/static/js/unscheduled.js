@@ -1,7 +1,7 @@
 
 
 // How often we should poll the backend for new portcalls, in milliseconds
-var pollingFrequency = 10000;
+var pollingFrequency = 3000;
 
 // Things we are interested in from HTML
 var addPortCallButton = $('#add-portcall-button');
