@@ -1,4 +1,4 @@
-var baseURL = 'http://localhost:8080/';
+
 
 // How often we should poll the backend for new portcalls, in milliseconds
 var pollingFrequency = 10000;
@@ -62,7 +62,7 @@ addPortCallForm.on('submit', function(){
     };
 
     $.ajax({
-        url: baseURL + 'portcalls/add', // this URL only works when the server is on the same machine!
+        url: 'portcalls/add', // this URL only works when the server is on the same machine!
         type: 'POST',
         contentType: 'application/json',
         data: JSON.stringify(newPortCall),
@@ -75,7 +75,7 @@ addPortCallForm.on('submit', function(){
 
 function getAllPortCalls(){
  $.ajax({
-     url: baseURL + 'portcalls', // this URL only works when the server is on the same machine!
+     url: 'portcalls', // this URL only works when the server is on the same machine!
      type: 'GET',
      success: updatePortCallList
  });
