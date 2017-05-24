@@ -1,8 +1,6 @@
 var msgModal = document.getElementById('messageBox');
 var msgButton = $('#btnSendPCM');
 
-console.log("halloo");
-
 msgButton.on('click',function(){
     msgModal.style.display = "block";
 });
