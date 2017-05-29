@@ -1,10 +1,8 @@
 package softproject.controllers;
 
-import lombok.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import softproject.services.PortCDMRequest;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Date;
@@ -26,16 +24,22 @@ public class HomeController {
         String username = requestParams.get("user");
         String password = requestParams.get("password");
 
-        if (username != null && password != null && username.equals("potatis") && password.equals("kakor")) {
-            PortCDMRequest req = new PortCDMRequest();
-            req.subscribe("urn:x-mrn:stm:portcdm:port_call:SEGOT:ca1a795e-ee95-4c96-96d1-53896617c9ac");
+        if (username != null && password != null && username.equals("admin") && password.equals("password")) {
             return "index";
         }
         else return "login";
     }
 
-    @GetMapping("/portcallx")
-    public String portcall(){
+    @GetMapping("/portcallList")
+    public String portcallList(){return "index";}
+
+    @GetMapping("/portcall")
+    public String portcall() {
         return "portcallView";
+    }
+
+    @GetMapping("/report")
+    public String reportTestPage() {
+        return "reportTestPage";
     }
 }

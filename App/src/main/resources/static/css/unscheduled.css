@@ -1,0 +1,65 @@
+* {
+    font-family: 'Hind', sans-serif;
+}
+
+.centered {
+    margin: auto;
+    text-align: center;
+}
+
+.unscheduled-container {
+    width: 70%;
+}
+.hidden {
+    display: none;
+}
+.add-portcall-input {
+    max-width: 640px;
+}
+
+.add-portcall-input fieldset {
+    margin: 1.5em 0 0 0;
+    padding: 0;
+}
+
+.add-portcall-input fieldset ol {
+    padding: 1em 1em 0 1em;
+    list-style: none;
+}
+
+.add-portcall-input li {
+    padding-bottom: 1em;
+}
+
+#add-portcall-form {
+    text-align: center;
+}
+
+#list-of-portcalls {
+    list-style: none;
+    margin-top: 2px;
+}
+
+#list-of-portcalls .show-info-li {
+    border: 1px solid black;
+    margin-bottom: 10px;
+    transition: 0.2s all;
+}
+
+.show-info-li:hover{
+    background-color: #DDDDDD;
+}
+
+
+/*#add-portcall-form label{*/
+    /*display: inline-block;*/
+    /*text-align: right;*/
+    /*float: left;*/
+    /*clear: left;*/
+/*}*/
+
+/*#add-portcall-form input {*/
+    /*width: auto;*/
+    /*display: inline-block;*/
+    /*float: left;*/
+/*}*/
