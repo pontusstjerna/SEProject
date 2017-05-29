@@ -24,20 +24,18 @@ public class HomeController {
         String username = requestParams.get("user");
         String password = requestParams.get("password");
 
-        if (username != null && password != null && username.equals("potatis") && password.equals("kakor")) {
+        if (username != null && password != null && username.equals("admin") && password.equals("password")) {
             return "index";
         }
         else return "login";
     }
 
+    @GetMapping("/portcallList")
+    public String portcallList(){return "index";}
+
     @GetMapping("/portcall")
     public String portcall() {
         return "portcallView";
-    }
-
-    @GetMapping("/unscheduled")
-    public String getUnscheduled() {
-        return "unscheduled";
     }
 
     @GetMapping("/report")
