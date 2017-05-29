@@ -3,6 +3,7 @@ Software Engineering Project spring 2017
 
 # To run the prototype
 java -jar terminal2-program.jar
+
 the system is then available at: localhost:8080/
 
 # Ids that might be useful for testing
