@@ -1,32 +1,100 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <title>Terminal 2</title>
-  <link rel="stylesheet" href="/css/main.css">
+    <meta charset="UTF-8">
+    <title>Portcalls</title>
+    <link href="/css/unscheduled.css" rel="stylesheet" />
+    <script
+            src="https://code.jquery.com/jquery-2.2.4.js"
+            integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="
+            crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css?family=Hind" rel="stylesheet">
 </head>
-
 <body>
+<div class="unscheduled-container centered">
+    <h1>Portcalls</h1>
+    <button id="add-portcall-button">Add Portcall</button>
 
-  <button id="subscribe">Subscribe</button>
-  <span id="queueId">...</span>
+    <div class="add-portcall-input hidden centered">
+        <form id="add-portcall-form">
+            <fieldset>
+                <legend>Mandatory</legend>
+                <ol>
+                    <li>
+                        <label for="cargo-in-input">Load Cargo:</label>
+                        <input id="cargo-in-input" type="text" class="text"/>
+                    </li>
+                    <li>
+                        <label for="cargo-out-input">Unload Cargo:</label>
+                        <input id="cargo-out-input" type="text" class="text"/>
+                    </li>
+                    <li>
+                        <label for="laycan-start-picker-date">Laycan start date:</label>
+                        <input type="date" id="laycan-start-picker-date" />
+                        <label for="laycan-start-picker-time">Laycan start time</label>
+                        <input type="time" id="laycan-start-picker-time" />
+                   </li>
+                    <li>
+                        <label for="laycan-end-picker-date">Laycan end date:</label>
+                        <input type="date" id="laycan-end-picker-date" />
+                        <label for="laycan-end-picker-time">Laycan start time</label>
+                        <input type="time" id="laycan-end-picker-time" />
+                    </li>
+                </ol>
+            </fieldset>
+            <fieldset>
+                <legend>Optional</legend>
+                <ol>
+                    <li>
+                        <label for="name-input">Nickname:</label>
+                        <input id="name-input" type="text" class="text"/>
+                    </li>
+                    <li>
+                        <label for="vesselId-input">Vessel IMO:</label>
+                        <input id="vesselId-input" type="text" class="text"/>
+                    </li>
+                    <li>
+                        <label for="portcall-id-input">Portcall ID:</label>
+                        <input id="portcall-id-input" type="text" class="text"/>
+                    </li>
+                </ol>
+            </fieldset>
+            <input type="submit" name="submit" value="Add PortCall">
+        </form>
+    </div>
 
-  <h2>New messages</h2>
+    <div class="centered">
+        <h2>Incoming Portcalls: </h2>
+        <!--<button id="load-port-calls">Load Port Calls</button>-->
+        <ul id="list-of-portcalls">
+            <!--<li class="show-info-li">-->
+                <!--<div>Cargo to load: Oil, 5000 barrels</div>-->
+                <!--<div>Cargo to unload: nothing</div>-->
+                <!--<div>Laycan: 2017-03-12 13:00 to 2017-04-10 15:00</div>-->
+                <!--<div>Name: johans portcall</div>-->
+                <!--<div>Vessel ID: xrnf:fgfdfg:fdgfggvfd:122334</div>-->
+                <!--<div>Portcall id: x-rnf:dfgsdf:gfdsgds:224555-5gggfgftr-54545353-bhghtt</div>-->
+            <!--</li>-->
+            <!--<li class="show-info-li">-->
+                <!--<div>Cargo to load: Oil, 5000 barrels</div>-->
+                <!--<div>Cargo to unload: nothing</div>-->
+                <!--<div>Laycan: 2017-03-12 13:00 to 2017-04-10 15:00</div>-->
+                <!--<div>Name: johans portcall</div>-->
+                <!--<div>Vessel ID: xrnf:fgfdfg:fdgfggvfd:122334</div>-->
+                <!--<div>Portcall id: x-rnf:dfgsdf:gfdsgds:224555-5gggfgftr-54545353-bhghtt</div>-->
+            <!--</li>-->
+        </ul>
+        <!--cargoIn : cargoInInput.val(),-->
+        <!--cargoOut : cargoOutInput.val(),-->
+        <!--laycanStart : laycanStart,-->
+        <!--laycanEnd : laycanEnd,-->
+        <!--name : nameInput.val(),-->
+        <!--vesselId : vesselIdInput.val(),-->
+        <!--portcallId : portcallIdInput.val()-->
 
-  <button id="getNewMessages">Get all new messages</button>
-  <ul id="resultList">
-  </ul>
+    </div>
 
-  <script src="https://code.jquery.com/jquery-2.2.4.js"
-          integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="
-          crossorigin="anonymous"></script>
-  <script src="js/test.js"></script>
+</div>
+<script src="/js/unscheduled.js"></script>
 </body>
-
-<footer>
-    <p class="copyright" align="center">&copy; Copyright 2017 Billy Corgan Project.</p>
-</footer>
-
 </html>
