@@ -47,7 +47,7 @@ function getPortCall() {
 }
 
 function Return() {
-    window.open("/unscheduled", "_self");
+    window.open("/portcallList", "_self");
 }
 
 function setTimestamp(field, value) {
