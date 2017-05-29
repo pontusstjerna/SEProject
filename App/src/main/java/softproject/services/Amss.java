@@ -42,38 +42,18 @@ public class Amss {
                 .post(requestBody)
                 .build();
 
-        return sendRequest(message, request);
-        // TODO fixa error hantering osv
-    }
-
-    public boolean postMSS(PortCallMessage message) {
-        String messageAsXML = convertPortCallMessageToXML(message);
-
-        RequestBody requestBody = null;
-        requestBody = RequestBody.create(mediaType, messageAsXML);
-
-        Request request = PortCDMRequest.getBaseRequest().newBuilder()
-                .url(PortCDMRequest.getBaseRequest().urlString() + "mb/mss")
-                .post(requestBody)
-                .build();
-
-        return sendRequest(message, request);
-    }
-
-
-    private boolean sendRequest(PortCallMessage message, Request request) {
         Response response = null;
         try {
             response = this.httpClient.newCall(request).execute();
         } catch (IOException e) {
             e.printStackTrace();
-            return false;
         }
 
         System.out.println(response.code());
+
+        // TODO fixa error hantering osv
         return true;
     }
-
 
     private String convertPortCallMessageToXML(PortCallMessage message) {
         String messageAsXML = "";

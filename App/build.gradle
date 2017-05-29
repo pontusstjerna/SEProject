@@ -31,16 +31,13 @@ repositories {
 	}
 }
 
+
 dependencies {
 //	compile group: 'com.fasterxml.jackson.module', name: 'jackson-module-jaxb-annotations', version: '2.1.4'
-	compile('com.fasterxml.jackson.datatype:jackson-datatype-jsr310')
 	compile('com.fasterxml.jackson.module:jackson-module-jaxb-annotations')
-	compile('org.springframework.boot:spring-boot-devtools')
     compile('com.fasterxml.jackson.dataformat:jackson-dataformat-xml')
 //	compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.0.pr2'
 	compile('eu.portcdm:message-broker-dto:1.5-SNAPSHOT')
-	compile('com.squareup.okhttp:okhttp:2.7.5')
-	compile('eu.portcdm:port-call-message-format:1.6-SNAPSHOT')
 	compile("org.springframework.boot:spring-boot-devtools")
 	//compile('org.springframework.boot:spring-boot-starter-data-jpa')
 	//compile('org.springframework.boot:spring-boot-starter-jooq')
@@ -51,5 +48,3 @@ dependencies {
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 
 }
-
-

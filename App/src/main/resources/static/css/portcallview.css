@@ -1,7 +1,3 @@
-b{
-  color: #404040;
-}
-
 .maincontainer{
   margin: 0;
   padding: 0;
@@ -18,17 +14,15 @@ b{
   vertical-align: top;
   border-top: 0;
   border-bottom: 0;
-  text-align: center;
 }
 
 .innercontainer{
   width: 95%;
   display: inline-block;
   text-align: left;
-  vertical-align: center;
+  border: 0.12em black dotted;
   margin-bottom: 0.05em;
-  padding: 0.03em;
-  border: 0.01em gray;
+  padding-top: 0;
 }
 
 .portcallmessage{
@@ -39,41 +33,11 @@ b{
   border-width: 0.1em;
 }
 
-.data{
-  width:80%;
-  border: 1px black solid;
-}
-
-.data:read-only{
-  width:80%;
-  border: none;
-}
-
-.btnEdit{
-  /*background-image: url(/img/edit.png);
-  background-repeat: no-repeat;
-  background-position: left;
-  padding-left: 32px;*/
-  margin: 0.2em;
-  align-self: right;
-}
-
-.tblInfo{
-  width: 100%;
-  height: 50%;
-  font-size: 0.8em;
-}
-
-td{
-  white-space: nowrap;
-}
-
 #right{
   border-left: 0;
 }
 
 #portcallmessages{
-  font-size: 0.8em;
   overflow-y:scroll;
-  height: 550px;
+  height:400px;
 }

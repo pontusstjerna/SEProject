@@ -4,18 +4,14 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.squareup.okhttp.*;
 import eu.portcdm.mb.dto.Filter;
 import eu.portcdm.messaging.PortCallMessage;
 import softproject.services.exceptions.BadRequest;
 import softproject.services.exceptions.CouldNotReachPortCDM;
 import softproject.services.exceptions.IllegalFilters;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.io.IOException;
 import java.util.List;
@@ -25,6 +21,7 @@ public class MessageQueueService {
     private OkHttpClient httpClient;
     private MediaType mediaType;
     private Request baseRequest;
+
 
     public MessageQueueService(OkHttpClient httpClient, Request baseRequest) {
         this.httpClient = httpClient;
@@ -45,44 +42,18 @@ public class MessageQueueService {
                 .post(reqBody)
                 .build();
 
-        return executeRequest(request);
-    }
-
-    // Tries to create a queue using filters and fromTime sent in as parameters
-    public String postMqs(List<Filter> filters, String fromTime) throws IllegalFilters, CouldNotReachPortCDM, BadRequest {
-        RequestBody reqBody = createRequestBody(filters);
-
-        Request request = this.baseRequest.newBuilder()
-                .url(this.baseRequest.urlString() + "/mqs?fromTime="+fromTime)
-                .post(reqBody)
-                .build();
-
-        return executeRequest(request);
-    }
-
-    // Tries to create a queue using fromTime sent in as parameter
-    public String postMqs(String fromTime) throws IllegalFilters, CouldNotReachPortCDM, BadRequest {
-        Request request = this.baseRequest.newBuilder()
-                .url(this.baseRequest.urlString() + "/mqs?fromTime="+fromTime)
-                .post(RequestBody.create(MediaType.parse("application/json"),""))
-                .build();
-
-        return executeRequest(request);
-    }
-
-    private String executeRequest(Request request) {
         try {
             Response response = this.httpClient.newCall(request).execute();
             if(response.isSuccessful()) {
-                String result = response.body().string();
-                response.body().close();
-                return result;
+                return response.body().string();
             } else {
                 throw new BadRequest(response.code());
             }
         } catch (IOException e) {
-            throw new CouldNotReachPortCDM(e, "from MessageQueueService::postMqs(List<Filter> filters, String fromTime)");
+            throw new CouldNotReachPortCDM(e, "from MessageQueueService::postMqs(List<Filter>");
         }
+
+
     }
 
     // creates the RequestBody for a postMqs call, converting filters to a JSON array
@@ -98,7 +69,7 @@ public class MessageQueueService {
     }
 
     public void putMqs(String queue, List<Filter> filters) {
-        throw new UnsupportedOperationException();
+        throw new NotImplementedException();
     }
 
     public List<PortCallMessage> getMqs(String queue) throws CouldNotReachPortCDM, BadRequest {
@@ -110,12 +81,12 @@ public class MessageQueueService {
                 .url(this.baseRequest.urlString() + "/mqs/" + queue + "?count=" + limit)
                 .build();
 
-
+        Response response = null;
+        String messagesAsXML = "";
         try {
-            Response response = this.httpClient.newCall(request).execute();
+            response = this.httpClient.newCall(request).execute();
             if(response.isSuccessful()) {
-                String messagesAsXML = response.body().string();
-                response.body().close();
+                messagesAsXML = response.body().string();
                 return convertFromXmlToPortCall(messagesAsXML);
             } else {
                 throw new BadRequest(response.code());
@@ -127,7 +98,6 @@ public class MessageQueueService {
 
     private List<PortCallMessage> convertFromXmlToPortCall(String messagesAsXML) throws IOException {
         XmlMapper mapper = new XmlMapper();
-        mapper.registerModule(new JavaTimeModule());
         return mapper.readValue(messagesAsXML, new TypeReference<List<PortCallMessage>>() {});
     }
 
