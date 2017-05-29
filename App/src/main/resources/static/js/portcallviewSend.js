@@ -146,11 +146,14 @@ function sendCargoOpCompleted(){
 function getPortCDMPortCall(){
     var vesselId = $("#vesselId").val();
     var portcallId = $("#portcallId").val();
+    var berth = $('#berth').val();
 
     if(vesselId === "") vesselId = null;
     if(portcallId === "") portcallId = null;
+    if(berth === "") berth = null;
 
-    return {vesselId : vesselId, portcallId : portcallId};
+
+    return {vesselId : vesselId, portcallId : portcallId, berth: berth};
 }
 
 function setModalPanel(visible){
