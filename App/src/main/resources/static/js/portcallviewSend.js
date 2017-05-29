@@ -139,7 +139,7 @@ function sendCargoOpCompleted(){
             contentType: 'application/json',
             data: JSON.stringify(getPortCDMPortCall()),
             dataType: 'json'
-        });
+        })
     });
 }
 

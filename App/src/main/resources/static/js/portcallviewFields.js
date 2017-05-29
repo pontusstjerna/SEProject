@@ -96,8 +96,16 @@ function saveChanges(){
         type: 'POST',
         contentType: 'application/json',
         data: JSON.stringify(newPortCall),
-        dataType: 'json'
+        dataType: 'json',
+        success: addRequestDone
     });
+}
+
+function addRequestDone(data) {
+    if(data === false) {
+        alert('Illegal berth id, portcall not saved!');
+        $('#berth').val('');
+    }
 }
 
 function getStringFromDate(field){

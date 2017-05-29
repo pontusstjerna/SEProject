@@ -1,6 +1,7 @@
 package softproject.controllers;
 
 
+import eu.portcdm.messaging.Location;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,8 +10,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import softproject.model.PortCall;
 import softproject.model.PortCallRepository;
+import softproject.model.Vessel;
+import softproject.services.LocationRegistryService;
+import softproject.services.PortCDMRequest;
+import softproject.services.VesselRegistryService;
+import softproject.services.exceptions.BadRequest;
 
 import javax.annotation.PostConstruct;
+import javax.sound.sampled.Port;
 import java.util.List;
 
 
@@ -21,13 +28,23 @@ import java.util.List;
 @RestController
 public class PortCallController {
 
-    @PostMapping("/portcalls/add")
-    public void addPortCall(@RequestBody PortCall newPortCall) {
-        System.out.println(newPortCall.getLaycanStart());
-        System.out.println(newPortCall.getLaycanEnd());
-        PortCallRepository.getRepo().add(newPortCall);
-    }
+    private static final String BERTH_BASE = "urn:mrn:stm:location:segot:BERTH:";
 
+    @PostMapping("/portcalls/add")
+    public boolean addPortCall(@RequestBody PortCall newPortCall) {
+
+        LocationRegistryService ls = new LocationRegistryService(PortCDMRequest.getClientInstance(),
+                                                                 PortCDMRequest.getBaseRequest());
+
+        boolean exist = ls.doesLocationMRNExist(BERTH_BASE + newPortCall.getBerth());
+        if(!exist) {
+            System.out.println("Invalid location URN!");
+            return false;
+        }
+
+        PortCallRepository.getRepo().add(newPortCall);
+        return true;
+    }
 
     @RequestMapping("/internalPortcall")
     public PortCall portcall(@RequestParam(value="id") String id) {
