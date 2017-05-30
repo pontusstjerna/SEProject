@@ -87,6 +87,7 @@ function updatePortCallList(listOfPortCalls, textStatus){
         var portcall = listOfPortCalls[i];
 
         console.log(portcall);
+        console.log("in uodatePortCalllist: " + portcall.internalId);
         var htmlForLi = '<li class=show-info-li onclick=openPortCall(' + portcall.internalId + ')>' +
                 '<div> <strong>Cargo to unload: </strong>' + portcall.cargoIn + '</div>' +
                 '<div> <strong>Cargo to load: </strong>' + portcall.cargoOut + '</div>' +

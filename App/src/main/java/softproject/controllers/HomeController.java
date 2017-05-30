@@ -2,10 +2,12 @@ package softproject.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import softproject.model.PortCall;
 import softproject.services.PortCDMRequest;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -34,8 +36,8 @@ public class HomeController {
     public String portcallList(){return "index";}
 
     @GetMapping("/portcall")
-    public String portcall() {
-        return "portcallView";
+    public String portcall(@RequestParam int id) {
+        return "portcallview";
     }
 
     @GetMapping("/report")

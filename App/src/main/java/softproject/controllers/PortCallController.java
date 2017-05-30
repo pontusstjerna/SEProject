@@ -20,11 +20,6 @@ import javax.annotation.PostConstruct;
 import javax.sound.sampled.Port;
 import java.util.List;
 
-
-/**
- * Created by pontu on 2017-04-26.
- */
-
 @RestController
 public class PortCallController {
 
@@ -36,10 +31,12 @@ public class PortCallController {
         LocationRegistryService ls = new LocationRegistryService(PortCDMRequest.getClientInstance(),
                                                                  PortCDMRequest.getBaseRequest());
 
-        boolean exist = ls.doesLocationMRNExist(BERTH_BASE + newPortCall.getBerth());
-        if(!exist) {
-            System.out.println("Invalid location URN!");
-            return false;
+        if(newPortCall.getBerth() != null) {
+            boolean exist = ls.doesLocationMRNExist(BERTH_BASE + newPortCall.getBerth());
+            if (!exist) {
+                System.out.println("Invalid location URN!");
+                return false;
+            }
         }
 
         PortCallRepository.getRepo().add(newPortCall);
@@ -51,24 +48,6 @@ public class PortCallController {
         int portId = Integer.parseInt(id);
 
         return PortCallRepository.getRepo().get(portId);
-    }
-
-    private class DummyPortCall{
-        private int id;
-        private String vesselName;
-
-        public DummyPortCall(){
-            id = 1337;
-            vesselName = "Superfint anrop";
-        }
-
-        public int getId(){
-            return id;
-        }
-
-        public String getVesselName(){
-            return vesselName;
-        }
     }
 
     @GetMapping("/portcalls")

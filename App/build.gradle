@@ -10,9 +10,18 @@ buildscript {
 	}
 }
 
+plugins {
+	id 'org.springframework.boot' version '1.5.3.RELEASE'
+}
+
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
+
+jar {
+	baseName = 'terminal2'
+	version = '0.2.2'
+}
 
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = 1.8
@@ -48,6 +57,7 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-web')
 	// runtime('org.postgresql:postgresql')
 	compileOnly('org.projectlombok:lombok')
+
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 
 }
