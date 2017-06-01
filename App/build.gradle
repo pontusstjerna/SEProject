@@ -1,3 +1,4 @@
+
 buildscript {
 	ext {
 		springBootVersion = '1.5.2.RELEASE'
@@ -13,10 +14,24 @@ buildscript {
 plugins {
 	id 'org.springframework.boot' version '1.5.3.RELEASE'
 }
-
+apply plugin: 'findbugs'
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
+findbugs {
+	ignoreFailures = true
+}
+
+task checkFindBugsReport << {
+	def xmlReport = findbugsMain.reports.xml
+	def slurped = new XmlSlurper().parse(xmlReport.destination)
+	def bugsFound = slurped.BugInstance.size()
+	if (bugsFound > 0) {
+		throw new GradleException("$bugsFound FindBugs rule violations were found. See the report at: $xmlReport.destination")
+	}
+}
+
+findbugsMain.finalizedBy checkFindBugsReport
 
 jar {
 	baseName = 'terminal2'
@@ -41,21 +56,16 @@ repositories {
 }
 
 dependencies {
-//	compile group: 'com.fasterxml.jackson.module', name: 'jackson-module-jaxb-annotations', version: '2.1.4'
 	compile('com.fasterxml.jackson.datatype:jackson-datatype-jsr310')
 	compile('com.fasterxml.jackson.module:jackson-module-jaxb-annotations')
 	compile('org.springframework.boot:spring-boot-devtools')
     compile('com.fasterxml.jackson.dataformat:jackson-dataformat-xml')
-//	compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.0.pr2'
 	compile('eu.portcdm:message-broker-dto:1.5-SNAPSHOT')
 	compile('com.squareup.okhttp:okhttp:2.7.5')
 	compile('eu.portcdm:port-call-message-format:1.6-SNAPSHOT')
 	compile("org.springframework.boot:spring-boot-devtools")
-	//compile('org.springframework.boot:spring-boot-starter-data-jpa')
-	//compile('org.springframework.boot:spring-boot-starter-jooq')
 	compile('org.springframework.boot:spring-boot-starter-mustache')
 	compile('org.springframework.boot:spring-boot-starter-web')
-	// runtime('org.postgresql:postgresql')
 	compileOnly('org.projectlombok:lombok')
 
 	testCompile('org.springframework.boot:spring-boot-starter-test')
