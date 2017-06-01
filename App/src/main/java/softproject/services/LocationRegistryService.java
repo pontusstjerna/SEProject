@@ -16,7 +16,6 @@ public class LocationRegistryService {
     private static final String API_URL_ADDITION = "location-registry";
     private static final String LOCATION_URL_ADDITION = "/location/";
 
-    private MediaType mediaType = MediaType.parse("application/json");
 
     private OkHttpClient httpClient;
     private Request baseRequest;

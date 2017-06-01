@@ -31,7 +31,7 @@ public class PortCallController {
         LocationRegistryService ls = new LocationRegistryService(PortCDMRequest.getClientInstance(),
                                                                  PortCDMRequest.getBaseRequest());
 
-        if(newPortCall.getBerth() != null) {
+        if(newPortCall.getBerth() != null && !newPortCall.getBerth().equals("") && !newPortCall.getBerth().equals("Unassigned")) {
             boolean exist = ls.doesLocationMRNExist(BERTH_BASE + newPortCall.getBerth());
             if (!exist) {
                 System.out.println("Invalid location URN!");

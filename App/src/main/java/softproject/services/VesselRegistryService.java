@@ -16,7 +16,6 @@ public class VesselRegistryService {
     private static final String API_URL_ADDITION = "vr";
     private static final String VESSEL_URL_ADDITION = "/vessel/";
 
-    private MediaType mediaType = MediaType.parse("application/json");
 
     private OkHttpClient httpClient;
     private Request baseRequest;
