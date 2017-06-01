@@ -107,7 +107,9 @@ public class PortCallFileRepository implements PortCallRepository {
             old.setArrivalVesselBerth(newPortCall.getArrivalVesselBerth());
             old.setDepartureVesselBerth(newPortCall.getDepartureVesselBerth());
         }else {
+
             newPortCall.setInternalId(portcalls.size() + 1);
+            System.out.println("Adding new PortCall with internal id: " + portcalls.size());
             portcalls.add(newPortCall);
         }
 
