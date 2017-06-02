@@ -1,6 +1,8 @@
 # SEProject
 Software Engineering Project spring 2017
 
+Trello: https://trello.com/b/XO2K55E7/product-backlog
+
 # To run the prototype
 java -jar terminal2.jar
 
